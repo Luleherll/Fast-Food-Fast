@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="keywords" lang="en-us" content="fast food, food app, order food">
+        <title>Fast Food</title>
+        <link rel="icon" type="image/gif/png" href="images/logo.jpg">
+        <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+        <script type="text/javascript">
+          function displayblock (id1,id2) {
+           var x = document.getElementById(id1);
+           var y = document.getElementById(id2)
+          if (y.style.display === "none") {
+          x.style.display = "none";
+          y.style.display = "block";
+        } else {
+           x.style.display = "block";
+           y.style.display = "none"
+        }}
+        function on() {
+            document.getElementById("overlay").style.display = "block";
+        }
+    </script>
+</head>
+<body >
+       <div class="slogan">Hunger can't wait !<br><span>ORDER NOW.</span></div>
+   <div id="log" class="wrapper">
+        <form method="POST">
+            <div class="fields">
+               Email
+                <div><input class="ins" type="text" placeholder="john@example.com"></div>
+            </div>
+            <div class="fields">
+               Password
+                <div><input class="ins" type="password" placeholder="password"></div>
+            </div>
+                <div class="fields btn"><input type="button" onclick="on()" value="LOGIN"></div>
+        </form>
+        <input class="btn" type="button" onclick="displayblock('log','reg')" value="Create Account.">
+        <a class="heads" href="#reg">I Forgot My Password.</a>
+    </div>
+    <div id="reg" class="wrapper">
+            <form method="POST">
+                <div class="fields">
+                    Username
+                    <div><input class="ins" type="text" placeholder="john"></div>
+                </div>
+                <div class="fields">
+                   Email
+                    <div><input class="ins" type="text" placeholder="john@example.com"></div>
+                </div>
+                <div class="fields">
+                   Password
+                    <div><input class="ins" type="password" placeholder="*****"></div>
+                </div>
+                    <div class="fields btn"><input type="submit" value="Register"></div>
+            </form>
+        </div>
+        <div id="overlay">
+           <div>
+               <a href="home.html">User</a>
+               <a href="admin.html">Admin</a>
+            </div>   
+        </div> 
+    
+</body>
+</html>

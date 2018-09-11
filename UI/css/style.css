@@ -1,0 +1,99 @@
+header{
+    position: fixed;
+    width: 100%;
+    cursor: pointer;
+}
+.nav-bar {
+    background-color: yellow;
+    box-shadow: 0px 2px rgba(102, 100, 100, 0.5);
+    
+    cursor: pointer;
+}
+.nav-bar a {
+    float: right;
+    color: rgb(197, 202, 174);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: bold;
+}
+.nav-bar a:hover {
+    background-color: rgb(154, 231, 82);
+    color: rgb(255, 254, 254);
+}
+.nav-bar a.active {
+    background-color: rgb(162, 219, 29);
+    color: rgb(44, 41, 41);
+}
+
+#search{
+    margin-left: 25%;
+    position: absolute;
+    top: 30%;
+    width: 250px;
+    height: 30px;
+    text-align: center;
+}
+input{
+    border: none;
+    border-radius: 30px;
+}
+input:hover{
+    border: 1px solid orangered;
+}
+#looker{
+    position: absolute;
+    margin-left: 45%;
+    top: 30%;
+    width: 30px;
+    height: 33px;
+    background-image: url('C://Users/USER/Fast-Food-Fast/UI/images/search.png');
+    background-color: transparent;
+}
+#blank{
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+}
+#side-bar{
+    height: 100%;
+    width: 30%;
+    position: fixed;
+    margin-left: 70%;
+    border: inherit;
+    font-size: 40px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+#side-bar .title{
+    background-image: url('C://Users/USER/Fast-Food-Fast/UI/images/bars.png');
+    background-repeat: no-repeat;
+}
+.item{
+    background-color: green;
+    height: 120px;
+    width: 70%;
+    margin-bottom: 10px;
+}
+.dtl{
+    background-color: yellow;
+    height: 120px;
+    width: 400px;
+    margin-left: 55%;
+    font-size: 40px;
+}
+.dtl div{
+    margin-top: 20px;
+}
+.dtl div span{
+    color: green;
+}
+.dtl div input{
+    background-color: red;
+    color: wheat;
+    font-style: oblique;
+    padding: 10px;
+    width: 180px;
+    font-size: 20px;
+    margin-left: 30px;
+}
