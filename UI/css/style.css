@@ -70,25 +70,27 @@ input:hover{
     background-repeat: no-repeat;
 }
 .item{
-    background-color: green;
+    background-color: yellow;
     height: 120px;
     width: 70%;
     margin-bottom: 10px;
+    font-size: 25px;
 }
-.dtl{
-    background-color: yellow;
-    height: 120px;
-    width: 400px;
-    margin-left: 55%;
-    font-size: 40px;
+.item div{
+    float: right;
+    margin-top: 30px;
+
 }
-.dtl div{
-    margin-top: 20px;
+.images{
+    margin-top: 30%;
 }
-.dtl div span{
+#accept{
+    background-color: green;
+}
+.item div span{
     color: green;
 }
-.dtl div input{
+.item div input{
     background-color: red;
     color: wheat;
     font-style: oblique;
