@@ -48,7 +48,7 @@ input:hover{
     top: 30%;
     width: 30px;
     height: 33px;
-    background-image: url('C://Users/USER/Fast-Food-Fast/UI/images/search.png');
+    background-image: url('../images/search.jpg');
     background-color: transparent;
 }
 #blank{
@@ -66,7 +66,7 @@ input:hover{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 #side-bar .title{
-    background-image: url('C://Users/USER/Fast-Food-Fast/UI/images/bars.png');
+    background-image: url('../images/bars.jpg');
     background-repeat: no-repeat;
 }
 .item{

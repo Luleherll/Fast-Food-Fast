@@ -1,5 +1,5 @@
 body{
-    background-image: url('C://Users/USER/Fast-Food-Fast/UI/images/fastfood.jpg') ;
+    background-image: url('../images/fastfood.jpg') ;
     object-fit: cover;
 }
 
