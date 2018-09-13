@@ -9,20 +9,47 @@
         <title>Fast Food | Home</title>
         <link rel="icon" type="image/gif/png" href="images/logo.jpg">
         <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+        <script src="js/main.js"></script>
 </head>
-<body>
+<body onload="current(2)">
     <header>
     <nav class="nav-bar">
     <img src="images/icon.jpg">
     <input id="search" type="search" placeholder="search food..">
     <input id="looker" type="button">
     <a href="#home">Settings</a>
-    <a href="#buy">History</a>
+    <a class="page" onclick="current(1)">History</a>
     <a href="#">Order</a>
-    <a class="active" href="home.html">Home</a>
+    <a class="page active" onclick="current(2)">Home</a>
     </nav> 
     </header>
-    <div id="blank"></div>
+    <div class="slides fade">
+        <div id="blank"></div>
+        <div id="side-bar">
+            <div class="title">Most Ordered.</div>
+            <img src="images/most.png" alt="" width="200px" height="150px">
+            <div class="title">Latest Food.</div>
+            <img src="images/latest.png" alt="" width="200px" height="150px">
+        </div>
+        <div class="item">
+            <span class="images">
+                <img src="images/bil2.jpg" alt="" width="120px" height="120px">
+                <img src="images/bil3.jpg" alt="" width="120px" height="120px">
+                <img src="images/bil4.jpg" alt="" width="120px" height="120px">
+            </span>
+            <div>Chicken Biriyan<br><span>Delivered At: 1 /April /2018</span></div>
+        </div>
+        <div class="item">
+            <span class="images">
+                <img src="images/tik1.jpg" alt="" width="120px" height="120px">
+                <img src="images/Tik2.jpg" alt="" width="120px" height="120px">
+                <img src="images/tik3.jpg" alt="" width="120px" height="120px">
+            </span>
+            <div>Kababs<br><span>Delivered At: 20 /July /2018</span></div>
+        </div>
+    </div>
+    <div class="slides fade">
+   <div id="blank"></div>
     <div id="side-bar">
         <div class="title">Most Ordered.</div>
         <img src="images/most.png" alt="" width="200px" height="150px">
@@ -77,5 +104,7 @@
             </span>
         <div>Pizza<br><span>Ush 50000</span> <input type="button" value="Order Now"></div>
     </div>
+    </div>
+    
 </body>
 </html>

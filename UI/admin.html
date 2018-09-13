@@ -9,8 +9,9 @@
         <title>Fast Food | Admin</title>
         <link rel="icon" type="image/gif/png" href="images/logo.jpg">
         <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+        <script src="js/main.js"></script>
 </head>
-<body>
+<body onload="current(2)">
     <header>
     <nav class="nav-bar">
     <img src="images/icon.jpg">
@@ -18,11 +19,29 @@
     <input id="looker" type="button">
     <a href="#achive">Archive</a>
     <a href="#stats">Stats</a>
-    <a href="#pending">Pending</a>
-    <a class="active" href="home.html">Orders</a>
+    <a class="page" onclick="current(1)">Pending</a>
+    <a class="page active" onclick="current(2)">Orders</a>
     </nav> 
     </header>
-    <div id="blank"></div>
+    
+    <div class="slides fade">
+        <div id="blank"></div>
+        <div id="side-bar">
+            <div class="title">Most Ordered.</div>
+            <img src="images/most.png" alt="" width="200px" height="150px">
+            <div class="title">Latest Food.</div>
+            <img src="images/latest.png" alt="" width="200px" height="150px">
+        </div>
+        <div class="item">
+            <span class="images">
+                <img src="images/bil2.jpg" alt="" width="120px" height="120px">
+            </span>
+            <div> 1 Chicken Biriyan<br>From: Zzana <span>In: 30 mins</span><input id="accept" type="button" value="Complete"></div>
+        </div>
+    </div>
+
+    <div class="slides fade">
+       <div id="blank"></div>
     <div id="side-bar">
         <div class="title">Most Ordered.</div>
         <img src="images/most.png" alt="" width="200px" height="150px">
@@ -64,6 +83,8 @@
                 <img src="images/piz1.jpg" alt="" width="120px" height="120px">
             </span>
         <div>1 Pizza<br>From: Bukoto <span>In: 1 hr</span><input id="accept" type="button" value="Accept"><input type="button" value="Decline"></div>
+    </div> 
     </div>
+    
 </body>
 </html>
