@@ -1,3 +1,5 @@
+from flask import Flask
+from flask import jsonify
 
 
 class Order:
@@ -9,12 +11,13 @@ class Order:
         self.customer = customer
         self.location = location
 
+
 class Orders:
 
     def __init__(self):
         self.orders = []
         self.n = 1
-    
+
     def check(self, order_id):
         for order in self.orders:
             if order['id'] == order_id:
@@ -23,10 +26,10 @@ class Orders:
         return False
 
     def not_found(self, order_id):
-        return 'Order with Id: {} not found.'.format(order_id)
+        return jsonify('Order with Id: {} not found.'.format(order_id)), 404
 
     def status(self, order_id, state):
-        if state =='Q':
+        if state == 'Q':
             state = 'Queued'
         elif state == 'P':
             state = 'Pending'
@@ -40,40 +43,42 @@ class Orders:
             self.not_found(order_id)
         else:
             order['status'] = state
-    
+
     def success(self, act, order_id):
         if act == 'P':
             act = 'placed'
         elif act == 'U':
-            act == 'updated'
+            act = 'updated'
 
-        return 'Your order was successfully {}. Order Id: {}'.format(act,order_id)
+        return jsonify('Your order was successfully {}. Order Id: \
+{}'.format(act, order_id)), 200
 
     def place_order(self, order):
-        sheet = {'id': self.n, 'name': order.name, 'quantity': order.quantity, 'wanted_in': order.time, 
-                  'requester': order.customer, 'where': order.location}
+        sheet = {'id': self.n, 'name': order.name, 'quan\
+tity': order.quantity, 'wanted_in': order.time, 're\
+quester': order.customer, 'where': order.location}
 
         order_id = self.n
         self.orders.append(sheet)
-        self.status(self.n,'Q')
+        self.status(self.n, 'Q')
         self.n += 1
 
-        self.success('P', order_id)
+        return self.success('P', order_id)
 
     def get_order(self, order_id):
         order = self.check(order_id)
         if order is False:
-            self.not_found(order_id)
+            return self.not_found(order_id)
         else:
-            return order
+            return jsonify(order), 200
 
     def update_order(self, order_id, state):
         order = self.check(order_id)
         if order is False:
-            self.not_found(order_id)
+            return self.not_found(order_id)
         else:
             self.status(order_id, state)
-            self.success('U', order_id)
+            return self.success('U', order_id)
 
     def all_orders(self):
-        return self.orders
+        return jsonify(self.orders), 200
