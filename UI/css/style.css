@@ -74,14 +74,15 @@ input:hover{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 .item{
-    background-color: yellow;
+    background-color: transparent;
     height: 120px;
     width: 70%;
     margin-bottom: 10px;
     font-size: 25px;
+    border: 2px solid yellowgreen;
 }
 .change{
-    border-bottom: 2px solid yellow;
+    border-bottom: 2px solid yellowgreen;
     height: 150px;
     width: 70%;
     font-size: 20px;
