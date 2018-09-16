@@ -40,7 +40,7 @@ class Orders:
 
         order = self.check(order_id)
         if order is False:
-            self.not_found(order_id)
+            return self.not_found(order_id)
         else:
             order['status'] = state
 
