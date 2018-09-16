@@ -3,7 +3,7 @@
 <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes">
         <meta name="HandheldFriendly" content="true">
         <meta name="keywords" lang="en-us" content="fast food, food app, order food">
         <title>Fast Food</title>
@@ -39,21 +39,15 @@
                     <div class="fields btn"><input type="button" onclick="current(3)" value="Register"></div>
             </form>
         </div>   
-   <div class="slides wrapper fade">
-        <form method="POST">
-            <div class="fields">
-               Email
-                <div><input class="ins" type="text" placeholder="john@example.com"></div>
-            </div>
-            <div class="fields">
-               Password
-                <div><input class="ins" type="password" placeholder="password"></div>
-            </div>
-                <div class="fields btn"><input type="button" onclick="on()" value="LOGIN"></div>
-        </form>
-        <input class="btn" type="button" onclick="current(2)" value="Create Account.">
+   <form class="slides wrapper fade">
+        Email
+        <div><input class="ins" type="text" placeholder="john@example.com"></div>
+        Password
+        <div><input class="ins" type="password" placeholder="**********"></div>
+        <div><input class="btn" type="button" onclick="on()" value="LOGIN"></div>
+        <div><input class="btn" type="button" onclick="current(2)" value="Create Account."></div>
         <a class="heads" onclick="current(1)">I Forgot My Password.</a>
-    </div>
+   </form>
     
         <div id="overlay">
            <div>
