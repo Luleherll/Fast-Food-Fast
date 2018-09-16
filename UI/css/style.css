@@ -62,12 +62,16 @@ input:hover{
     position: fixed;
     margin-left: 70%;
     border: inherit;
-    font-size: 40px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-#side-bar .title{
+#side-bar img{
+    width: 200px;
+    height: 150px;
+}
+.title{
     background-image: url('../images/bars.jpg');
     background-repeat: no-repeat;
+    font-size: 30px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 .item{
     background-color: yellow;
@@ -76,13 +80,32 @@ input:hover{
     margin-bottom: 10px;
     font-size: 25px;
 }
+.change{
+    border-bottom: 2px solid yellow;
+    height: 150px;
+    width: 70%;
+    font-size: 20px;
+}
+.change select{
+    width: 200px;
+    height: 20px;
+}
+.change div{
+    float: right;
+}
+.change .title{
+    float: right;
+}
 .item div{
     float: right;
     margin-top: 30px;
-
 }
 .images{
     margin-top: 30%;
+}
+.images img{
+    width: 120px;
+    height: 120px;
 }
 #accept{
     background-color: green;
@@ -98,6 +121,18 @@ input:hover{
     width: 180px;
     font-size: 20px;
     margin-left: 30px;
+}
+.slides{
+    display: none;
+}
+#no{
+    background-color: red;
+    font-size: 20px;
+    color: white;
+}
+#yes{
+    background-color: green;
+    color: white;
 }
 .fade {
     -webkit-animation-name: fade;

@@ -1,3 +1,20 @@
+@media screen and (max-width: 768px){
+    .btn {  
+        background-color: rgb(81, 187, 90);
+        border-radius: 3px; 
+        display: block;
+        padding: 5px;
+        margin-left: 80px;
+        margin-bottom: 5px;
+        border: none;
+        width: 300px;
+        height: 40px;
+      }
+      a{
+        margin-left: 160px;
+        color: rgb(180, 113, 26);
+    }
+}
 body{
     background-image: url('../images/fastfood.jpg') ;
     object-fit: cover;

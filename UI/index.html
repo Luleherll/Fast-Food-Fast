@@ -8,11 +8,20 @@
         <meta name="keywords" lang="en-us" content="fast food, food app, order food">
         <title>Fast Food</title>
         <link rel="icon" type="image/gif/png" href="images/logo.jpg">
-        <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+        <link rel="stylesheet" type="text/css" href="css/main.css" />
         <script src="js/main.js"></script>
 </head>
-<body onload="current(2)">
+<body onload="current(3)">
        <div class="slogan">Hunger can't wait !<br><span>ORDER NOW.</span></div>
+       <div class="slides wrapper fade">
+        <form method="POST">
+            <div class="fields">
+               Enter Your Email
+                <div><input class="ins" type="text" placeholder="john@example.com"></div>
+            </div>
+            <div class="fields btn"><input type="button" onclick="current(3)" value="Reset Password"></div>
+        </form>
+    </div>  
     <div class="slides wrapper fade">
             <form method="POST">
                 <div class="fields">
@@ -27,7 +36,7 @@
                    Password
                     <div><input class="ins" type="password" placeholder="*****"></div>
                 </div>
-                    <div class="fields btn"><input type="button" onclick="current(2)" value="Register"></div>
+                    <div class="fields btn"><input type="button" onclick="current(3)" value="Register"></div>
             </form>
         </div>   
    <div class="slides wrapper fade">
@@ -42,8 +51,8 @@
             </div>
                 <div class="fields btn"><input type="button" onclick="on()" value="LOGIN"></div>
         </form>
-        <input class="btn" type="button" onclick="current(1)" value="Create Account.">
-        <a class="heads" href="#reg">I Forgot My Password.</a>
+        <input class="btn" type="button" onclick="current(2)" value="Create Account.">
+        <a class="heads" onclick="current(1)">I Forgot My Password.</a>
     </div>
     
         <div id="overlay">
