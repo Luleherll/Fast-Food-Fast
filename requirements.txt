@@ -1,0 +1,8 @@
+flask
+Flask-Gunicorn
+gunicorn
+py
+nose
+coverage
+coveralls
+cookiecutter

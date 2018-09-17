@@ -45,7 +45,7 @@ def update_order(id):
         state = request.get_json()['status']
     except KeyError:
         return jsonify('You must provide the required value. [status]'), 206
-    
+
     response = orders.update_order(order, state)
 
     return response
