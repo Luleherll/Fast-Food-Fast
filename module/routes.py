@@ -10,6 +10,7 @@ orders = Orders()
 def welcome():
     return "<h1>Welcome to the Fast-Food-Fast API<h1>"
 
+
 @app.route('/api/v1/orders', methods=['POST'])
 def place_order():
     try:
