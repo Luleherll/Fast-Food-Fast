@@ -41,14 +41,10 @@ when given the order id. If it exists, returns the order and `False` if it\
  of the specified states, adds a `status` key and value to the order with a\
  given `id`. If order doesnot exist, a `not_found(order_id)` method is called.
         """
-        if state == 'Q':
-            state = 'Queued'
-        elif state == 'P':
-            state = 'Pending'
-        elif state == 'C':
-            state = 'Completed'
-        else:
-            state = 'Undefined'
+        states = ['Queued', 'Pending', 'Completed', 'Undefined']
+        for status in states:
+            if state == status[0]:
+                state = status
 
         order = self.check(order_id)
         if order is False:
