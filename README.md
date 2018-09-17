@@ -8,7 +8,7 @@ Fast-Food-Fast is a food delivery app.<br/>
 
 This API enables the the user to add, update the status and retrieve orders:<br/>
 ## API ROUTES:
->[POST] `/api/v1/orders` | For placing orders
->[GET] `/api/v1/orders` | For retrieving all orders in the orders list
->[GET] `/api/v1/orders/<int:order_id>` | For retrieving one order
->[PUT] `/api/v1/orders/<int:order_id>` | For updating the status of one order
+>[POST] `/api/v1/orders` | For placing orders<br/>
+>[GET] `/api/v1/orders` | For retrieving all orders in the orders list<br/>
+>[GET] `/api/v1/orders/<int:order_id>` | For retrieving one order<br/>
+>[PUT] `/api/v1/orders/<int:order_id>` | For updating the status of one order<br/>
