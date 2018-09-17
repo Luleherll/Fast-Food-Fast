@@ -58,9 +58,27 @@ to'}), content_type='application/json')
 ': "P"}), content_type='application/json')
         self.assertEqual(404, response.status_code)
 
-    def test_update_order(self):
+    def test_update_order_to_pending(self):
         response = self.app.put('/api/v1/orders/1', data=json.dumps({'status\
 ': "P"}), content_type='application/json')
+        self.assertEqual('Your order was successfully updated. Order Id: \
+1', response.json)
+
+    def test_update_order_to_declined(self):
+        response = self.app.put('/api/v1/orders/1', data=json.dumps({'status\
+': "D"}), content_type='application/json')
+        self.assertEqual('Your order was successfully updated. Order Id: \
+1', response.json)
+
+    def test_update_order_to_completed(self):
+        response = self.app.put('/api/v1/orders/1', data=json.dumps({'status\
+': "C"}), content_type='application/json')
+        self.assertEqual('Your order was successfully updated. Order Id: \
+1', response.json)
+
+    def test_update_order_to_undefined(self):
+        response = self.app.put('/api/v1/orders/1', data=json.dumps({'status\
+': "z"}), content_type='application/json')
         self.assertEqual('Your order was successfully updated. Order Id: \
 1', response.json)
 
