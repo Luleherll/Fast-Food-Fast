@@ -30,17 +30,17 @@ def all_orders():
     return response
 
 
-@app.route('/api/v1/orders/<int:id>', methods=['GET'])
-def get_order(id):
-    order = id
+@app.route('/api/v1/orders/<int:order_id>', methods=['GET'])
+def get_order(order_id):
+    order = order_id
     response = orders.get_order(order)
 
     return response
 
 
-@app.route('/api/v1/orders/<int:id>', methods=['PUT'])
-def update_order(id):
-    order = id
+@app.route('/api/v1/orders/<int:order_id>', methods=['PUT'])
+def update_order(order_id):
+    order = order_id
     try:
         state = request.get_json()['status']
     except KeyError:
