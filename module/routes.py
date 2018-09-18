@@ -13,6 +13,8 @@ def welcome():
 
 @app.route('/api/v1/orders', methods=['POST'])
 def place_order():
+    "This route adds a new order to the orders list when parsed with a json\
+ object containing all required values."
     try:
         name = request.get_json()['name']
         quantity = request.get_json()['quantity']
@@ -31,12 +33,14 @@ time, user_id, location]'), 206
 
 @app.route('/api/v1/orders', methods=['GET'])
 def all_orders():
+    "This route returns the list of orders."
     response = orders.all_orders()
     return response
 
 
 @app.route('/api/v1/orders/<int:order_id>', methods=['GET'])
 def get_order(order_id):
+    "This route returns the details of a particular order."
     order = order_id
     response = orders.get_order(order)
 
@@ -45,6 +49,7 @@ def get_order(order_id):
 
 @app.route('/api/v1/orders/<int:order_id>', methods=['PUT'])
 def update_order(order_id):
+    "This route updates the status key of a particular order."
     order = order_id
     try:
         state = request.get_json()['status']
