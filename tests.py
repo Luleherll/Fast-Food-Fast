@@ -122,3 +122,8 @@ time, user_id, location]', response.json)
     def test_all_orders_status_code(self):
         response = self.all_orders()
         self.assertEqual(200, response.status_code)
+
+    def test_welcome(self):
+        response = self.app.get('/')
+        self.assertEqual(b'<h1>Welcome to the Fast-Food-Fast API<h1>\
+', response.data)
