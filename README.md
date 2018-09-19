@@ -8,6 +8,9 @@ Fast-Food-Fast is a food delivery app.<br/>
 
 This API enables the the user to add, update the status and retrieve orders:<br/>
 
+Here is the link for the API hosted on Heroku:<br/>
+# https://lule-fast-food.herokuapp.com/
+
 ## API ROUTES:
  HTTP Method | Endpoint | Action
 -------|-------|-------
