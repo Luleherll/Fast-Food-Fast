@@ -194,7 +194,7 @@ ating.', response.json)
 
     def test_add_food_item_exists_status_code(self):
         response = self.helper.add_food_item('fries')
-        self.assertEqual(501, response.status_code)
+        self.assertEqual(403, response.status_code)
 
     def test_update_food_item(self):
         response = self.helper.update_food_item('fries')
