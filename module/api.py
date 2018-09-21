@@ -25,7 +25,7 @@ class FoodList:
         check = self.check(item['name'])
         if check is not None:
             return jsonify('Food with name: {} already exists. Try updating.\
-'.format(item['name'])), 501
+'.format(item['name'])), 403
         else:
             self.food_list[item['name']] = item
 
