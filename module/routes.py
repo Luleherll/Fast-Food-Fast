@@ -1,9 +1,11 @@
-from module.api import Order, Orders, jsonify
-from flask import Flask
+from module.api import Order, Orders, FoodList
+from flask import Flask, jsonify
 from flask import request
 
 app = Flask(__name__)
 orders = Orders()
+foods = FoodList()
+partial_content = 'You must provide the required values.'
 
 
 @app.route('/')
@@ -22,8 +24,8 @@ def place_order():
         customer = request.get_json()['user_id']
         where = request.get_json()['location']
     except KeyError:
-        return jsonify('You must provide all required values. [name, quantity,\
-time, user_id, location]'), 206
+        return jsonify(partial_content + ' [name, quantity, time, user_id,\
+ location]'), 206
 
     order = Order(name, quantity, time, customer, where)
     response = orders.place_order(order)
@@ -54,8 +56,50 @@ def update_order(order_id):
     try:
         state = request.get_json()['status']
     except KeyError:
-        return jsonify('You must provide the required value. [status]'), 206
+        return jsonify(partial_content + ' [status]'), 206
 
     response = orders.update_order(order, state)
 
+    return response
+
+
+@app.route('/api/v1/menu', methods=['GET'])
+def menu():
+    response = foods.get_menu()
+    return response
+
+
+@app.route('/api/v1/menu/add', methods=['POST'])
+def add_food_item():
+    try:
+        name = request.get_json()['name']
+        price = request.get_json()['price']
+        ready_in = request.get_json()['ready in']
+        status = request.get_json()['status']
+        units = request.get_json()['units']
+        tags = request.get_json()['tags']
+    except KeyError:
+        return jsonify(partial_content + ' [name, price, ready in,\
+ status, units, tags'), 206
+
+    food_item = {'name': name, "price": price, 'ready in\
+': ready_in, 'status': status, 'units': units, 'tags\
+': tags}
+
+    response = foods.add_food_item(food_item)
+    return response
+
+
+@app.route('/api/v1/menu/<string:name>', methods=['PUT'])
+def update_food_item(name):
+    food_name = name
+    updates = request.get_json()
+    response = foods.update_food_item(food_name, updates)
+    return response
+
+
+@app.route('/api/v1/menu/<string:name>', methods=['DELETE'])
+def delete_food_item(name):
+    food_name = name
+    response = foods.delete_food_item(food_name)
     return response

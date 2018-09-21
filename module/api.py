@@ -2,6 +2,57 @@ from flask import Flask
 from flask import jsonify
 
 
+class FoodList:
+
+    def __init__(self):
+        self.food_list = {}
+
+    def check(self, name):
+        for key in self.food_list:
+            if key == name:
+                return self.food_list[key]
+        else:
+            return
+
+    def not_found(self, name):
+        return jsonify('Food with name: {} not found in food list'.format
+                       (name)), 404
+
+    def success(self, name, act):
+        return jsonify('[{}] {} successfully.'.format(name, act)), 200
+
+    def add_food_item(self, item):
+        check = self.check(item['name'])
+        if check is not None:
+            return jsonify('Food with name: {} already exists. Try updating.\
+'.format(item['name'])), 501
+        else:
+            self.food_list[item['name']] = item
+
+            return self.success(item['name'], 'added')
+
+    def update_food_item(self, name, updates):
+        food_item = self.check(name)
+        if food_item is None:
+            return self.not_found(name)
+        else:
+            for key in food_item:
+                for update in updates:
+                    if key == update:
+                        food_item[key] = updates[update]
+            return self.success(name, 'updated')
+
+    def delete_food_item(self, name):
+        try:
+            self.food_list.pop(name)
+            return self.success(name, 'deleted')
+        except KeyError:
+            return self.not_found(name)
+
+    def get_menu(self):
+        return jsonify(self.food_list), 200
+
+
 class Order:
     "Order class is being used to create the order object when given all the\
  required parameters."
