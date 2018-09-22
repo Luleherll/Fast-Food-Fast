@@ -3,11 +3,14 @@ from flask import jsonify
 
 
 class FoodList:
-
+    "This class handles menu related issues of Fast-Food-Fast."
     def __init__(self):
+        "This initializes the dictionary where all food items will be."
         self.food_list = {}
 
     def check(self, name):
+        "This method checks if a food item exists in the food_list and returns\
+ it or `None` if not found."
         for key in self.food_list:
             if key == name:
                 return self.food_list[key]
@@ -15,13 +18,18 @@ class FoodList:
             return
 
     def not_found(self, name):
+        "This method returns a response containing a `not found`\
+ message with a `404` status code"
         return jsonify('Food with name: {} not found in food list'.format
                        (name)), 404
 
     def success(self, name, act):
+        "This method returns a response containing a `success` message with\
+ a `200` status code."
         return jsonify('[{}] {} successfully.'.format(name, act)), 200
 
     def add_food_item(self, item):
+        "This method adds a food item to the food list."
         check = self.check(item['name'])
         if check is not None:
             return jsonify('Food with name: {} already exists. Try updating.\
@@ -32,6 +40,8 @@ class FoodList:
             return self.success(item['name'], 'added')
 
     def update_food_item(self, name, updates):
+        "This method updates a particular food item if it exists in the food\
+ list."
         food_item = self.check(name)
         if food_item is None:
             return self.not_found(name)
@@ -43,6 +53,7 @@ class FoodList:
             return self.success(name, 'updated')
 
     def delete_food_item(self, name):
+        "This method deletes a food item from the food list if it exists."
         try:
             self.food_list.pop(name)
             return self.success(name, 'deleted')
@@ -50,6 +61,7 @@ class FoodList:
             return self.not_found(name)
 
     def get_menu(self):
+        "This returns the food list with all the food items."
         return jsonify(self.food_list), 200
 
 

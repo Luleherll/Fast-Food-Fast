@@ -65,12 +65,14 @@ def update_order(order_id):
 
 @app.route('/api/v1/menu', methods=['GET'])
 def menu():
+    "This route returns all the food items in the food list."
     response = foods.get_menu()
     return response
 
 
 @app.route('/api/v1/menu/add', methods=['POST'])
 def add_food_item():
+    "This route adds a food item to the food list."
     try:
         name = request.get_json()['name']
         price = request.get_json()['price']
@@ -92,6 +94,7 @@ def add_food_item():
 
 @app.route('/api/v1/menu/<string:name>', methods=['PUT'])
 def update_food_item(name):
+    "This route updates the details of a particular food item."
     food_name = name
     updates = request.get_json()
     response = foods.update_food_item(food_name, updates)
@@ -100,6 +103,7 @@ def update_food_item(name):
 
 @app.route('/api/v1/menu/<string:name>', methods=['DELETE'])
 def delete_food_item(name):
+    "This route deletes a particular food item from the food list."
     food_name = name
     response = foods.delete_food_item(food_name)
     return response
