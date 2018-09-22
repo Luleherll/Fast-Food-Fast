@@ -6,6 +6,14 @@
 
 Fast-Food-Fast is a food delivery app.<br/>
 
+The UI template has been made with:
+>HTML<br/>
+>CSS<br/>
+>JAVASCRIPT<br/>
+
+The link to the app demo is here:<br />
+# https://Luleherll.github.io
+
 This API enables the the user to add, update the status and retrieve orders:<br/>
 
 Here is the link for the API hosted on Heroku:<br/>
