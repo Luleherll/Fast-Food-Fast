@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="keywords" lang="en-us" content="fast food, food app, order food">
+        <title>Fast Food | Admin</title>
+        <link rel="icon" type="image/gif/png" href="images/logo.jpg">
+        <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+        <script src="js/main.js"></script>
+</head>
+<body onload="current(4)">
+    <header>
+    <nav class="nav-bar">
+    <img src="images/icon.jpg">
+    <input id="search" type="search" placeholder="search food..">
+    <input id="looker" type="button">
+    <a class="page" onclick="current(1)">Archive</a>
+    <a class="page" onclick="current(2)">Panel</a>
+    <a class="page" onclick="current(3)">Pending</a>
+    <a class="page active" onclick="current(4)">Orders</a>
+    </nav> 
+    </header>
+    <div class="slides fade">
+        <div id="blank"></div>
+        <div id="side-bar">
+            <div class="title">Most Ordered.</div>
+            <img src="images/most.png" alt="" >
+            <div class="title">Latest Food.</div>
+            <img src="images/latest.png" alt="" >
+        </div>
+        <div class="item">
+            <span class="images">
+                <img src="images/bil2.jpg" alt="" >
+            </span>
+            <div> 1 Chicken Biriyan<br>From: Zzana <span>In: 30 mins</span>
+                <br><span id="no">RE: We cannot make it in 30 minutes.   </span><span id="no">Declined</span></div>
+        </div>
+       <div class="item">
+        <span class="images">
+            <img src="images/bil2.jpg" alt="" >
+        </span>
+        <div> 1 Chicken Biriyan<br>From: Bukoto <span>In: 30 mins</span><br><span id="yes">Completed</span></div>
+    </div>
+    </div>
+    
+    <div class="slides fade">
+        <div id="blank"></div>
+        <div id="side-bar">
+            <div class="title">Statistics</div>
+            <img src="images/stats.jpg">
+        </div>
+        <div class="title">Add Food</div>
+        <div class="change">
+            
+            <span class="images">
+                <input type="file"><br><input type="file"><br><input type="file">
+            </span>
+            <div> Name: <input type="text"><br>Price: <input type="text"><br>
+                Units: <input type="text" placeholder="eg. plates, rolls"><br>
+                <input id="accept" type="button" onclick="current()" value="Add food"></div>       
+        </div>
+        <div class="title">Update Food</div>
+        <div class="change">
+            
+            <span class="images">
+                <img src="images/bil2.jpg" alt="" >
+                <img src="images/bil3.jpg" alt="" >
+                <img src="images/bil4.jpg" alt="" >
+            </span>
+            <div><select>
+                <option>Chicken Biriyan</option>
+                <option>Kababs</option>
+                <option>Burgers</option>
+                <option>Beef tacos</option>
+                <option>Skyline dish</option>
+                <option>Pizza</option>
+            </select><br>Price: <input type="text" placeholder="Ush 30000"><br>
+            <input type="file"><br><input type="file"><br><input type="file"><br>
+            <input id="accept" type="button" onclick="current(1)" value="Update Food"></div>     
+        </div>
+        <div class="title">Remove Food</div>
+        <div class="change">
+            
+            <span class="images">
+                <img src="images/taco2.jpg" alt="" >
+                <img src="images/Taco3.jpg" alt="" >
+            </span>
+            <div><select>
+                <option>Beef tacos</option>
+                <option>Kababs</option>
+                <option>Burgers</option>
+                <option>Chicken Biriyan</option>
+                <option>Skyline dish</option>
+                <option>Pizza</option>
+            </select><br>Price: <input type="text" value="Ush 20000">
+            <br>Units: <input type="text" placeholder="None"><br><input id="accept" type="button" onclick="current()" value="Remove food"></div>       
+        </div>
+    </div>
+    <div class="slides fade">
+        <div id="blank"></div>
+        <div id="side-bar">
+            <div class="title">Most Ordered.</div>
+            <img src="images/most.png" alt="" >
+            <div class="title">Latest Food.</div>
+            <img src="images/latest.png" alt="" >
+        </div>
+        <div class="item">
+            <span class="images">
+                <img src="images/bil2.jpg" alt="" >
+            </span>
+            <div> 1 Chicken Biriyan<br>From: Zzana <span>In: 30 mins</span><input id="accept" type="button" onclick="current(1)" value="Complete"></div>
+        </div>
+    </div>
+
+    <div class="slides fade">
+       <div id="blank"></div>
+    <div id="side-bar">
+        <div class="title">Most Ordered.</div>
+        <img src="images/most.png" alt="">
+        <div class="title">Latest Food.</div>
+        <img src="images/latest.png" alt="">
+    </div>
+    <div class="item">
+        <span class="images">
+            <img src="images/bil2.jpg" alt="">
+        </span>
+        <div> 1 Chicken Biriyan<br>From: Zzana <span>In: 30 mins</span>
+            <input id="accept" type="button" onclick="current(3)" value="Accept"><input type="button" onclick="current(1)" value="Decline"></div>
+    </div>
+    <div class="item">
+        <span class="images">
+            <img src="images/tik1.jpg" alt="">
+        </span>
+        <div> 1 Kababs<br>From: Rubaga <span>In: 1 hr</span>
+            <input id="accept" type="button" onclick="current(3)" value="Accept"><input type="button" onclick="current(1)" value="Decline"></div>
+    </div>
+    <div class="item">
+            <span class="images">
+                    <img src="images/big1.jpg" alt="" >
+                </span>
+            <div>3 Burgers<br>From: Nalya <span>In: 3 hrs</span>
+                <input id="accept" type="button" onclick="current(3)" value="Accept"><input type="button" onclick="current(1)" value="Decline"></div>
+    </div>
+    <div class="item">
+            <span class="images">
+                    <img src="images/taco2.jpg" alt="">
+                </span>
+            <div>4 Beef tacos<br>From: Bukoto <span>In: 40 mins</span>
+                <input id="accept" type="button" onclick="current(3)" value="Accept"><input type="button" onclick="current(1)" value="Decline"></div>
+    </div>
+    <div class="item">
+            <span class="images">
+                    <img src="images/plate1.png" alt="">
+                </span>
+            <div>1 Skyline dish<br>From: Lungujja <span>In: 1 hr</span>
+                <input id="accept" type="button" onclick="current(3)" value="Accept"><input type="button" onclick="current(1)" value="Decline"></div>
+    </div>
+    <div class="item">
+            <span class="images">
+                <img src="images/piz1.jpg" alt="">
+            </span>
+        <div>1 Pizza<br>From: Bukoto <span>In: 1 hr</span>
+            <input id="accept" type="button" onclick="current(3)" value="Accept"><input type="button" onclick="current(1)" value="Decline"></div>
+    </div> 
+    </div>
+    
+</body>
+</html>

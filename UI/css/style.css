@@ -1,0 +1,156 @@
+header{
+    position: fixed;
+    width: 100%;
+    cursor: pointer;
+}
+body{
+    background-color: azure;
+}
+.nav-bar {
+    background-color: yellow;
+    box-shadow: 0px 2px rgba(102, 100, 100, 0.5);
+    
+    cursor: pointer;
+}
+.nav-bar a {
+    float: right;
+    color: rgb(197, 202, 174);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: bold;
+}
+.nav-bar a:hover {
+    background-color: rgb(154, 231, 82);
+    color: rgb(255, 254, 254);
+}
+.nav-bar a.active {
+    background-color: rgb(162, 219, 29);
+    color: rgb(44, 41, 41);
+}
+
+#search{
+    margin-left: 25%;
+    position: absolute;
+    top: 30%;
+    width: 250px;
+    height: 30px;
+    text-align: center;
+}
+input{
+    border: none;
+    border-radius: 30px;
+}
+input:hover{
+    border: 1px solid orangered;
+}
+#looker{
+    position: absolute;
+    margin-left: 45%;
+    top: 30%;
+    width: 30px;
+    height: 33px;
+    background-image: url('../images/search.jpg');
+    background-color: transparent;
+}
+#blank{
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+}
+#side-bar{
+    height: 100%;
+    width: 30%;
+    position: fixed;
+    margin-left: 70%;
+    border: inherit;
+}
+#side-bar img{
+    width: 200px;
+    height: 150px;
+}
+.title{
+    background-image: url('../images/bars.jpg');
+    background-repeat: no-repeat;
+    font-size: 30px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.item{
+    background-color: transparent;
+    height: 120px;
+    width: 70%;
+    margin-bottom: 10px;
+    font-size: 25px;
+    border: 2px solid yellowgreen;
+}
+.change{
+    border-bottom: 2px solid yellowgreen;
+    height: 150px;
+    width: 70%;
+    font-size: 20px;
+}
+.change select{
+    width: 200px;
+    height: 20px;
+}
+.change div{
+    float: right;
+}
+.change .title{
+    float: right;
+}
+.item div{
+    float: right;
+    margin-top: 30px;
+}
+.images{
+    margin-top: 30%;
+}
+.images img{
+    width: 120px;
+    height: 120px;
+}
+#accept{
+    background-color: green;
+}
+.item div span{
+    color: green;
+}
+.item div input{
+    background-color: red;
+    color: wheat;
+    font-style: oblique;
+    padding: 10px;
+    width: 180px;
+    font-size: 20px;
+    margin-left: 30px;
+}
+.slides{
+    display: none;
+}
+#no{
+    background-color: red;
+    font-size: 20px;
+    color: white;
+}
+#yes{
+    background-color: green;
+    color: white;
+}
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: fade;
+    animation-duration: 1.5s;
+  }
+  
+  @-webkit-keyframes fade {
+    from {opacity: .4} 
+    to {opacity: 1}
+  }
+  
+  @keyframes fade {
+    from {opacity: .4} 
+    to {opacity: 1}
+  }

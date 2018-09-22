@@ -1,4 +1,5 @@
 # Fast-Food-Fast
+ API
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 [![Build Status](https://travis-ci.com/Luleherll/Fast-Food-Fast.svg?branch=API)](https://travis-ci.com/Luleherll/Fast-Food-Fast)
 [![Maintainability](https://api.codeclimate.com/v1/badges/0a46deab9bc7008a20f7/maintainability)](https://codeclimate.com/github/Luleherll/Fast-Food-Fast/maintainability)
@@ -18,3 +19,14 @@ Here is the link for the API hosted on Heroku:<br/>
  GET | `/api/v1/orders` | For retrieving all orders in the orders list
  GET | `/api/v1/orders/<int:order_id>` | For retrieving one order
  PUT | `/api/v1/orders/<int:order_id>` | For updating the status of one order
+
+Fast-Food-Fast App is a food delivery app.
+
+The UI template has been made with:
+>HTML<br/>
+>CSS<br/>
+>JAVASCRIPT<br/>
+
+The link to the app demo is here:<br />
+# https://Luleherll.github.io
+develop
