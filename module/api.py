@@ -51,10 +51,10 @@ class FoodList:
         return jsonify('Food with name: {} not found in food list'.format
                        (name)), 404
 
-    def success(self, name, act):
+    def success(self, name, act, code):
         "This method returns a response containing a `success` message with\
  a `200` status code."
-        return jsonify('[{}] {} successfully.'.format(name, act)), 200
+        return jsonify('[{}] {} successfully.'.format(name, act)), code
 
     def add_food_item(self, item):
         "This method adds a food item to the food list."
@@ -65,7 +65,7 @@ class FoodList:
         else:
             self.food_list[item['name']] = item
 
-            return self.success(item['name'], 'added')
+            return self.success(item['name'], 'added', 201)
 
     def update_food_item(self, name, updates):
         "This method updates a particular food item if it exists in the food\
@@ -78,13 +78,13 @@ class FoodList:
                 for update in updates:
                     if key == update:
                         food_item[key] = updates[update]
-            return self.success(name, 'updated')
+            return self.success(name, 'updated', 202)
 
     def delete_food_item(self, name):
         "This method deletes a food item from the food list if it exists."
         try:
             self.food_list.pop(name)
-            return self.success(name, 'deleted')
+            return self.success(name, 'deleted', 200)
         except KeyError:
             return self.not_found(name)
 
@@ -146,16 +146,16 @@ when given the order id. If it exists, returns the order and `False` if it\
         else:
             order['status'] = state
 
-    def success(self, act, order_id):
+    def success(self, act, order_id, code):
         "This method returns a response containing a `successful` message\
- that shows the operation that was successful with a `200` status code."
+ that shows the operation that was successful with a `201` status code."
         if act == 'P':
             act = 'placed'
         elif act == 'U':
             act = 'updated'
 
         return jsonify('Your order was successfully {}. Order Id: \
-{}'.format(act, order_id)), 201
+{}'.format(act, order_id)), code
 
     def strip(self, order):
         "When given the order object, this method creates a dictionary using\
@@ -183,7 +183,7 @@ quester': order.customer, 'where': user['location']}
             self.status(self.n, 'Q')
             self.n += 1
 
-        return self.success('P', order_id)
+        return self.success('P', order_id, 201)
 
     def get_order(self, order_id):
         "When given the order id, this method returns a response containing\
@@ -203,7 +203,7 @@ state)` method. If the update is a success, then it returns the value\
         if type(updated) == tuple:
             return updated
         else:
-            return self.success('U', order_id)
+            return self.success('U', order_id, 202)
 
     def all_orders(self):
         "This returns a response containing a list of orders with a `200`\
