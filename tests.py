@@ -237,7 +237,7 @@ class TestFoodList(unittest.TestCase):
 
     def test_add_food_item_status_code(self):
         response = self.helper.add_food_item('pizza')
-        self.assertEqual(200, response.status_code)
+        self.assertEqual(201, response.status_code)
 
     def test_add_food_item_exists(self):
         response = self.helper.add_food_item('fries')
@@ -254,7 +254,7 @@ ating.', response.json)
 
     def test_update_food_item_status_code(self):
         response = self.helper.update_food_item('fries')
-        self.assertEqual(200, response.status_code)
+        self.assertEqual(202, response.status_code)
 
     def test_update_food_item_not_exist(self):
         response = self.helper.update_food_item('buns')
