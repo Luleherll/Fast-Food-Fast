@@ -114,7 +114,7 @@ class TestUsers(unittest.TestCase):
 
     def test_register_user_partial_status_code(self):
         response = self.helper.register_user_partial()
-        self.assertEqual(206, response.status_code)
+        self.assertEqual(400, response.status_code)
 
     def test_place_order_unregistered(self):
         response = self.helper.place_order('sam')
@@ -147,7 +147,7 @@ class TestOrders(unittest.TestCase):
 
     def test_partial_content_status_code(self):
         response = self.helper.partial_content()
-        self.assertEqual(206, response.status_code)
+        self.assertEqual(400, response.status_code)
 
     def test_get_order(self):
         self.helper.place_order('lule')
@@ -233,7 +233,7 @@ class TestFoodList(unittest.TestCase):
 
     def test_add_food_item_partial_content_status_code(self):
         response = self.helper.add_food_item_partial()
-        self.assertEqual(206, response.status_code)
+        self.assertEqual(400, response.status_code)
 
     def test_add_food_item_status_code(self):
         response = self.helper.add_food_item('pizza')

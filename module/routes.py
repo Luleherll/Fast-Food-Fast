@@ -28,7 +28,7 @@ def register():
         key_point = get_json('key point')
     except KeyError:
         return jsonify(partial_content + '[username, email, location,\
- key point]'), 206
+ key point]'), 400
 
     user = {'username': name, 'email': email, 'location': location,
             'key point': key_point}
@@ -47,7 +47,7 @@ def place_order():
         customer = get_json('username')
     except KeyError:
         return jsonify(partial_content + ' [name, quantity, comment,\
- username]'), 206
+ username]'), 400
 
     order = Order(name, quantity, comment, customer)
     response = orders.place_order(order)
@@ -78,7 +78,7 @@ def update_order(order_id):
     try:
         state = get_json('status')
     except KeyError:
-        return jsonify(partial_content + ' [status]'), 206
+        return jsonify(partial_content + ' [status]'), 400
 
     response = orders.update_order(order, state)
 
@@ -104,7 +104,7 @@ def add_food_item():
         tags = get_json('tags')
     except KeyError:
         return jsonify(partial_content + ' [name, price, ready in,\
- status, units, tags'), 206
+ status, units, tags'), 400
 
     food_item = {'name': name, "price": price, 'ready in\
 ': ready_in, 'status': status, 'units': units, 'tags\
