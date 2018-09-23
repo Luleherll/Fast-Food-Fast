@@ -21,7 +21,7 @@ class Users:
 username'])), 403
         else:
             self.users.append(user)
-            return jsonify('Registration successful.'), 200
+            return jsonify('Registration successful.'), 201
 
     def get_user(self, name):
         for user in self.users:
@@ -61,7 +61,7 @@ class FoodList:
         check = self.check(item['name'])
         if check is not None:
             return jsonify('Food with name: {} already exists. Try updating.\
-'.format(item['name'])), 501
+'.format(item['name'])), 403
         else:
             self.food_list[item['name']] = item
 
@@ -132,10 +132,13 @@ when given the order id. If it exists, returns the order and `False` if it\
  of the specified states, adds a `status` key and value to the order with a\
  given `id`. If order doesnot exist, a `not_found(order_id)` method is called.
         """
-        states = ['Queued', 'Pending', 'Completed', 'Undefined']
+        states = ['Queued', 'Pending', 'Declined', 'Completed']
         for status in states:
             if state == status[0]:
                 state = status
+                break
+        else:
+            state = 'Undefined'
 
         order = self.check(order_id)
         if order is False:
@@ -152,7 +155,7 @@ when given the order id. If it exists, returns the order and `False` if it\
             act = 'updated'
 
         return jsonify('Your order was successfully {}. Order Id: \
-{}'.format(act, order_id)), 200
+{}'.format(act, order_id)), 201
 
     def strip(self, order):
         "When given the order object, this method creates a dictionary using\

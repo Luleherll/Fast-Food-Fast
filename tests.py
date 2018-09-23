@@ -97,7 +97,7 @@ class TestUsers(unittest.TestCase):
 
     def test_register_user_status_code(self):
         response = self.helper.register_user('mozzy')
-        self.assertEqual(200, response.status_code)
+        self.assertEqual(201, response.status_code)
 
     def test_register_user_exists(self):
         response = self.helper.register_user('lule')
@@ -138,7 +138,7 @@ class TestOrders(unittest.TestCase):
 
     def test_place_order_status_code(self):
         response = self.helper.place_order('lule')
-        self.assertEqual(200, response.status_code)
+        self.assertEqual(201, response.status_code)
 
     def test_partial_content(self):
         response = self.helper.partial_content()
@@ -246,7 +246,7 @@ ating.', response.json)
 
     def test_add_food_item_exists_status_code(self):
         response = self.helper.add_food_item('fries')
-        self.assertEqual(501, response.status_code)
+        self.assertEqual(403, response.status_code)
 
     def test_update_food_item(self):
         response = self.helper.update_food_item('fries')
@@ -257,8 +257,8 @@ ating.', response.json)
         self.assertEqual(200, response.status_code)
 
     def test_update_food_item_not_exist(self):
-        response = self.helper.update_food_item('bans')
-        self.assertEqual('Food with name: bans not found in food list\
+        response = self.helper.update_food_item('buns')
+        self.assertEqual('Food with name: buns not found in food list\
 ', response.json)
 
     def test_update_food_item_not_exist_status_code(self):
@@ -280,7 +280,7 @@ ating.', response.json)
 ', response.json)
 
     def test_delete_food_item_not_exist_status_code(self):
-        response = self.helper.delete_food_item('bans')
+        response = self.helper.delete_food_item('buns')
         self.assertEqual(404, response.status_code)
 
     def test_get_menu(self):
