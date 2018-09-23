@@ -9,10 +9,10 @@ class Helper:
         self.arg = arg
 
     # Methods for TestOrders class
-    def place_order(self):
+    def place_order(self, name):
         response = self.arg.post('/api/v1/orders', data=json.dumps({'name\
-': 'Pizza', 'quantity': 1, 'time': '1 hr', 'user_id': 1, 'location': 'Buko\
-to'}), content_type='application/json')
+': 'Pizza', 'quantity': 1, 'comment': 'hurry.', 'username': '{}\
+'.format(name)}), content_type='application/json')
         return response
 
     def update_order(self, l):
@@ -22,8 +22,7 @@ to'}), content_type='application/json')
 
     def partial_content(self):
         response = self.arg.post('/api/v1/orders', data=json.dumps({'name\
-': 'Pizza', 'time': '1 hr', 'user_id': 1, 'location': 'Buko\
-to'}), content_type='application/json')
+': 'Pizza', 'user_id': 'lule'}), content_type='application/json')
         return response
 
     def get_order(self):
@@ -72,6 +71,59 @@ Unavailable'}), content_type='application/json')
         return response
     # End of TestFoodList methods
 
+    # Users helper methods
+    def register_user(self, name):
+        response = self.arg.post('/api/v1/register', data=json.dumps({"username\
+": "{}".format(name), 'email': 'lule@dev.com', 'location': 'kasubi', 'key point\
+': 'Tombs'}), content_type='application/json')
+        return response
+
+    def register_user_partial(self):
+        response = self.arg.post('/api/v1/register', data=json.dumps({"username\
+": "lule", 'email': 'lule@dev.com', 'key point\
+': 'Tombs'}), content_type='application/json')
+        return response
+
+
+class TestUsers(unittest.TestCase):
+
+    def setUp(self):
+        self.app = app.test_client()
+        self.helper = Helper(self.app)
+
+    def test_register_user(self):
+        response = self.helper.register_user('eric')
+        self.assertEqual('Registration successful.', response.json)
+
+    def test_register_user_status_code(self):
+        response = self.helper.register_user('mozzy')
+        self.assertEqual(201, response.status_code)
+
+    def test_register_user_exists(self):
+        response = self.helper.register_user('lule')
+        self.assertEqual('User named lule already exists.', response.json)
+
+    def test_register_user_exists_status_code(self):
+        response = self.helper.register_user('lule')
+        self.assertEqual(403, response.status_code)
+
+    def test_register_user_partial(self):
+        response = self.helper.register_user_partial()
+        self.assertEqual('You must provide the required values.[username, email,\
+ location, key point]', response.json)
+
+    def test_register_user_partial_status_code(self):
+        response = self.helper.register_user_partial()
+        self.assertEqual(400, response.status_code)
+
+    def test_place_order_unregistered(self):
+        response = self.helper.place_order('sam')
+        self.assertEqual('User named sam is not registered.', response.json)
+
+    def test_place_order_unregistered_status_code(self):
+        response = self.helper.place_order('sam')
+        self.assertEqual(401, response.status_code)
+
 
 class TestOrders(unittest.TestCase):
 
@@ -80,31 +132,31 @@ class TestOrders(unittest.TestCase):
         self.helper = Helper(self.app)
 
     def test_place_order(self):
-        response = self.helper.place_order()
+        response = self.helper.place_order('lule')
         self.assertEqual('Your order was successfully placed. Order Id: \
 3', response.json)
 
     def test_place_order_status_code(self):
-        response = self.helper.place_order()
-        self.assertEqual(200, response.status_code)
+        response = self.helper.place_order('lule')
+        self.assertEqual(201, response.status_code)
 
     def test_partial_content(self):
         response = self.helper.partial_content()
         self.assertEqual('You must provide the required values. [name, quantity,\
- time, user_id, location]', response.json)
+ comment, username]', response.json)
 
     def test_partial_content_status_code(self):
         response = self.helper.partial_content()
-        self.assertEqual(206, response.status_code)
+        self.assertEqual(400, response.status_code)
 
     def test_get_order(self):
-        self.helper.place_order()
+        self.helper.place_order('lule')
         response = self.helper.get_order()
-        self.assertEqual({"id": 1, "name": "Pizza", "quantity": 1, "wanted_in": "1 hr\
-", "requester": 1, "status": "Queued", "where": "Bukoto"}, response.json)
+        self.assertEqual({"id": 1, "name": "Pizza", "quantity": 1, "comment": "hurry.\
+", "requester": 'lule', "status": "Queued", "where": "Kasubi"}, response.json)
 
     def test_get_order_status_code(self):
-        self.helper.place_order()
+        self.helper.place_order('lule')
         response = self.helper.get_order()
         self.assertEqual(200, response.status_code)
 
@@ -181,7 +233,7 @@ class TestFoodList(unittest.TestCase):
 
     def test_add_food_item_partial_content_status_code(self):
         response = self.helper.add_food_item_partial()
-        self.assertEqual(206, response.status_code)
+        self.assertEqual(400, response.status_code)
 
     def test_add_food_item_status_code(self):
         response = self.helper.add_food_item('pizza')
@@ -205,8 +257,8 @@ ating.', response.json)
         self.assertEqual(200, response.status_code)
 
     def test_update_food_item_not_exist(self):
-        response = self.helper.update_food_item('bans')
-        self.assertEqual('Food with name: bans not found in food list\
+        response = self.helper.update_food_item('buns')
+        self.assertEqual('Food with name: buns not found in food list\
 ', response.json)
 
     def test_update_food_item_not_exist_status_code(self):
@@ -228,7 +280,7 @@ ating.', response.json)
 ', response.json)
 
     def test_delete_food_item_not_exist_status_code(self):
-        response = self.helper.delete_food_item('bans')
+        response = self.helper.delete_food_item('buns')
         self.assertEqual(404, response.status_code)
 
     def test_get_menu(self):
