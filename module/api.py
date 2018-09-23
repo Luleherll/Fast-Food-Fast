@@ -2,6 +2,34 @@ from flask import Flask
 from flask import jsonify
 
 
+class Users:
+
+    def __init__(self):
+        self.users = [{'username': 'lule', 'email': 'lule@dev.com\
+', 'location': 'Kasubi', 'key point': 'Tombs'}]
+
+    def check(self, person):
+        for user in self.users:
+            if user['username'] == person['username']:
+                return True
+        return False
+
+    def register(self, user):
+        check = self.check(user)
+        if check is True:
+            return jsonify('User named {} already exists.'.format(user['\
+username'])), 403
+        else:
+            self.users.append(user)
+            return jsonify('Registration successful.'), 200
+
+    def get_user(self, name):
+        for user in self.users:
+            if user['username'] == name:
+                return user
+        return None
+
+
 class FoodList:
     "This class handles menu related issues of Fast-Food-Fast."
     def __init__(self):
@@ -68,12 +96,11 @@ class FoodList:
 class Order:
     "Order class is being used to create the order object when given all the\
  required parameters."
-    def __init__(self, name, quantity, wanted_in, customer, location):
+    def __init__(self, name, quantity, comment, customer):
         self.name = name
         self.quantity = quantity
-        self.time = wanted_in
+        self.comment = comment
         self.customer = customer
-        self.location = location
 
 
 class Orders:
@@ -82,6 +109,7 @@ class Orders:
         "Initializes the orders list for storing all orders and an integer\
  for assigning an `id` to every order."
         self.orders = []
+        self.users = Users()
         self.n = 1
 
     def check(self, order_id):
@@ -129,9 +157,13 @@ when given the order id. If it exists, returns the order and `False` if it\
     def strip(self, order):
         "When given the order object, this method creates a dictionary using\
  the `order` attributes and returns it."
-        sheet = {'id': self.n, 'name': order.name, 'quan\
-tity': order.quantity, 'wanted_in': order.time, 're\
-quester': order.customer, 'where': order.location}
+        user = self.users.get_user(order.customer)
+        if user is not None:
+            sheet = {'id': self.n, 'name': order.name, 'quan\
+tity': order.quantity, 'comment': order.comment, 're\
+quester': order.customer, 'where': user['location']}
+        else:
+            return None
 
         return sheet
 
@@ -139,10 +171,14 @@ quester': order.customer, 'where': order.location}
         "This method gets and adds the value of `strip(order)` to the orders list\
  and returns the value of `success(act, order_id)` method."
         sheet = self.strip(order)
-        order_id = self.n
-        self.orders.append(sheet)
-        self.status(self.n, 'Q')
-        self.n += 1
+        if sheet is None:
+            return jsonify('User named {} is not registered.'.format(order
+                           .customer)), 401
+        else:
+            order_id = self.n
+            self.orders.append(sheet)
+            self.status(self.n, 'Q')
+            self.n += 1
 
         return self.success('P', order_id)
 
