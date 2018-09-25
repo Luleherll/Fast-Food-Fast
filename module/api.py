@@ -128,18 +128,11 @@ when given the order id. If it exists, returns the order and `False` if it\
         return jsonify('Order with Id: {} not found.'.format(order_id)), 404
 
     def status(self, order_id, state):
-        """This method when given the order id and a letter corresponding to any\
- of the specified states, adds a `status` key and value to the order with a\
+        """This method when given the order id and one of the of the specified \
+states, adds a `status` key and value to the order with a\
  given `id`. If order doesnot exist, a `not_found(order_id)` method is called.
         """
-        states = ['Queued', 'Pending', 'Declined', 'Completed']
-        for status in states:
-            if state == status[0]:
-                state = status
-                break
-        else:
-            state = 'Undefined'
-
+        self.states = ['Queued', 'Pending', 'Declined', 'Completed']
         order = self.check(order_id)
         if order is False:
             return self.not_found(order_id)
@@ -180,7 +173,7 @@ quester': order.customer, 'where': user['location']}
         else:
             order_id = self.n
             self.orders.append(sheet)
-            self.status(self.n, 'Q')
+            self.status(self.n, 'Queued')
             self.n += 1
 
         return self.success('P', order_id, 201)
@@ -199,10 +192,13 @@ exist, returns the value of `not_found(order_id)` method."
         "This method updates the order status by calling the `status(order_id,\
 state)` method. If the update is a success, then it returns the value\
  of the `success(act, order_id)` method."
-        updated = self.status(order_id, state)
-        if type(updated) == tuple:
-            return updated
+        if state not in self.states:
+            return jsonify('The status you provided is invalid. Choose from {}'
+                           .format(self.states)), 400
         else:
+            updated = self.status(order_id, state)
+            if type(updated) == tuple:
+                return updated
             return self.success('U', order_id, 202)
 
     def all_orders(self):
