@@ -1,5 +1,5 @@
 # Fast-Food-Fast
-[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 [![Build Status](https://travis-ci.com/Luleherll/Fast-Food-Fast.svg?branch=revision)](https://travis-ci.com/Luleherll/Fast-Food-Fast)
 [![Maintainability](https://api.codeclimate.com/v1/badges/0a46deab9bc7008a20f7/maintainability)](https://codeclimate.com/github/Luleherll/Fast-Food-Fast/maintainability)
 [![Coverage Status](https://coveralls.io/repos/github/Luleherll/Fast-Food-Fast/badge.svg?branch=revision)](https://coveralls.io/github/Luleherll/Fast-Food-Fast?branch=revision)
@@ -7,7 +7,7 @@
 Fast-Food-Fast is a food delivery app.<br/>
 
 This API enables the the user to add, update the status and retrieve orders:<br/>
-
+[![Website perso.crans.org](https://img.shields.io/website-up-down-green-red/http/perso.crans.org.svg)](http://perso.crans.org/)<br>
 Here is the link for the API hosted on Heroku:<br/>
 # https://lule-fast-food.herokuapp.com/
 
