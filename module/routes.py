@@ -7,24 +7,45 @@ orders = Orders()
 foods = FoodList()
 users = orders.users
 partial_content = 'You must provide the required values.'
+invalid = 'The server encountered an error which is due\
+ to an invalid data type. Valid format: '
+
+
+def missing(iterable):
+    if all(iterable) is False:
+        return jsonify('You must fill in all the fields.'), 400
+    return True
 
 
 @app.route('/')
 def welcome():
-    return "<h1>Welcome to the Fast-Food-Fast API<h1>"
+    return jsonify("Welcome to the Fast-Food-Fast API")
+
+
+@app.errorhandler(404)
+def not_found_error(e):
+    return "<h1>You're lost in the woods:<br> Go back to index:<h1>\
+<a>https://lule-fast-food.herokuapp.com/<a>", 404
 
 
 @app.route('/api/v1/register', methods=['POST'])
 def register():
     "This route registers a new user."
     try:
-        name = request.get_json()['username']
-        email = request.get_json()['email']
-        location = request.get_json()['location']
-        key_point = request.get_json()['key point']
+        name = request.get_json()['username'].strip(' ')
+        email = request.get_json()['email'].strip(' ')
+        location = request.get_json()['location'].strip(' ')
+        key_point = request.get_json()['key point'].strip(' ')
+        check = missing([name, email, location, key_point])
+        if check is not True:
+            return check
+        else:
+            pass
     except KeyError:
         return jsonify(partial_content + '[username, email, location,\
  key point]'), 400
+    except AttributeError:
+        return jsonify(invalid + '[letters,letters,letters,letters]'), 400
 
     user = {'username': name, 'email': email, 'location': location,
             'key point': key_point}
@@ -38,15 +59,23 @@ def place_order():
  object containing all required values."
     if request.method == 'POST':
         try:
-            name = request.get_json()['name']
-            quantity = request.get_json()['quantity']
-            comment = request.get_json()['comment']
-            customer = request.get_json()['username']
+            name = request.get_json()['name'].strip(' ')
+            quantity = int(request.get_json()['quantity'])
+            comment = request.get_json()['comment'].strip(' ')
+            customer = request.get_json()['username'].strip(' ')
+            check = missing([name, quantity, comment, customer])
+            if check is not True:
+                return check
+            else:
+                order = Order(name, quantity, comment, customer)
         except KeyError:
             return jsonify(partial_content + ' [name, quantity, comment,\
  username]'), 400
+        except ValueError:
+            return jsonify(invalid + '[letters,numbers,letters,letters]'), 400
+        except AttributeError:
+            return jsonify(invalid + '[letters,numbers,letters,letters]'), 400
 
-        order = Order(name, quantity, comment, customer)
         response = orders.place_order(order)
         return response
 
@@ -68,9 +97,16 @@ def get_order(order_id):
         "This route updates the status key of a particular order."
         order = order_id
         try:
-            state = request.get_json()['status']
+            state = request.get_json()['status'].strip(' ')
+            check = missing([state])
+            if check is not True:
+                return check
+            else:
+                pass
         except KeyError:
             return jsonify(partial_content + ' [status]'), 400
+        except AttributeError:
+            return jsonify(invalid + '[letters]'), 400
 
         response = orders.update_order(order, state)
         return response
@@ -87,15 +123,26 @@ def menu():
 def add_food_item():
     "This route adds a food item to the food list."
     try:
-        name = request.get_json()['name']
-        price = request.get_json()['price']
-        ready_in = request.get_json()['ready in']
-        status = request.get_json()['status']
-        units = request.get_json()['units']
-        tags = request.get_json()['tags']
+        name = request.get_json()['name'].strip(' ')
+        price = int(request.get_json()['price'])
+        ready_in = request.get_json()['ready in'].strip(' ')
+        status = request.get_json()['status'].strip(' ')
+        units = request.get_json()['units'].strip(' ')
+        tags = request.get_json()['tags'].strip(' ')
+        check = missing([name, price, ready_in, status, units, tags])
+        if check is not True:
+            return check
+        else:
+            pass
     except KeyError:
         return jsonify(partial_content + ' [name, price, ready in,\
  status, units, tags'), 400
+    except ValueError:
+        return jsonify(invalid + '[letters,numbers,letters for all the rest]\
+'), 400
+    except AttributeError:
+        return jsonify(invalid + '[letters,numbers,letters for all the rest]\
+'), 400
 
     food_item = {'name': name, "price": price, 'ready in\
 ': ready_in, 'status': status, 'units': units, 'tags\
