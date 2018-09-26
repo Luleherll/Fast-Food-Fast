@@ -2,7 +2,6 @@
 
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 [![Build Status](https://travis-ci.com/Luleherll/Fast-Food-Fast.svg?branch=API)](https://travis-ci.com/Luleherll/Fast-Food-Fast)
-
 [![Maintainability](https://api.codeclimate.com/v1/badges/0a46deab9bc7008a20f7/maintainability)](https://codeclimate.com/github/Luleherll/Fast-Food-Fast/maintainability)
 [![Coverage Status](https://coveralls.io/repos/github/Luleherll/Fast-Food-Fast/badge.svg?branch=API)](https://coveralls.io/github/Luleherll/Fast-Food-Fast?branch=API)
 
