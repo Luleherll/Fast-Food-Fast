@@ -11,7 +11,7 @@
         <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
         <script src="js/main.js"></script>
 </head>
-<body onload="current(4)">
+<body onload="current(2), opt(1)">
     <header>
     <nav class="nav-bar">
     <img src="images/icon.jpg">
@@ -45,58 +45,60 @@
         <div> 1 Chicken Biriyan<br>From: Bukoto <span>In: 30 mins</span><br><span id="yes">Completed</span></div>
     </div>
     </div>
-    
     <div class="slides fade">
         <div id="blank"></div>
         <div id="side-bar">
             <div class="title">Statistics</div>
             <img src="images/stats.jpg">
         </div>
-        <div class="title">Add Food</div>
-        <div class="change">
-            
-            <span class="images">
-                <input type="file"><br><input type="file"><br><input type="file">
-            </span>
-            <div> Name: <input type="text"><br>Price: <input type="text"><br>
-                Units: <input type="text" placeholder="eg. plates, rolls"><br>
-                <input id="accept" type="button" onclick="current()" value="Add food"></div>       
+        <div class="controls">
+        <input class="opts" onclick="opt(1)" type="button" value="Add Food"> 
+        <input class="opts" onclick="opt(2)" type="button" value="Update Food">
+        <input class="opts active" onclick="opt(3)" type="button" value="Delete Food">
         </div>
-        <div class="title">Update Food</div>
-        <div class="change">
-            
-            <span class="images">
-                <img src="images/bil2.jpg" alt="" >
-                <img src="images/bil3.jpg" alt="" >
-                <img src="images/bil4.jpg" alt="" >
-            </span>
-            <div><select>
+        <div class="editors action fade">
+            <img src="images/big1.jpg" alt="empty"><img src="images/big2.jpg" alt="empty"><img src="images/big3.jpg" alt="empty"><br>
+            <input type="file"><input type="file"><input type="file">
+            <div>Name:<input type="text"></div>
+            <div>Price :<input type="text"></div>
+            <div>Units :<input type="text" placeholder="eg. plates, rolls"></div>
+            <div>Status:<input type="text"></div>
+            <div>Tag(s):<input type="text" placeholder="separate with ( , )"></div>
+            <div><input type="button" value="Add Food"></div>
+        </div>
+        <div class="editors action fade">
+                <img src="images/bil2.jpg" alt="empty"><img src="images/bil3.jpg" alt="empty"><img src="images/bil4.jpg" alt="empty"><br>
+                <input type="file"><input type="file"><input type="file">
+                <div>Name:<select>
                 <option>Chicken Biriyan</option>
                 <option>Kababs</option>
                 <option>Burgers</option>
                 <option>Beef tacos</option>
                 <option>Skyline dish</option>
                 <option>Pizza</option>
-            </select><br>Price: <input type="text" placeholder="Ush 30000"><br>
-            <input type="file"><br><input type="file"><br><input type="file"><br>
-            <input id="accept" type="button" onclick="current(1)" value="Update Food"></div>     
+                </select></div>
+                <div>Price :<input type="text" placeholder="Ush 30000"></div>
+                <div>Units :<input type="text" placeholder="plates"></div>
+                <div>Status:<input type="text" placeholder="Available"></div>
+                <div>Tag(s):<input type="text" placeholder="Dish"></div>
+                <div><input type="button" value="Update Food"></div>
         </div>
-        <div class="title">Remove Food</div>
-        <div class="change">
-            
-            <span class="images">
-                <img src="images/taco2.jpg" alt="" >
-                <img src="images/Taco3.jpg" alt="" >
-            </span>
-            <div><select>
-                <option>Beef tacos</option>
-                <option>Kababs</option>
-                <option>Burgers</option>
-                <option>Chicken Biriyan</option>
-                <option>Skyline dish</option>
-                <option>Pizza</option>
-            </select><br>Price: <input type="text" value="Ush 20000">
-            <br>Units: <input type="text" placeholder="None"><br><input id="accept" type="button" onclick="current()" value="Remove food"></div>       
+        <div class="editors action fade">
+                <img src="images/taco2.jpg" alt="empty"><img src="images/Taco3.jpg" alt="empty"><img src="images/taco4.jpg" alt="empty"><br>
+                <input type="file"><input type="file"><input type="file">
+                <div>Name:<select>
+                        <option>Beef tacos</option>
+                        <option>Kababs</option>
+                        <option>Burgers</option>
+                        <option>Chicken Biriyan</option>
+                        <option>Skyline dish</option>
+                        <option>Pizza</option>
+                    </select></div>
+                <div>Price :<input type="text" placeholder="Ush 15000"></div>
+                <div>Units :<input type="text" placeholder="None"></div>
+                <div>Status:<input type="text" placeholder="Unavailable"></div>
+                <div>Tag(s):<input type="text" placeholder="Meal"></div>
+                <div><input type="button" value="Remove Food"></div>
         </div>
     </div>
     <div class="slides fade">

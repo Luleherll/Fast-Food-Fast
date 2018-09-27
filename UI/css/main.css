@@ -7,7 +7,7 @@ body{
 .wrapper{
     position: absolute;
     top: 10%;
-    background-color: transparent;
+    background-color: rgba(172, 255, 47, 0.356);
     width: fit-content;
     height: 70%;
     border: 1px solid yellow;
@@ -15,7 +15,7 @@ body{
     text-align: center;
     font-size: 30px;
     font-style: bold;
-    color: red;
+    color:white;
 }
 
 .ins{
@@ -23,7 +23,7 @@ body{
     margin-bottom: 30px;
     font-style: italic;
     width: 320px;
-    color: yellow;
+    color:black;
 }
 input{
     padding: 10px;
@@ -39,7 +39,7 @@ input{
 .fields{
     padding-left: 2%;
     font-size: 25px;
-    color: red;
+    color: white;
     text-align: center;
 }
 
@@ -56,7 +56,7 @@ input{
     }
 a{
     margin-left: 5%;
-    color: yellow;
+    color:darkred;
     cursor: pointer;
 }
 #reg{
@@ -94,6 +94,7 @@ a{
     font-size: 40px;
     color: yellow;
 }
+
 .fade {
     -webkit-animation-name: fade;
     -webkit-animation-duration: 1.5s;
