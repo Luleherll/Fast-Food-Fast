@@ -4,29 +4,64 @@ header{
     cursor: pointer;
 }
 body{
-    background-color: azure;
+    background-color: darkolivegreen;
 }
 .nav-bar {
-    background-color: yellow;
+    background-color: yellowgreen;
     box-shadow: 0px 2px rgba(102, 100, 100, 0.5);
     
     cursor: pointer;
 }
 .nav-bar a {
     float: right;
-    color: rgb(197, 202, 174);
+    color: white;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
     font-size: 17px;
     font-weight: bold;
 }
-.nav-bar a:hover {
-    background-color: rgb(154, 231, 82);
-    color: rgb(255, 254, 254);
+.dropdown {
+    float: right;
+  }
+.dropdown .dropbtn {
+    font-size: 17px; 
+    border: none;
+    outline: none;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 14px 16px;
+    background-color: inherit;
+    margin: 0;
+  }
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 1%;
+    background-color: rgb(175, 9, 9);
+    min-width: 160px;
+    height: 50%;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.274);
+    z-index: 1;
+  }
+.dropdown-content a {
+    float: none;
+    color: black;
+    font-size: 150%;
+    text-decoration: none;
+    padding-top: 3%;
+    text-align: center;
+  }
+.dropdown:hover .dropdown-content {
+    display: block;
+  }
+.nav-bar a:hover, .controls input:hover, .dropdown:hover {
+    background-color: yellow;
+    color: green;
 }
-.nav-bar a.active {
-    background-color: rgb(162, 219, 29);
+.nav-bar a.active, .controls input.active {
+    background-color: rgb(158, 168, 12);
     color: rgb(44, 41, 41);
 }
 
@@ -43,7 +78,7 @@ input{
     border-radius: 30px;
 }
 input:hover{
-    border: 1px solid orangered;
+    border: 1px solid yellow;
 }
 #looker{
     position: absolute;
@@ -84,22 +119,54 @@ input:hover{
     font-size: 25px;
     border: 2px solid yellowgreen;
 }
-.change{
-    border-bottom: 2px solid yellowgreen;
+.action{
+    background-color: yellowgreen;
+    height: auto;
+    width: 60%;
+    margin-bottom: 10px;
+    font-size: 40px;
+    
+    cursor: pointer;
+}
+.action input[type='file']{
+        width: 33%;
+}
+.action input[type='text'], .action select{
+    width: 50%;
+    height: 30px;
+    text-align: center;
+    font-size: 50%;
+    
+}
+.action input[type='button']{
+    text-align: center;
+    font-size: 20px;
+    padding: 2% 6%;
+    margin-left: 30%;
+    background-color: darkgreen;
+}
+.action img{
+    width: 30%;
     height: 150px;
-    width: 70%;
+}
+.disappear{
+    display: none;
+
+}
+.controls{
+    border-bottom: 1px solid yellow;
+    width: 60%;
+    
+}
+.controls input{
+    width: 30%;
+    height: 70px;
+    background-color: yellowgreen;
     font-size: 20px;
 }
-.change select{
-    width: 200px;
-    height: 20px;
-}
-.change div{
-    float: right;
-}
-.change .title{
-    float: right;
-}
+
+
+
 .item div{
     float: right;
     margin-top: 30px;
@@ -112,13 +179,13 @@ input:hover{
     height: 120px;
 }
 #accept{
-    background-color: green;
+    background-color: darkgreen;
 }
 .item div span{
-    color: green;
+    color: greenyellow;
 }
 .item div input{
-    background-color: red;
+    background-color: coral;
     color: wheat;
     font-style: oblique;
     padding: 10px;
@@ -145,12 +212,12 @@ input:hover{
     animation-duration: 1.5s;
   }
   
-  @-webkit-keyframes fade {
+@-webkit-keyframes fade {
     from {opacity: .4} 
     to {opacity: 1}
   }
   
-  @keyframes fade {
+@keyframes fade {
     from {opacity: .4} 
     to {opacity: 1}
   }
