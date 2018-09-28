@@ -25,7 +25,7 @@ def welcome():
 @app.errorhandler(404)
 def not_found_error(e):
     return "<h1>You're lost in the woods:<br> Go back to index:<h1>\
-<a>https://lule-fast-food.herokuapp.com/<a>", 404
+<a href='https://lule-fast-food.herokuapp.com/'>Click Here<a>", 404
 
 
 @app.route('/api/v1/register', methods=['POST'])
