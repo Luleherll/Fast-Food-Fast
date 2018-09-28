@@ -228,7 +228,7 @@ letters]', response.json)
     def test_page_not_found(self):
         response = self.app.get('/api/orders')
         self.assertEqual(b"<h1>You're lost in the woods:<br> Go back to index:<h1>\
-<a>https://lule-fast-food.herokuapp.com/<a>", response.data)
+<a href='https://lule-fast-food.herokuapp.com/'>Click Here<a>", response.data)
 
 
 class TestFoodList(unittest.TestCase):
