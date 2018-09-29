@@ -17,12 +17,23 @@
     <img src="images/icon.jpg">
     <input id="search" type="search" placeholder="search food..">
     <input id="looker" type="button">
-    <a href="#home">Settings</a>
+    <div class="dropdown">
+            <button class="dropbtn">Settings 
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+              <a href="#">Profile</a>
+              <a href="#">Account</a>
+              <a href="index.html">Logout</a>
+            </div>
+          </div> 
     <a class="page" onclick="current(1)">History</a>
     <a class="page" onclick="current(2)">Order</a>
     <a class="page active" onclick="current(3)">Home</a>
     </nav> 
     </header>
+
+    
     <div class="slides fade">
         <div id="blank"></div>
         <div id="side-bar">
