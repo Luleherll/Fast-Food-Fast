@@ -1,9 +1,9 @@
 # Fast-Food-Fast
 
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
-[![Build Status](https://travis-ci.com/Luleherll/Fast-Food-Fast.svg?branch=API)](https://travis-ci.com/Luleherll/Fast-Food-Fast)
+[![Build Status](https://travis-ci.com/Luleherll/Fast-Food-Fast.svg?branch=develop)](https://travis-ci.com/Luleherll/Fast-Food-Fast)
 [![Maintainability](https://api.codeclimate.com/v1/badges/0a46deab9bc7008a20f7/maintainability)](https://codeclimate.com/github/Luleherll/Fast-Food-Fast/maintainability)
-[![Coverage Status](https://coveralls.io/repos/github/Luleherll/Fast-Food-Fast/badge.svg?branch=API)](https://coveralls.io/github/Luleherll/Fast-Food-Fast?branch=API)
+[![Coverage Status](https://coveralls.io/repos/github/Luleherll/Fast-Food-Fast/badge.svg?branch=develop)](https://coveralls.io/github/Luleherll/Fast-Food-Fast?branch=develop)
 
 Fast-Food-Fast is a food delivery app.<br/>
 
@@ -29,4 +29,4 @@ The UI template has been made with:
 
 The link to the app demo is here:<br />
 # https://Luleherll.github.io
-develop
+
