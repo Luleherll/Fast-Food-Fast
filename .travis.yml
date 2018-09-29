@@ -1,0 +1,9 @@
+language: python
+python:
+  - "3.6.6"
+install:
+  - pip install -r requirements.txt
+script: 
+  - coverage run -m nose
+  - coverage report -m
+after_success: coveralls
