@@ -1,4 +1,6 @@
 from API.db import Database
+from API.validation import Check
+from flask import jsonify
 
 
 class Users:
@@ -13,16 +15,20 @@ class Users:
                           role)
              VALUES(%s,%s,%s,%s,%s,%s,%s) RETURNING user_id;
         """,)
-        self.db.run(sql, (user['username'], user['password'],
-                    user['tel'], user['email'], user['location'],
-                    user['key_point'], 'User'), 'INSERT')
-        return 'Signup successful. You can login now.'
+        clean = Check().is_clean(user)
+        if type(clean) == tuple:
+            return clean
+        else:
+            self.db.run(sql, (clean['username'], clean['password'],
+                        clean['tel'], clean['email'], clean['location'],
+                        clean['key_point'], 'User'), 'INSERT')
+        return jsonify('Signup successful. You can login now.'), 201
 
     def login(self, username, password):
         user_id = self.db.run(("""SELECT user_id FROM Users WHERE
                                 username = %s and password = %s""",),
                               (username, password,), 'SELECT')
-        return user_id
+        return jsonify(user_id)
 
     def reset_password(self, username, new_password):
         updated = self.db.run(("""UPDATE users SET password = %s
@@ -86,7 +92,7 @@ class Menu:
 
     def get_menu(self):
         menu = self.db.run(("""SELECT * FROM menu"""), command='SELECT')
-        return menu
+        return jsonify(menu)
 
 
 class Orders:
