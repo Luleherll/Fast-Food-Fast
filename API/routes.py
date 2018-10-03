@@ -1,20 +1,14 @@
 from API.models import Users, Orders, Menu
+from API.validation import Check
 from flask import Flask, jsonify
-from flask import request
+from flask import request, session
+from flask_jwt_extended import (JWTManager, create_access_token,
+                                get_jwt_identity, jwt_required)
+
 
 app = Flask(__name__)
-
-"""if __name__ == '__main__':
-    u = {'username': 'lule', 'password': 'dev', 'tel': '07777',
-         'email': 'lule@dev.com', 'location': 'Nalya',
-         'key point': 'Acacia mall entrance'}
-    x = Users().register(u)
-    print(x)
-    m = Users().login('lule', 'admin')
-    print(m)
-partial_content = 'You must provide the required values.'
-invalid = 'The server encountered an error which is due\
- to an invalid data type. Valid format: '"""
+app.config['JWT_SECRET_KEY'] = 'ucanguessit'
+jwt = JWTManager(app)
 
 
 @app.route('/')
@@ -47,109 +41,76 @@ def register():
 
 @app.route('/api/v2/auth/login', methods=['POST'])
 def login():
-    "This route registers a new user."
+    "This route logs in a user."
     name = request.get_json()['username']
     password = request.get_json()['password']
-    response = Users().login(name, password)
-    return response
+    user_id = Users().login(name, password)
 
-"""@app.route('/api/v2/users/orders', methods=['GET', 'POST'])
+    access_token = create_access_token(identity=user_id)
+
+    return jsonify(access_token), 200
+
+
+@app.route('/api/v2/users/orders', methods=['GET', 'POST'])
+@jwt_required
 def place_order():
+    user_id = get_jwt_identity()
     "This route adds a new order to the orders list."
     if request.method == 'POST':
         name = request.get_json()['name']
         quantity = request.get_json()['quantity']
         comment = request.get_json()['comment']
-        order = Order(name, quantity, comment)
+        order = {'name': name, 'quantity': quantity, 'comment': comment}
 
         response = Orders().make_order(order)
         return response
 
     elif request.method == 'GET':
-        "This route returns the list of orders."
-        response = Orders().user_history(user_id)
+        "This route returns the history of orders."
+        response = Users().user_history(user_id)
         return response
 
 
-@app.route('/api/v1/orders/<int:order_id>', methods=['GET', 'PUT'])
-def get_order(order_id):
+@app.route('/api/v2/orders/<int:orderId>', methods=['GET', 'PUT'])
+@jwt_required
+def get_order(orderId):
+    user_id = get_jwt_identity()
     "This route returns the details of a particular order."
     if request.method == 'GET':
-        order = order_id
-        response = orders.get_order(order)
-        return response
+        order = Orders().get_order(user_id, orderId)
+        return jsonify(order)
 
     elif request.method == 'PUT':
         "This route updates the status key of a particular order."
-        order = order_id
-        try:
-            state = request.get_json()['status'].strip(' ')
-            check = missing([state])
-            if check is not True:
-                return check
-            else:
-                pass
-        except KeyError:
-            return jsonify(partial_content + ' [status]'), 400
-        except AttributeError:
-            return jsonify(invalid + '[letters]'), 400
-
-        response = orders.update_order(order, state)
-        return response"""
-
-
-"""@app.route('/api/v2/menu', methods=['GET'])
-def menu():
-    "This route returns all the food items in the food list."
-    response = Menu().get_menu()
-    #return response
-    print(response)
-
-
-@app.route('/api/v1/menu/add', methods=['POST'])
-def add_food_item():
-    "This route adds a food item to the food list."
-    try:
-        name = request.get_json()['name'].strip(' ')
-        price = int(request.get_json()['price'])
-        ready_in = request.get_json()['ready in'].strip(' ')
-        status = request.get_json()['status'].strip(' ')
-        units = request.get_json()['units'].strip(' ')
-        tags = request.get_json()['tags'].strip(' ')
-        check = missing([name, price, ready_in, status, units, tags])
-        if check is not True:
-            return check
-        else:
-            pass
-    except KeyError:
-        return jsonify(partial_content + ' [name, price, ready in,\
- status, units, tags'), 400
-    except ValueError:
-        return jsonify(invalid + '[letters,numbers,letters for all the rest]\
-'), 400
-    except AttributeError:
-        return jsonify(invalid + '[letters,numbers,letters for all the rest]\
-'), 400
-
-    food_item = {'name': name, "price": price, 'ready in\
-': ready_in, 'status': status, 'units': units, 'tags\
-': tags}
-
-    response = foods.add_food_item(food_item)
-    return response
-
-
-@app.route('/api/v1/menu/<string:name>', methods=['PUT', 'DELETE'])
-def update_food_item(name):
-    if request.method == 'PUT':
-        "This route updates the details of a particular food item."
-        food_name = name
-        updates = request.get_json()
-        response = foods.update_food_item(food_name, updates)
+        status = request.get_json()['status']
+        response = Orders().update_order(user_id, orderId, status)
         return response
 
-    elif request.method == 'DELETE':
-        "This route deletes a particular food item from the food list."
-        food_name = name
-        response = foods.delete_food_item(food_name)
-        return response"""
+
+@app.route('/api/v2/orders/', methods=['GET'])
+@jwt_required
+def get_orders():
+    "This route returns all orders."
+    user_id = get_jwt_identity()
+    response = Orders().get_orders(user_id)
+    return jsonify(response)
+
+
+@app.route('/api/v2/menu', methods=['GET', 'POST'])
+@jwt_required
+def menu():
+    "This route returns all the food items in the food list."
+    user_id = get_jwt_identity()
+    if request.method == 'GET':
+        response = Menu().get_menu()
+        return response
+
+    elif request.method == 'POST':
+        name = request.get_json()['name']
+        price = request.get_json()['price']
+        status = request.get_json()['status']
+        tags = request.get_json()['tags']
+        food = {'name': name, 'price': price, 'status': status,
+                'tags': tags}
+        response = Menu().add_food(user_id, food)
+        return response

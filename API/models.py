@@ -1,6 +1,8 @@
 from API.db import Database
 from API.validation import Check
 from flask import jsonify
+from werkzeug.security import (generate_password_hash,
+                               check_password_hash)
 
 
 class Users:
@@ -25,10 +27,11 @@ class Users:
         return jsonify('Signup successful. You can login now.'), 201
 
     def login(self, username, password):
-        user_id = self.db.run(("""SELECT user_id FROM Users WHERE
+        response = self.db.run(("""SELECT user_id FROM Users WHERE
                                 username = %s and password = %s""",),
-                              (username, password,), 'SELECT')
-        return jsonify(user_id)
+                               (username, password,), 'SELECT')
+        user_id = Check().unwrap(response)
+        return user_id[0]
 
     def reset_password(self, username, new_password):
         updated = self.db.run(("""UPDATE users SET password = %s
@@ -46,7 +49,7 @@ class Users:
         orders = self.db.run(("""SELECT * FROM orders WHERE
                                 user_id = %s and status = %s""",),
                              (user_id, 'Completed'), 'SELECT')
-        return orders
+        return jsonify(orders)
 
     def make_admin(self, username):
         updated = self.db.run(("""UPDATE users SET role = %s
@@ -61,14 +64,17 @@ class Menu:
         from API.routes import app
         self.db = Database(app)
 
-    def add_food(self, food):
+    def add_food(self, user_id, food):
         sql = ("""
         INSERT INTO menu(name, price, status, tags)
              VALUES(%s,%s,%s,%s) RETURNING food_id;
         """,)
-        self.db.run(sql, (food['name'], food['price'],
-                    food['status'], food['tags']), 'INSERT')
-        return 'Food option added successfully.'
+        if Check().is_admin(user_id) is True:
+            self.db.run(sql, (food['name'], food['price'],
+                        food['status'], food['tags']), 'INSERT')
+            return jsonify('Food option added successfully.'), 201
+        else:
+            return 'Not Authorized'
 
     def get_food(self, details, name):
         if details == 'no':
@@ -79,20 +85,26 @@ class Menu:
                                 name = %s""",), (name,), 'SELECT')
         return food
 
-    def update_food(self, name, key, value):
-        updated = self.db.run(("""UPDATE menu SET {} = %s
+    def update_food(self, user_id, name, key, value):
+        if Check().is_admin(user_id) is True:
+            updated = self.db.run(("""UPDATE menu SET {} = %s
                                 WHERE name = %s""".format(key),),
-                              (value, name,), 'UPDATE')
-        return updated
+                                  (value, name,), 'UPDATE')
+            return updated
+        else:
+            return 'Not Authorized'
 
-    def delete_food(self, food_id):
-        self.db.run(("""DELETE FROM menu WHERE
-                      food_id = %s""",), (food_id,))
-        return 'Food successfully deleted.'
+    def delete_food(self, user_id, food_id):
+        if Check().is_admin(user_id) is True:
+            self.db.run(("""DELETE FROM menu WHERE
+                        food_id = %s""",), (food_id,))
+            return 'Food successfully deleted.'
+        else:
+            return 'Not Authorized'
 
     def get_menu(self):
-        menu = self.db.run(("""SELECT * FROM menu"""), command='SELECT')
-        return jsonify(menu)
+        menu = self.db.run(("""SELECT * FROM menu""",), command='SELECT')
+        return jsonify(menu), 200
 
 
 class Orders:
@@ -113,22 +125,35 @@ class Orders:
                     'INSERT')
         return 'Your order was placed successfully.'
 
-    def get_order(self, order_id):
-        order = self.db.run(("""SELECT * FROM orders WHERE
-                                order_id = %s""",), (order_id,), 'SELECT')
-        return order
+    def get_order(self, user_id, order_id):
+        if Check().is_admin(user_id) is True:
+            order = self.db.run(("""SELECT * FROM orders WHERE
+                                 order_id = %s""",), (order_id,), 'SELECT')
+            return order
+        else:
+            return 'Not Authorized'
 
-    def update_order(self, order_id, status):
-        updated = self.db.run(("""UPDATE orders SET status = %s
+    def update_order(self, user_id, order_id, status):
+        if Check().is_admin(user_id) is True:
+            updated = self.db.run(("""UPDATE orders SET status = %s
                                 WHERE order_id = %s""",),
-                              (status, order_id,), 'UPDATE')
-        return updated
+                                  (status, order_id,), 'UPDATE')
+            return updated
+        else:
+            return 'Not Authorized'
 
-    def delete_order(self, order_id):
-        self.db.run(("""DELETE FROM orders WHERE
-                      order_id = %s""",), (order_id,))
-        return 'Order successfully deleted.'
+    def delete_order(self, user_id, order_id):
+        if Check().is_admin(user_id) is True:
+            self.db.run(("""DELETE FROM orders WHERE
+                        order_id = %s""",), (order_id,))
+            return 'Order successfully deleted.'
+        else:
+            return 'Not Authorized'
 
-    def get_orders(self):
-        orders = self.db.run(("""SELECT * FROM orders""",), command='SELECT')
-        return orders
+    def get_orders(self, user_id):
+        if Check().is_admin(user_id) is True:
+            orders = self.db.run(("""SELECT * FROM orders""",),
+                                 command='SELECT')
+            return orders
+        else:
+            return 'Not Authorized'
