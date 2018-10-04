@@ -35,16 +35,16 @@ class Database:
 
     def create_tables(self):
         sql_main = (
-            """CREATE DATABASE fastfood
+            """CREATE DATABASE fastfood 
             """,
-            """"CREATE TABLE menu
+            """"CREATE TABLE menu IF NOT EXISTS
                 (
                 food_id SERIAL PRIMARY KEY,
                 name VARCHAR(255) NOT NULL UNIQUE,
                 price INTEGER NOT NULL,
                 status VARCHAR(255) NOT NULL,
                 tags VARCHAR(255) )""",
-            """CREATE TABLE users
+            """CREATE TABLE users IF NOT EXISTS
               (
                 user_id SERIAL PRIMARY KEY,
                 username VARCHAR(255) NOT NULL UNIQUE,
@@ -55,7 +55,7 @@ class Database:
                 key_point VARCHAR(255),
                 role VARCHAR(20),
             )""",
-            """CREATE TABLE orders
+            """CREATE TABLE orders IF NOT EXISTS
              (
                 order_id SERIAL PRIMARY KEY,
                 user_id INTEGER NOT NULL,
@@ -111,9 +111,9 @@ class Database:
                     ON UPDATE CASCADE ON DELETE CASCADE
              )"""
         )
-        response_1 = self.run(sql_main)
+
         response_2 = self.run(sql_tests)
-        return response_1, response_2
+        return response_2
 
     def clean_tables(self):
         sql = ("DELETE FROM orders", "DELETE FROM users", "DELETE FROM menu")

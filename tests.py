@@ -11,6 +11,7 @@ class TestUsers(unittest.TestCase):
         self.app = app.test_client()
         app.config['TESTING'] = True
         self.db = Database(app)
+        self.db.create_tables()
         self.response = self.app.post('/api/v2/auth/signup', data=json.dumps(
             {'username': 'top', 'password': 'dal', 'tel': '0999',
              'email': 'tom@dev.com', 'location': 'some', 'key point': 'hhh'}),
