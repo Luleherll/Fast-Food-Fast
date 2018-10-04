@@ -8,8 +8,9 @@ class Database:
             conn = pg.connect(dbname='fasttests', user='postgres',
                               password='0789')
         else:
-            conn = pg.connect(dbname='fastfood', user='postgres',
-                              password='0789')
+            conn = pg.connect(host='ec2-54-225-68-133.compute-1.amazonaws.com',
+                              dbname='d88tp0iv0aqbgc', user='dmyozauakukgim',
+                              password='78c6acc65cef8bc118a1e044dd422393a21a1018ee9cabbcd9769b4451ae6032')
         self.conn = conn
         self.conn.autocommit = True
         self.cur = conn.cursor()
@@ -111,9 +112,9 @@ class Database:
                     ON UPDATE CASCADE ON DELETE CASCADE
              )"""
         )
-
+        response_1 = self.run(sql_main)
         response_2 = self.run(sql_tests)
-        return response_2
+        return response_1, response_2
 
     def clean_tables(self):
         sql = ("DELETE FROM orders", "DELETE FROM users", "DELETE FROM menu")
