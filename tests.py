@@ -5,25 +5,25 @@ from API.db import Database
 
 
 class TestUsers(unittest.TestCase):
-    
+
     @classmethod
     def setUpClass(self):
         self.app = app.test_client()
         app.config['TESTING'] = True
         self.db = Database(app)
-    
-    @classmethod
-    def tearDown(self):
-        self.db.clean_tables()
-
-    def test_register_user(self):
-        response = self.app.post('/api/v2/auth/signup', data=json.dumps(
+        self.response = self.app.post('/api/v2/auth/signup', data=json.dumps(
             {'username': 'top', 'password': 'dal', 'tel': '0999',
              'email': 'tom@dev.com', 'location': 'some', 'key point': 'hhh'}),
             content_type='application/json')
+
+    @classmethod
+    def tearDownClass(self):
+        self.db.clean_tables()
+
+    def test_register_user(self):
         self.assertEqual('Signup successful. You can login now.',
-                         response.json)
-        self.assertEqual(201, response.status_code)
+                         self.response.json)
+        self.assertEqual(201, self.response.status_code)
 
     def test_register_user_exists(self):
         self.app.post('/api/v2/auth/signup', data=json.dumps(
@@ -55,9 +55,8 @@ class TestUsers(unittest.TestCase):
 
     def test_login(self):
         response = self.app.post('/api/v2/auth/login', data=json.dumps(
-            {'username': 'tol', 'password': 'dal'}),
+            {'username': 'top', 'password': 'dal'}),
              content_type='application/json')
-        self.assertIn(b'access_token', response.data)
         self.assertEqual(200, response.status_code)
 
     def test_login_unregistered(self):
@@ -66,6 +65,24 @@ class TestUsers(unittest.TestCase):
              content_type='application/json')
         self.assertIn('Not Registered.', response.json)
         self.assertEqual(401, response.status_code)
+
+    def test_login_partial(self):
+        response = self.app.post('/api/v2/auth/login', data=json.dumps(
+            {'username': '', 'password': 'dalx'}),
+             content_type='application/json')
+        self.assertEqual('[username] is empty.', response.json)
+        self.assertEqual(400, response.status_code)
+
+    def test_get_menu(self):
+        token = self.app.post('/api/v2/auth/login', data=json.dumps(
+            {'username': 'top', 'password': 'dal'}),
+             content_type='application/json')
+        data = json.loads(token.data.decode())
+        response = self.app.get('/api/v2/menu',
+                                headers={'Authorization': 'Bearer {}'.format(data)})
+        self.assertEqual({}, response.json)
+        self.assertEqual(200, response.status_code)
+    
 
 
 """class TestOrders(unittest.TestCase):

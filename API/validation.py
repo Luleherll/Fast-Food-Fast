@@ -35,7 +35,6 @@ class Check:
                                 user_id = %s""",),
                                (user_id,), 'SELECT')
         role = self.unwrap(response)
-        print(role)
         if role[0] == 'Admin':
             return True
         else:
@@ -48,10 +47,9 @@ class Check:
         user = Check().unwrap(response)
         return user
 
-    def food_exists(self, food_id):
+    def food_exists(self, name):
         response = self.db.run(("""SELECT * FROM Menu WHERE
-                                user_id = %s""",),
-                               (food_id,), 'SELECT')
+                                name = %s""",),
+                               (name,), 'SELECT')
         food = Check().unwrap(response)
         return food
-

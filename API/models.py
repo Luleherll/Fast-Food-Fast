@@ -24,8 +24,8 @@ class Users:
             info = self.db.run(sql, (clean['username'], clean['password'],
                                      clean['tel'], clean['email'],
                                      clean['location'],
-                                    clean['key_point'], 'User'),
-                                    'INSERT')
+                                     clean['key_point'], 'User'),
+                             'INSERT')
             if info is not None:
                 res = jsonify("User named {} already exists.".format(
                                         clean['username'])), 406
@@ -38,7 +38,6 @@ class Users:
                                (username, password,), 'SELECT')
         user_id = Check().unwrap(response)
         return user_id
-        
 
     def reset_password(self, username, new_password):
         updated = self.db.run(("""UPDATE users SET password = %s
@@ -50,7 +49,14 @@ class Users:
         orders = self.db.run(("""SELECT * FROM orders WHERE
                                 user_id = %s and status = %s""",),
                              (user_id, 'Pending'), 'SELECT')
-        return orders
+        all_orders = {}
+        for order in orders:
+            line = {'id': order[0], 'user_id': order[1], 'food_id': order[2],
+                     'name': order[3], 'quantity': order[4],
+                     'comment': order[5], 'location': order[6]}
+        all_orders[order[3]] = line
+
+        return jsonify(all_orders), 200
 
     def user_history(self, user_id):
         orders = self.db.run(("""SELECT * FROM orders WHERE
@@ -128,16 +134,22 @@ class Orders:
         from API.routes import app
         self.db = Database(app)
 
-    def make_order(self, order):
-        sql = ("""
-        INSERT INTO orders(user_id, food_id, name, quantity, comment,
-        location, amount, status)
+    def make_order(self, user_id, order):
+        user = Check().user_exists(user_id)
+        food = Check().food_exists(order['name'])
+        print(user, food)
+        if food is None:
+            return jsonify('Food name you specified is not found.'), 404
+        else:
+            sql = ("""
+             INSERT INTO orders(user_id, food_id, name, quantity, comment,
+             location, amount, status)
              VALUES(%s,%s,%s,%s,%s,%s,%s,%s) RETURNING order_id;
-        """,)
-        self.db.run(sql, (order['user_id'], order['food_id'], order['name'],
-                          order['quantity'], order['comment'],
-                          order['location'], order['amount'], 'Queued'),
-                    'INSERT')
+            """,)
+            self.db.run(sql, (user[0], food[0], order['name'],
+                              order['quantity'], order['comment'],
+                              user[5], order['quantity']*food[2],
+                              'Queued'), 'INSERT')
         return jsonify('Your order was placed successfully.'), 201
 
     def get_order(self, user_id, order_id):

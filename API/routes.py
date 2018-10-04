@@ -48,14 +48,20 @@ def register():
 @app.route('/api/v2/auth/login', methods=['POST'])
 def login():
     "This route logs in a user."
-    name = request.get_json()['username']
-    password = request.get_json()['password']
-    user_id = Users().login(name, password)
     try:
-        access_token = create_access_token(identity=user_id[0])
-        return jsonify(access_token=access_token), 200
+        name = request.get_json()['username']
+        password = request.get_json()['password']
+        clean = Check().is_clean({'username': name, 'password': password})
+        if type(clean) == tuple:
+            return clean
+        else:
+            user_id = Users().login(name, password)
+            access_token = create_access_token(identity=user_id[0])
+            return jsonify(access_token), 200
     except TypeError:
         return jsonify('Not Registered.'), 401
+    except KeyError:
+        return jsonify('Missing data'), 400
 
 
 @app.route('/api/v2/users/orders', methods=['GET', 'POST'])
@@ -64,18 +70,23 @@ def place_order():
     user_id = get_jwt_identity()
     "This route adds a new order to the orders list."
     if request.method == 'POST':
-        name = request.get_json()['name']
-        quantity = request.get_json()['quantity']
-        comment = request.get_json()['comment']
-        order = {'name': name, 'quantity': quantity, 'comment': comment}
+        try:
+            name = request.get_json()['name']
+            quantity = request.get_json()['quantity']
+            comment = request.get_json()['comment']
+            order = {'name': name, 'quantity': quantity, 'comment': comment}
 
-        response = Orders().make_order(order)
-        return response
+            response = Orders().make_order(user_id, order)
+            return response
+        except KeyError:
+            return jsonify('Missing data'), 400
+        except ValueError:
+            return jsonify('Invalid data'), 400
 
     elif request.method == 'GET':
         "This route returns the history of orders."
         response = Users().user_history(user_id)
-        return response
+        return jsonify(response)
 
 
 @app.route('/api/v2/orders/<int:orderId>', methods=['GET', 'PUT'])
