@@ -6,8 +6,7 @@ from API.db import Database
 
 class TestUsers(unittest.TestCase):
 
-    @classmethod
-    def setUpClass(self):
+    def setUp(self):
         self.app = app.test_client()
         app.config['TESTING'] = True
         self.db = Database(app)
