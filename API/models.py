@@ -37,7 +37,7 @@ class Users:
                                 username = %s and password = %s""",),
                                (username, password,), 'SELECT')
         user_id = Check().unwrap(response)
-        return user_id[0]
+        return user_id
         
 
     def reset_password(self, username, new_password):

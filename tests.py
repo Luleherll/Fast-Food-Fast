@@ -64,8 +64,8 @@ class TestUsers(unittest.TestCase):
         response = self.app.post('/api/v2/auth/login', data=json.dumps(
             {'username': 'tolx', 'password': 'dalx'}),
              content_type='application/json')
-        self.assertIn(b'access_token', response.data)
-        self.assertEqual(200, response.status_code)
+        self.assertIn('Not Registered.', response.json)
+        self.assertEqual(401, response.status_code)
 
 
 """class TestOrders(unittest.TestCase):

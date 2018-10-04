@@ -52,8 +52,8 @@ def login():
     password = request.get_json()['password']
     user_id = Users().login(name, password)
     try:
-       access_token = create_access_token(identity=user_id)
-       return jsonify(access_token=access_token), 200
+        access_token = create_access_token(identity=user_id[0])
+        return jsonify(access_token=access_token), 200
     except TypeError:
         return jsonify('Not Registered.'), 401
 
