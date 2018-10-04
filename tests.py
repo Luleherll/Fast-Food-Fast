@@ -1,131 +1,74 @@
 import unittest
 import json
-from module.routes import app
-
-
-class Helper:
-    "This class contains methods used for testing."
-    def __init__(self, arg):
-        self.arg = arg
-
-    # Methods for TestOrders class
-    def place_order(self, field1, field2, name):
-        response = self.arg.post('/api/v1/orders', data=json.dumps({'name\
-': 'Pizza', 'quantity': field1, 'comment': field2, 'username': name}),
-                                 content_type='application/json')
-        return response
-
-    def update_order(self, word):
-        response = self.arg.put('/api/v1/orders/1', data=json.dumps({'status\
-': word}), content_type='application/json')
-        return response
-
-    def partial_content(self):
-        response = self.arg.post('/api/v1/orders', data=json.dumps({'name\
-': 'Pizza', 'user_id': 'lule'}), content_type='application/json')
-        return response
-
-    def get_order(self):
-        response = self.arg.get('/api/v1/orders/1')
-        return response
-
-    def get_order_not_found(self):
-        response = self.arg.get('/api/v1/orders/3')
-        return response
-
-    def update_order_not_found(self):
-        response = self.arg.put('/api/v1/orders/5', data=json.dumps({'status\
-': "Pending"}), content_type='application/json')
-        return response
-
-    def all_orders(self):
-        response = self.arg.get('/api/v1/orders')
-        return response
-    # End of TestOrders methods
-
-    # Methods of TestFoodList class
-    def add_food_item(self, field1, field2):
-        response = self.arg.post('/api/v1/menu/add', data=json.dumps({'name\
-': field1, "price": field2, 'ready in': '30 mins', 'status': 'Avai\
-lable', 'units': 'plate', 'tags': 'snack'}), content_type='application/json')
-        return response
-
-    def add_food_item_partial(self):
-        response = self.arg.post('/api/v1/menu/add', data=json.dumps({'name\
-': 'pizza', 'ready in': '30 mins', 'status': 'Avai\
-lable', 'units': 'plate', 'tags': 'snack'}), content_type='application/json')
-        return response
-
-    def update_food_item(self, name):
-        response = self.arg.put('/api/v1/menu/{}'.format(name),
-                                data=json.dumps({"price": 6000, 'status': '\
-Unavailable'}), content_type='application/json')
-        return response
-
-    def delete_food_item(self, name):
-        response = self.arg.delete('/api/v1/menu/{}'.format(name))
-        return response
-
-    def get_menu(self):
-        response = self.arg.get('/api/v1/menu')
-        return response
-    # End of TestFoodList methods
-
-    # Users helper method
-    def register_user(self, name):
-        response = self.arg.post('/api/v1/register', data=json.dumps({"username\
-": name, 'email': 'lule@dev.com', 'location': 'kasubi', 'key point\
-': 'Tombs'}), content_type='application/json')
-        return response
-
-    def register_user_partial(self):
-        response = self.arg.post('/api/v1/register', data=json.dumps({"username\
-": "lule", 'email': 'lule@dev.com', 'key point\
-': 'Tombs'}), content_type='application/json')
-        return response
+from API.routes import app
+from API.db import Database
 
 
 class TestUsers(unittest.TestCase):
 
-    def setUp(self):
+    @classmethod
+    def setUpClass(self):
         self.app = app.test_client()
-        self.helper = Helper(self.app)
+        app.config['TESTING'] = True
+        self.db = Database(app)
+
+    @classmethod
+    def tearDown(self):
+        self.db.clean_tables()
 
     def test_register_user(self):
-        response = self.helper.register_user('eric')
-        self.assertEqual('Registration successful.', response.json)
+        response = self.app.post('/api/v2/auth/signup', data=json.dumps(
+            {'username': 'tog', 'password': 'dal', 'tel': '0999',
+             'email': 'tom@dev.com', 'location': 'some', 'key point': 'hhh'}),
+            content_type='application/json')
+        self.assertEqual('Signup successful. You can login now.',
+                         response.json)
         self.assertEqual(201, response.status_code)
 
     def test_register_user_exists(self):
-        response = self.helper.register_user('lule')
-        self.assertEqual('User named lule already exists.', response.json)
-        self.assertEqual(403, response.status_code)
+        self.app.post('/api/v2/auth/signup', data=json.dumps(
+            {'username': 'tol', 'password': 'dal', 'tel': '0999',
+             'email': 'tom@dev.com', 'location': 'some', 'key point': 'hhh'}),
+            content_type='application/json')
+        response = self.app.post('/api/v2/auth/signup', data=json.dumps(
+            {'username': 'tol', 'password': 'dal', 'tel': '0999',
+             'email': 'tom@dev.com', 'location': 'some', 'key point': 'hhh'}),
+            content_type='application/json')
+        self.assertEqual('User named tol already exists.', response.json)
+        self.assertEqual(406, response.status_code)
 
     def test_register_user_partial(self):
-        response = self.helper.register_user_partial()
-        self.assertEqual('You must provide the required values.[username, email,\
- location, key point]', response.json)
+        response = self.app.post('/api/v2/auth/signup', data=json.dumps(
+            {'username': 'tol', 'password': 'dal', 'tel': '0999',
+             'email': 'tom@dev.com', 'key point': 'hhh'}),
+            content_type='application/json')
+        self.assertEqual('Missing data', response.json)
         self.assertEqual(400, response.status_code)
 
     def test_register_user_empty_field(self):
-        response = self.helper.register_user('')
-        self.assertEqual('You must fill in all the fields.', response.json)
+        response = self.app.post('/api/v2/auth/signup', data=json.dumps(
+            {'username': 'tol', 'password': 'dal', 'tel': '0999',
+             'email': 'tom@dev.com', 'location': '' ,'key point': 'hhh'}),
+            content_type='application/json')
+        self.assertEqual('[location] is empty.', response.json)
         self.assertEqual(400, response.status_code)
 
-    def test_register_user_wrong_data_type(self):
-        response = self.helper.register_user(4)
-        self.assertEqual('The server encountered an error which is due\
- to an invalid data type. Valid format: [letters,letters,letters,\
-letters]', response.json)
-        self.assertEqual(400, response.status_code)
+    def test_login(self):
+        response = self.app.post('/api/v2/auth/login', data=json.dumps(
+            {'username': 'tol', 'password': 'dal'}),
+             content_type='application/json')
+        self.assertIn(b'access_token', response.data)
+        self.assertEqual(200, response.status_code)
 
-    def test_place_order_unregistered(self):
-        response = self.helper.place_order(20, 'fill', 'sam')
-        self.assertEqual('User named sam is not registered.', response.json)
-        self.assertEqual(401, response.status_code)
+    def test_login_unregistered(self):
+        response = self.app.post('/api/v2/auth/login', data=json.dumps(
+            {'username': 'tolx', 'password': 'dalx'}),
+             content_type='application/json')
+        self.assertIn(b'access_token', response.data)
+        self.assertEqual(200, response.status_code)
 
 
-class TestOrders(unittest.TestCase):
+"""class TestOrders(unittest.TestCase):
 
     def setUp(self):
         self.app = app.test_client()
@@ -297,4 +240,4 @@ ating.', response.json)
     def test_get_menu(self):
         response = self.helper.get_menu()
         self.assertEqual({}, response.json)
-        self.assertEqual(200, response.status_code)
+        self.assertEqual(200, response.status_code)"""

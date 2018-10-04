@@ -9,7 +9,7 @@ class Check:
         self.db = Database(app)
 
     def is_clean(self, container):
-        
+
         new_container = {}
         try:
             for key in container:
@@ -35,7 +35,8 @@ class Check:
                                 user_id = %s""",),
                                (user_id,), 'SELECT')
         role = self.unwrap(response)
-        if role == 'Admin':
+        print(role)
+        if role[0] == 'Admin':
             return True
         else:
             return False
@@ -53,3 +54,4 @@ class Check:
                                (food_id,), 'SELECT')
         food = Check().unwrap(response)
         return food
+

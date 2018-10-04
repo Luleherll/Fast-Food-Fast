@@ -25,19 +25,25 @@ def not_found_error(e):
 @app.route('/api/v2/auth/signup', methods=['POST'])
 def register():
     "This route registers a new user."
-    name = request.get_json()['username']
-    password = request.get_json()['password']
-    tel = request.get_json()['tel']
-    email = request.get_json()['email']
-    location = request.get_json()['location']
-    key_point = request.get_json()['key point']
+    try:
+        name = request.get_json()['username']
+        password = request.get_json()['password']
+        tel = request.get_json()['tel']
+        email = request.get_json()['email']
+        location = request.get_json()['location']
+        key_point = request.get_json()['key point']
 
-    user = {'username': name, 'password': password, 'tel': tel,
-            'email': email, 'location': location,
-            'key_point': key_point}
-    response = Users().register(user)
-    return response
+        user = {'username': name, 'password': password, 'tel': tel,
+                'email': email, 'location': location,
+                'key_point': key_point}
+        response = Users().register(user)
 
+        return response
+    except KeyError:
+        return jsonify('Missing data'), 400
+    except ValueError:
+        return jsonify('Invalid data'), 400
+    
 
 @app.route('/api/v2/auth/login', methods=['POST'])
 def login():
@@ -45,10 +51,11 @@ def login():
     name = request.get_json()['username']
     password = request.get_json()['password']
     user_id = Users().login(name, password)
-
-    access_token = create_access_token(identity=user_id)
-
-    return jsonify(access_token), 200
+    try:
+       access_token = create_access_token(identity=user_id)
+       return jsonify(access_token=access_token), 200
+    except TypeError:
+        return jsonify('Not Registered.'), 401
 
 
 @app.route('/api/v2/users/orders', methods=['GET', 'POST'])
@@ -78,7 +85,7 @@ def get_order(orderId):
     "This route returns the details of a particular order."
     if request.method == 'GET':
         order = Orders().get_order(user_id, orderId)
-        return jsonify(order)
+        return order
 
     elif request.method == 'PUT':
         "This route updates the status key of a particular order."
@@ -93,7 +100,7 @@ def get_orders():
     "This route returns all orders."
     user_id = get_jwt_identity()
     response = Orders().get_orders(user_id)
-    return jsonify(response)
+    return response
 
 
 @app.route('/api/v2/menu', methods=['GET', 'POST'])
