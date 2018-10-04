@@ -19,7 +19,7 @@ class TestUsers(unittest.TestCase):
 
     def test_register_user(self):
         response = self.app.post('/api/v2/auth/signup', data=json.dumps(
-            {'username': 'tog', 'password': 'dal', 'tel': '0999',
+            {'username': 'top', 'password': 'dal', 'tel': '0999',
              'email': 'tom@dev.com', 'location': 'some', 'key point': 'hhh'}),
             content_type='application/json')
         self.assertEqual('Signup successful. You can login now.',
