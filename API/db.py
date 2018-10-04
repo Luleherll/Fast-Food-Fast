@@ -36,8 +36,6 @@ class Database:
 
     def create_tables(self):
         sql_main = (
-            """CREATE DATABASE fastfood 
-            """,
             """"CREATE TABLE menu IF NOT EXISTS
                 (
                 food_id SERIAL PRIMARY KEY,
@@ -74,9 +72,6 @@ class Database:
              )"""
         )
         sql_tests = (
-            """CREATE DATABASE fasttests
-               IF NOT EXISTS
-            """,
             """"CREATE TABLE menu IF NOT EXISTS
                 (
                 food_id SERIAL PRIMARY KEY,

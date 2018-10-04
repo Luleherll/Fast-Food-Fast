@@ -15,7 +15,7 @@ class TestUsers(unittest.TestCase):
         self.db.create_tables()
         self.app.post('/api/v2/auth/signup', data=json.dumps(
             {'username': 'tanner', 'password': 'dal', 'tel': '0999',
-             'email': 'tom@dev.com', 'location': 'some', 'key point': 'hhh'}),
+             'email': 'tom@dev.com', 'location': 'sme', 'key point': 'hhh'}),
             content_type='application/json')
 
     @classmethod
