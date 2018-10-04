@@ -3,6 +3,10 @@ python:
   - "3.6.6"
 install:
   - pip install -r requirements.txt
+services:
+  - postgresql
+before_script:
+  - psql -c 'create database fasttests;' -U postgre
 script: 
   - coverage run -m nose
   - coverage report -m
