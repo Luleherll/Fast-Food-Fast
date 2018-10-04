@@ -10,4 +10,4 @@ before_script:
 script: 
   - coverage run -m nose
   - coverage report -m
-after_success: coveralls
+  - coveralls

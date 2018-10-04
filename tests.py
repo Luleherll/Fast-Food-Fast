@@ -11,9 +11,10 @@ class TestUsers(unittest.TestCase):
         self.app = app.test_client()
         app.config['TESTING'] = True
         self.db = Database(app)
+        self.db.clean_tables()
         self.db.create_tables()
-        self.response = self.app.post('/api/v2/auth/signup', data=json.dumps(
-            {'username': 'toxic', 'password': 'dal', 'tel': '0999',
+        self.app.post('/api/v2/auth/signup', data=json.dumps(
+            {'username': 'tanner', 'password': 'dal', 'tel': '0999',
              'email': 'tom@dev.com', 'location': 'some', 'key point': 'hhh'}),
             content_type='application/json')
 
@@ -22,9 +23,13 @@ class TestUsers(unittest.TestCase):
         self.db.clean_tables()
 
     def test_register_user(self):
+        response = self.app.post('/api/v2/auth/signup', data=json.dumps(
+            {'username': 'banner', 'password': 'dal', 'tel': '0999',
+             'email': 'tom@dev.com', 'location': 'some', 'key point': 'hhh'}),
+            content_type='application/json')
         self.assertEqual('Signup successful. You can login now.',
-                         self.response.json)
-        self.assertEqual(201, self.response.status_code)
+                         response.json)
+        self.assertEqual(201, response.status_code)
 
     def test_register_user_exists(self):
         self.app.post('/api/v2/auth/signup', data=json.dumps(
@@ -56,7 +61,7 @@ class TestUsers(unittest.TestCase):
 
     def test_login(self):
         response = self.app.post('/api/v2/auth/login', data=json.dumps(
-            {'username': 'toxic', 'password': 'dal'}),
+            {'username': 'tanner', 'password': 'dal'}),
              content_type='application/json')
         self.assertEqual(200, response.status_code)
 
@@ -76,14 +81,13 @@ class TestUsers(unittest.TestCase):
 
     def test_get_menu(self):
         token = self.app.post('/api/v2/auth/login', data=json.dumps(
-            {'username': 'toxic', 'password': 'dal'}),
+            {'username': 'tanner', 'password': 'dal'}),
              content_type='application/json')
         data = json.loads(token.data.decode())
         response = self.app.get('/api/v2/menu',
-                                headers={'Authorization': 'Bearer {}'.format(data)})
+            headers={'Authorization': 'Bearer {}'.format(data)})
         self.assertEqual({}, response.json)
         self.assertEqual(200, response.status_code)
-    
 
 
 """class TestOrders(unittest.TestCase):
