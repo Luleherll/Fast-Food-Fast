@@ -13,7 +13,7 @@ class TestUsers(unittest.TestCase):
         self.db = Database(app)
         self.db.create_tables()
         self.response = self.app.post('/api/v2/auth/signup', data=json.dumps(
-            {'username': 'top', 'password': 'dal', 'tel': '0999',
+            {'username': 'toxic', 'password': 'dal', 'tel': '0999',
              'email': 'tom@dev.com', 'location': 'some', 'key point': 'hhh'}),
             content_type='application/json')
 
@@ -49,14 +49,14 @@ class TestUsers(unittest.TestCase):
     def test_register_user_empty_field(self):
         response = self.app.post('/api/v2/auth/signup', data=json.dumps(
             {'username': 'tol', 'password': 'dal', 'tel': '0999',
-             'email': 'tom@dev.com', 'location': '' ,'key point': 'hhh'}),
+             'email': 'tom@dev.com', 'location': '' , 'key point': 'hhh'}),
             content_type='application/json')
         self.assertEqual('[location] is empty.', response.json)
         self.assertEqual(400, response.status_code)
 
     def test_login(self):
         response = self.app.post('/api/v2/auth/login', data=json.dumps(
-            {'username': 'top', 'password': 'dal'}),
+            {'username': 'toxic', 'password': 'dal'}),
              content_type='application/json')
         self.assertEqual(200, response.status_code)
 
@@ -76,7 +76,7 @@ class TestUsers(unittest.TestCase):
 
     def test_get_menu(self):
         token = self.app.post('/api/v2/auth/login', data=json.dumps(
-            {'username': 'top', 'password': 'dal'}),
+            {'username': 'toxic', 'password': 'dal'}),
              content_type='application/json')
         data = json.loads(token.data.decode())
         response = self.app.get('/api/v2/menu',
