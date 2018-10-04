@@ -5,12 +5,14 @@ from API.db import Database
 
 
 class TestUsers(unittest.TestCase):
-
-    def setUp(self):
+    
+    @classmethod
+    def setUpClass(self):
         self.app = app.test_client()
         app.config['TESTING'] = True
         self.db = Database(app)
     
+    @classmethod
     def tearDown(self):
         self.db.clean_tables()
 
