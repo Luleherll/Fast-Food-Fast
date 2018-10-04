@@ -11,6 +11,7 @@ class TestUsers(unittest.TestCase):
         self.app = app.test_client()
         app.config['TESTING'] = True
         self.db = Database(app)
+        self.db.create_tables()
 
     @classmethod
     def tearDown(self):
