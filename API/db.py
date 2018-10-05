@@ -68,46 +68,15 @@ class Database:
                     ON UPDATE CASCADE ON DELETE CASCADE,
                 FOREIGN KEY (user_id) REFERENCES users (user_id)
                     ON UPDATE CASCADE ON DELETE CASCADE
-             )"""
+             )""",
+             """
+        INSERT INTO Users(username, password, tel, email, location, key_point,
+                          role)
+             VALUES(tanner,pass,0777,tom@dev.com,Bukoto,Andela,Admin) RETURNING user_id;
+        """
         )
-        sql_tests = (
-            """"CREATE TABLE menu IF NOT EXISTS
-                (
-                food_id SERIAL PRIMARY KEY,
-                name VARCHAR(255) NOT NULL UNIQUE,
-                price INTEGER NOT NULL,
-                status VARCHAR(255) NOT NULL,
-                tags VARCHAR(255) )""",
-            """CREATE TABLE users IF NOT EXISTS
-              (
-                user_id SERIAL PRIMARY KEY,
-                username VARCHAR(255) NOT NULL UNIQUE,
-                password VARCHAR(255) NOT NULL,
-                tel INTEGER NOT NULL,
-                email VARCHAR(255),
-                location VARCHAR(255) NOT NULL,
-                key_point VARCHAR(255),
-                role VARCHAR(20),
-            )""",
-            """CREATE TABLE orders IF NOT EXISTS
-             (
-                order_id SERIAL PRIMARY KEY,
-                user_id INTEGER NOT NULL,
-                food_id INTEGER NOT NULL,
-                name VARCHAR(255) NOT NULL,
-                quantity INTEGER NOT NULL,
-                comment VARCHAR(255),
-                location VARCHAR(255) NOT NULL,
-                amount INTEGER NOT NULL,
-                status VARCHAR(255) NOT NULL,
-                FOREIGN KEY (food_id) REFERENCES menu (food_id)
-                    ON UPDATE CASCADE ON DELETE CASCADE,
-                FOREIGN KEY (user_id) REFERENCES users (user_id)
-                    ON UPDATE CASCADE ON DELETE CASCADE
-             )"""
-        )
+        
         response_1 = self.run(sql_main)
-        response_2 = self.run(sql_tests)
         return response_1, response_2
 
     def clean_tables(self):
