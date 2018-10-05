@@ -111,5 +111,5 @@ class Database:
         return response_1, response_2
 
     def clean_tables(self):
-        sql = ("DELETE FROM orders", "DELETE FROM users", "DELETE FROM menu")
+        sql = ("DROP users", "DROP menu", "DROP orders")
         self.run(sql)
