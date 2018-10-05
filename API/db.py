@@ -8,8 +8,8 @@ class Database:
             conn = pg.connect(dbname='fasttests', user='postgres',
                               password='0789')
         else:
-            conn = pg.connect(dbname='fastfood', user='postgres',
-                              password='0789')
+            conn = pg.connect(dbname='d88tp0iv0aqbgc', user='dmyozauakukgim',
+                              password='78c6acc65cef8bc118a1e044dd422393a21a1018ee9cabbcd9769b4451ae6032')
         self.conn = conn
         self.conn.autocommit = True
         self.cur = conn.cursor()
@@ -111,5 +111,5 @@ class Database:
         return response_1, response_2
 
     def clean_tables(self):
-        sql = ("DROP users", "DROP menu", "DROP orders")
+        sql = ("DELETE FROM orders", "DELETE FROM users", "DELETE FROM menu")
         self.run(sql)
