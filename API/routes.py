@@ -19,7 +19,7 @@ def welcome():
 @app.errorhandler(404)
 def not_found_error(e):
     return "<h1>You're lost in the woods:<br> Go back to index:<h1>\
-<a href='https://lule-fast-food.herokuapp.com/'>Click Here<a>", 404
+<a href='https://lule-persistent.herokuapp.com/'>Click Here<a>", 404
 
 
 @app.route('/api/v2/auth/signup', methods=['POST'])
@@ -63,6 +63,24 @@ def login():
     except KeyError:
         return jsonify('Missing data'), 400
 
+
+@app.route('/api/v2/auth/admin', methods=['POST'])
+@jwt_required
+def make_admin():
+    user_id = get_jwt_identity()
+    "This route logs in a user."
+    try:
+        name = request.get_json()['username']
+        clean = Check().is_clean({'username': name})
+        if type(clean) == tuple:
+            return clean
+        else:
+            response = Users().make_admin(user_id, name)
+            return jsonify(response), 201
+    except TypeError:
+        return jsonify('Not Registered.'), 401
+    except KeyError:
+        return jsonify('Missing data'), 400
 
 @app.route('/api/v2/users/orders', methods=['GET', 'POST'])
 @jwt_required

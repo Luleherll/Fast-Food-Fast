@@ -27,7 +27,7 @@ class Users:
                                      clean['key_point'], 'User'),
                              'INSERT')
             if info is not None:
-                res = jsonify("User named {} already exists.".format(
+                return jsonify("User named {} already exists.".format(
                                         clean['username'])), 406
 
         return res
@@ -62,13 +62,28 @@ class Users:
         orders = self.db.run(("""SELECT * FROM orders WHERE
                                 user_id = %s and status = %s""",),
                              (user_id, 'Completed'), 'SELECT')
-        return orders
+        my = {}
+        for order in orders:
+            store ={'order_id': order[0], 'user_id': order[1],
+                    'food_id': order[2], 'name': order[3],
+                    'quantity': order[4], 'comment': order[5],
+                    'location': order[6], 'amount': order[7],
+                    'status': order[8]}
+            my[store['name']] = store
+        return my
 
-    def make_admin(self, username):
-        updated = self.db.run(("""UPDATE users SET role = %s
+    def make_admin(self, user_id, username):
+        if Check().is_admin(user_id) is True:
+            updated = self.db.run(("""UPDATE users SET role = %s
                                 WHERE username = %s""",),
-                              ('Admin', username,), 'UPDATE')
-        return updated
+                                  ('Admin', username,), 'UPDATE')
+            if updated == 0:
+                return jsonify('User not found.'), 404
+            else:
+                return jsonify('{} made administrator.'), 201
+        else:
+            return jsonify('Not Authorized'), 401
+        
 
 
 class Menu:
@@ -121,11 +136,12 @@ class Menu:
 
     def get_menu(self):
         menu = self.db.run(("""SELECT * FROM menu""",), command='SELECT')
-        store = {}
+        foods = {}
         for food in menu:
             store = {'id': food[0], 'name': food[1], 'price': food[2],
-                   'status': food[3], 'tags': food[4]}
-        return jsonify(store), 200
+                     'status': food[3], 'tags': food[4]}
+            foods[store['name']] = store
+        return jsonify(foods), 200
 
 
 class Orders:
@@ -194,7 +210,8 @@ class Orders:
             for order in orders:
                 line = {'id': order[0], 'user_id': order[1], 'food_id': order[2],
                         'name': order[3], 'quantity': order[4],
-                        'comment': order[5], 'location': order[6]}
+                        'comment': order[5], 'location': order[6],
+                        'amount': order[7], 'status': order[8]}
                 all_orders[order[3]] = line
 
             return jsonify(all_orders), 200
