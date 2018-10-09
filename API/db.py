@@ -8,7 +8,8 @@ class Database:
             conn = pg.connect(dbname='fasttests', user='postgres',
                               password='0789')
         else:
-            conn = pg.connect(app.config['DB'])
+            conn = pg.connect(dbname='d88tp0iv0aqbgc', user='dmyozauakukgim',
+                              password='78c6acc65cef8bc118a1e044dd422393a21a1018ee9cabbcd9769b4451ae6032')
         self.conn = conn
         self.conn.autocommit = True
         self.cur = conn.cursor()
