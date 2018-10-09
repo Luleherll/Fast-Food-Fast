@@ -1,5 +1,4 @@
 import psycopg2 as pg
-import os
 
 
 class Database:
@@ -9,7 +8,7 @@ class Database:
             conn = pg.connect(dbname='fasttests', user='postgres',
                               password='0789')
         else:
-            conn = pg.connect(os.environ['DATABASE_URI'])
+            conn = pg.connect(app.config['DB'])
         self.conn = conn
         self.conn.autocommit = True
         self.cur = conn.cursor()
