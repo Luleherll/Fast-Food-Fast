@@ -146,6 +146,7 @@ class TestApi(unittest.TestCase):
         token = get_token(self.app)
         response = self.app.get('/', headers={'Authorization':
                                 'Bearer {}'.format(token)})
-        self.assertEqual(b'"Welcome to the Fast-Food-Fast API"\n', response.data)
+        self.assertEqual(b'"Welcome to the Fast-Food-Fast API"\n',
+                         response.data)
         self.assertEqual(200, response.status_code)
 

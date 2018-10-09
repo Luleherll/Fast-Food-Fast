@@ -64,7 +64,7 @@ def login():
         return jsonify('Missing data'), 400
 
 
-@app.route('/api/v2/auth/admin', methods=['POST'])
+@app.route('/api/v2/auth/admin', methods=['PUT'])
 @jwt_required
 def make_admin():
     user_id = get_jwt_identity()
@@ -81,6 +81,7 @@ def make_admin():
         return jsonify('Not Registered.'), 401
     except KeyError:
         return jsonify('Missing data'), 400
+
 
 @app.route('/api/v2/users/orders', methods=['GET', 'POST'])
 @jwt_required
