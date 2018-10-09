@@ -4,5 +4,6 @@ from API.routes import app
 from API.validation import Check
 
 if __name__ == '__main__':
-    Database(app).create_tables()
+    d = Database(app)
     app.run(debug=True)
+    d.create_tables()

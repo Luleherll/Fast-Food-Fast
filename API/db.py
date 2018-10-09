@@ -8,7 +8,10 @@ class Database:
             conn = pg.connect(dbname='fasttests', user='postgres',
                               password='0789')
         else:
-            conn = pg.connect('postgres://dmyozauakukgim:78c6acc65cef8bc118a1e044dd422393a21a1018ee9cabbcd9769b4451ae6032@ec2-54-225-68-133.compute-1.amazonaws.com:5432/d88tp0iv0aqbgc', sslmode='require')
+            conn = pg.connect(dbname='dd9mb4gqm802l1', user='envcqlrpkysjxa',
+                              password='428e7756143a868108cd0392055a879b31faae3e92ca3969ea26f14b9709b566',
+                              host='ec2-23-21-147-71.compute-1.amazonaws.com',
+                              port='5432', sslmode='require')
         self.conn = conn
         self.conn.autocommit = True
         self.cur = conn.cursor()
