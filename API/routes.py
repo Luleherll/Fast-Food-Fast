@@ -61,8 +61,8 @@ def login():
             return clean
         else:
             user_id = Users().login(name, password)
-            access_token = create_access_token(identity=user_id[0])
-            return jsonify(access_token=access_token), 100
+            access_token = create_access_token(identity=user_id['user_id'])
+            return jsonify(access_token), 200
     except TypeError:
         return jsonify(error='Not Registered.'), 401
     except KeyError:
@@ -116,7 +116,7 @@ def user_orders():
     user_id = get_jwt_identity() 
     "This route returns the history of orders."
     response = Users().user_orders(user_id)
-    return jsonify(response)
+    return response
 
 
 @app.route('/api/v2/users/history', methods=['GET'])

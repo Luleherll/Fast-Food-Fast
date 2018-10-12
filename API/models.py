@@ -37,6 +37,7 @@ class Users:
                                 username = %s and password = %s""",),
                                (username, password,), 'SELECT')
         user_id = Check().unwrap(response)
+        print(user_id)
         return user_id
 
     def reset_password(self, username, new_password):
@@ -49,28 +50,15 @@ class Users:
         orders = self.db.run(("""SELECT * FROM orders WHERE
                                 user_id = %s and status = %s""",),
                              (user_id, 'Pending'), 'SELECT')
-        all_orders = {}
-        for order in orders:
-            line = {'id': order[0], 'user_id': order[1], 'food_id': order[2],
-                    'name': order[3], 'quantity': order[4],
-                    'comment': order[5], 'location': order[6]}
-        all_orders[order[3]] = line
 
-        return jsonify(all_orders), 200
+        return jsonify(orders), 200
 
     def user_history(self, user_id):
         orders = self.db.run(("""SELECT * FROM orders WHERE
                                 user_id = %s and status = %s""",),
                              (user_id, 'Completed'), 'SELECT')
-        my = {}
-        for order in orders:
-            store = {'order_id': order[0], 'user_id': order[1],
-                    'food_id': order[2], 'name': order[3],
-                    'quantity': order[4], 'comment': order[5],
-                    'location': order[6], 'amount': order[7],
-                    'status': order[8]}
-            my[store['name']] = store
-        return my
+
+        return orders
 
     def make_admin(self, user_id, username):
         if Check().is_admin(user_id) is True:
@@ -136,12 +124,7 @@ class Menu:
 
     def get_menu(self):
         menu = self.db.run(("""SELECT * FROM menu""",), command='SELECT')
-        foods = {}
-        for food in menu:
-            store = {'id': food[0], 'name': food[1], 'price': food[2],
-                     'status': food[3], 'tags': food[4]}
-            foods[store['name']] = store
-        return jsonify(foods), 200
+        return jsonify(menu), 200
 
 
 class Orders:
@@ -162,9 +145,9 @@ class Orders:
              location, amount, status)
              VALUES(%s,%s,%s,%s,%s,%s,%s,%s) RETURNING order_id;
             """,)
-            self.db.run(sql, (user[0], food[0], order['name'],
+            self.db.run(sql, (user['user_id'], food['food_id'], order['name'],
                               order['quantity'], order['comment'],
-                              user[5], order['quantity']*food[2],
+                              user['location'], order['quantity']*food['price'],
                               'Queued'), 'INSERT')
         return jsonify(msg='Your order was placed successfully.'), 201
 
@@ -176,10 +159,7 @@ class Orders:
             if getter is None:
                 return jsonify(msg='Order not found.'), 404
             else:
-                store = {'id': getter[0], 'user_id': getter[1], 'food_id': getter[2],
-                        'name': getter[3], 'quantity': getter[4],
-                        'comment': getter[5], 'location': getter[6]}
-            return jsonify(store), 200
+                return jsonify(getter), 200
         else:
             return jsonify(msg='Not Authorized'), 401
 
@@ -211,14 +191,7 @@ class Orders:
         if Check().is_admin(user_id) is True:
             orders = self.db.run(("""SELECT * FROM orders""",),
                                  command='SELECT')
-            all_orders = {}
-            for order in orders:
-                line = {'id': order[0], 'user_id': order[1], 'food_id': order[2],
-                        'name': order[3], 'quantity': order[4],
-                        'comment': order[5], 'location': order[6],
-                        'amount': order[7], 'status': order[8]}
-                all_orders[order[3]] = line
 
-            return jsonify(all_orders), 200
+            return jsonify(orders), 200
         else:
             return jsonify(msg='Not Authorized'), 401

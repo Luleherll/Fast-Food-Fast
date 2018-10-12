@@ -35,7 +35,7 @@ class Check:
                                 user_id = %s""",),
                                (user_id,), 'SELECT')
         role = self.unwrap(response)
-        if role[0] == 'Admin':
+        if role['role'] == 'Admin':
             return True
         else:
             return False

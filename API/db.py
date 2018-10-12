@@ -1,4 +1,5 @@
 import psycopg2 as pg
+from psycopg2.extras import RealDictCursor
 
 
 class Database:
@@ -13,7 +14,7 @@ class Database:
                               )
         self.conn = conn
         self.conn.autocommit = True
-        self.cur = conn.cursor()
+        self.cur = conn.cursor(cursor_factory=RealDictCursor)
 
     def run(self, sql, data=None, command=None):
         info = None
