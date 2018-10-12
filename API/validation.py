@@ -19,7 +19,7 @@ class Check:
                 else:
                     new_container[key] = value
         except KeyError:
-            return jsonify('[{}] is empty.'.format(key)), 400
+            return jsonify(msg='[{}] is empty.'.format(key)), 400
         return new_container
 
     def unwrap(self, container):

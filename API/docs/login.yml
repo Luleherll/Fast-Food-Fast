@@ -1,0 +1,28 @@
+This logs in a user
+---
+tags:
+ - Authentication
+parameters:
+  - in: body
+    name: body
+    required: true
+    type: string
+    description: This route logs in a user, returning an access token
+responses:
+  200:
+    description: Login successfull
+    schema:
+      id: signin
+      properties:
+        username:
+          type: string
+          default: Admin
+        password:
+          type: string
+          default: secret
+
+  401:
+    description: 'User Not Registered.'
+
+  400:
+    description: 'You must provide all required fields.'

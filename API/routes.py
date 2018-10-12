@@ -1,19 +1,22 @@
 from API.models import Users, Orders, Menu
 from API.validation import Check
 from flask import Flask, jsonify
-from flask import request, session
+from flask import request, redirect
 from flask_jwt_extended import (JWTManager, create_access_token,
                                 get_jwt_identity, jwt_required)
+from flasgger import Swagger, swag_from
 
 
 app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = 'ucanguessit'
 jwt = JWTManager(app)
+Swagger(app)
+error = 'You must provide all required fields.'
 
 
-@app.route('/')
-def welcome():
-    return jsonify("Welcome to the Fast-Food-Fast API")
+@app.route("/")
+def index():
+    return redirect('/apidocs')
 
 
 @app.errorhandler(404)
@@ -23,6 +26,7 @@ def not_found_error(e):
 
 
 @app.route('/api/v2/auth/signup', methods=['POST'])
+@swag_from('docs/signup.yml')
 def register():
     "This route registers a new user."
     try:
@@ -40,12 +44,13 @@ def register():
 
         return response
     except KeyError:
-        return jsonify('Missing data'), 400
+        return jsonify(error=error), 400
     except ValueError:
-        return jsonify('Invalid data'), 400
+        return jsonify(error='Please provide valid data types.'), 400
     
 
 @app.route('/api/v2/auth/login', methods=['POST'])
+@swag_from('docs/login.yml')
 def login():
     "This route logs in a user."
     try:
@@ -57,18 +62,19 @@ def login():
         else:
             user_id = Users().login(name, password)
             access_token = create_access_token(identity=user_id[0])
-            return jsonify(access_token), 200
+            return jsonify(access_token=access_token), 100
     except TypeError:
-        return jsonify('Not Registered.'), 401
+        return jsonify(error='Not Registered.'), 401
     except KeyError:
-        return jsonify('Missing data'), 400
+        return jsonify(error=error), 400
 
 
 @app.route('/api/v2/auth/admin', methods=['PUT'])
 @jwt_required
+@swag_from('docs/make_admin.yml')
 def make_admin():
     user_id = get_jwt_identity()
-    "This route logs in a user."
+    "This route makes user admins."
     try:
         name = request.get_json()['username']
         clean = Check().is_clean({'username': name})
@@ -78,54 +84,75 @@ def make_admin():
             response = Users().make_admin(user_id, name)
             return jsonify(response), 201
     except TypeError:
-        return jsonify('Not Registered.'), 401
+        return jsonify(error='Not Registered.'), 401
     except KeyError:
-        return jsonify('Missing data'), 400
+        return jsonify(error=error), 400
 
 
-@app.route('/api/v2/users/orders', methods=['GET', 'POST'])
+@app.route('/api/v2/users/orders', methods=['POST'])
 @jwt_required
+@swag_from('docs/make_order.yml')
 def place_order():
     user_id = get_jwt_identity()
     "This route adds a new order to the orders list."
-    if request.method == 'POST':
-        try:
-            name = request.get_json()['name']
-            quantity = request.get_json()['quantity']
-            comment = request.get_json()['comment']
-            order = {'name': name, 'quantity': quantity, 'comment': comment}
+    try:
+        name = request.get_json()['name']
+        quantity = request.get_json()['quantity']
+        comment = request.get_json()['comment']
+        order = {'name': name, 'quantity': quantity, 'comment': comment}
 
-            response = Orders().make_order(user_id, order)
-            return response
-        except KeyError:
-            return jsonify('Missing data'), 400
-        except ValueError:
-            return jsonify('Invalid data'), 400
-
-    elif request.method == 'GET':
-        "This route returns the history of orders."
-        response = Users().user_history(user_id)
-        return jsonify(response)
+        response = Orders().make_order(user_id, order)
+        return response
+    except KeyError:
+        return jsonify(error=error), 400
+    except ValueError:
+        return jsonify(error='Please provide valid data types.'), 400
 
 
-@app.route('/api/v2/orders/<int:orderId>', methods=['GET', 'PUT'])
+@app.route('/api/v2/users/orders', methods=['GET'])
 @jwt_required
+@swag_from('docs/user_orders.yml')
+def user_orders():
+    user_id = get_jwt_identity() 
+    "This route returns the history of orders."
+    response = Users().user_orders(user_id)
+    return jsonify(response)
+
+
+@app.route('/api/v2/users/history', methods=['GET'])
+@jwt_required
+@swag_from('docs/user_history.yml')
+def user_history():
+    user_id = get_jwt_identity()
+    "This route returns the history of orders."
+    response = Users().user_history(user_id)
+    return jsonify(response)
+
+
+@app.route('/api/v2/orders/<int:orderId>', methods=['GET'])
+@jwt_required
+@swag_from('docs/get_order.yml')
 def get_order(orderId):
     user_id = get_jwt_identity()
     "This route returns the details of a particular order."
-    if request.method == 'GET':
-        order = Orders().get_order(user_id, orderId)
-        return order
+    order = Orders().get_order(user_id, orderId)
+    return order
 
-    elif request.method == 'PUT':
-        "This route updates the status key of a particular order."
-        status = request.get_json()['status']
-        response = Orders().update_order(user_id, orderId, status)
-        return response
+
+@app.route('/api/v2/orders/<int:orderId>', methods=['PUT'])
+@jwt_required
+@swag_from('docs/update_order.yml')
+def update_order(orderId):
+    user_id = get_jwt_identity()
+    "This route updates the status key of a particular order."
+    status = request.get_json()['status']
+    response = Orders().update_order(user_id, orderId, status)
+    return response
 
 
 @app.route('/api/v2/orders/', methods=['GET'])
 @jwt_required
+@swag_from('docs/orders.yml')
 def get_orders():
     "This route returns all orders."
     user_id = get_jwt_identity()
@@ -133,21 +160,26 @@ def get_orders():
     return response
 
 
-@app.route('/api/v2/menu', methods=['GET', 'POST'])
+@app.route('/api/v2/menu', methods=['GET'])
 @jwt_required
+@swag_from('docs/menu.yml')
 def menu():
     "This route returns all the food items in the food list."
-    user_id = get_jwt_identity()
-    if request.method == 'GET':
-        response = Menu().get_menu()
-        return response
+    response = Menu().get_menu()
+    return response
 
-    elif request.method == 'POST':
-        name = request.get_json()['name']
-        price = request.get_json()['price']
-        status = request.get_json()['status']
-        tags = request.get_json()['tags']
-        food = {'name': name, 'price': price, 'status': status,
-                'tags': tags}
-        response = Menu().add_food(user_id, food)
-        return response
+
+@app.route('/api/v2/menu', methods=['POST'])
+@jwt_required
+@swag_from('docs/add_food.yml')
+def add_menu():
+    user_id = get_jwt_identity()
+
+    name = request.get_json()['name']
+    price = request.get_json()['price']
+    status = request.get_json()['status']
+    tags = request.get_json()['tags']
+    food = {'name': name, 'price': price, 'status': status,
+            'tags': tags}
+    response = Menu().add_food(user_id, food)
+    return response

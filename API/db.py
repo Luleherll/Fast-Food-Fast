@@ -8,10 +8,8 @@ class Database:
             conn = pg.connect(dbname='fasttests', user='postgres',
                               password='0789')
         else:
-            conn = pg.connect("dbname='dd9mb4gqm802l1'  user='envcqlrpkysjxa'\
-                               host='ec2-23-21-147-71.compute-1.amazonaws.com'\
-                               port='5432'\
-                                password='428e7756143a868108cd0392055a879b31faae3e92ca3969ea26f14b9709b566'"
+            conn = pg.connect(dbname='fastfood', user='postgres',
+                              password='0789'
                               )
         self.conn = conn
         self.conn.autocommit = True
@@ -41,6 +39,9 @@ class Database:
             """CREATE TABLE IF NOT EXISTS menu
                 (
                 food_id SERIAL PRIMARY KEY,
+                img1 VARCHAR(500),
+                img2 VARCHAR(500),
+                img3 VARCHAR(500),
                 name VARCHAR(255) NOT NULL UNIQUE,
                 price INTEGER NOT NULL,
                 status VARCHAR(255) NOT NULL,
@@ -81,7 +82,6 @@ class Database:
            """
         )
         self.run(sql_main)
-        print('yeessss.')
 
     def clean_tables(self):
         sql = ("DELETE FROM orders", "DELETE FROM users", "DELETE FROM menu")
