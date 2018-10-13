@@ -1,0 +1,36 @@
+For editing a food option on the menu
+---
+tags:
+ - Admin
+parameters:
+  - name: Authorization
+    in: header
+    type: string
+    description: JWT token authorization
+    required: true
+  - name: body
+    in: body
+    description: The details of food option
+    required: true
+  - name: food_id
+    in: path
+    description: food item id.
+security:
+  - JWT:
+      name: Authorization
+      in: header
+      type: string
+      description: Pass in jwt token. i.e Bearer <jwt>
+      required: true
+responses:
+  205:
+    description: Food updated successlly.
+
+  400:
+    description: Required fields missing
+
+  401:
+    description: Not Authorized.
+
+  404:
+    descriptiom: Not updated. crosscheck the given values.

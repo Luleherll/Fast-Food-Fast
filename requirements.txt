@@ -1,8 +1,10 @@
-flask
-Flask-Gunicorn
+Flask
 gunicorn
-py
-nose
-coverage
+flask-gunicorn
+flask-jwt-extended
+flasgger
 coveralls
-cookiecutter
+nose
+pep8
+psycopg2
+pylint
