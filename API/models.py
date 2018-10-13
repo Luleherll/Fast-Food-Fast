@@ -11,7 +11,7 @@ class Users:
 
     def register(self, user):
         sql = ("""
-        INSERT INTO Users(username, password, tel, email, location, key_point,
+        INSERT INTO users(username, password, tel, email, location, key_point,
                           role)
              VALUES(%s,%s,%s,%s,%s,%s,%s) RETURNING user_id;
         """,)
@@ -26,10 +26,10 @@ class Users:
                                      clean['location'],
                                      clean['key_point'], 'User'),
                                'INSERT')
+            print(info)
             if info is not None:
                 return jsonify(msg="User named {} already exists.".format(
                                         clean['username'])), 406
-
         return res
 
     def login(self, username, password):
@@ -65,10 +65,11 @@ class Users:
             updated = self.db.run(("""UPDATE users SET role = %s
                                 WHERE username = %s""",),
                                   ('Admin', username,), 'UPDATE')
+            print(updated)
             if updated == 0:
                 return jsonify(msg='User not found.'), 404
             else:
-                return jsonify(msg='{} made administrator.'), 205
+                return jsonify(msg='{} made administrator.'.format(username)), 205
         else:
             return jsonify(msg='Not Authorized'), 401
 

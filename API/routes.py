@@ -47,7 +47,7 @@ def register():
         return jsonify(error=error), 400
     except ValueError:
         return jsonify(error='Please provide valid data types.'), 400
-    
+
 
 @app.route('/api/v2/auth/login', methods=['POST'])
 @swag_from('docs/login.yml')
@@ -82,7 +82,7 @@ def make_admin():
             return clean
         else:
             response = Users().make_admin(user_id, name)
-            return jsonify(response), 201
+            return response
     except TypeError:
         return jsonify(error='Not Registered.'), 401
     except KeyError:

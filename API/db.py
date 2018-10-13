@@ -34,7 +34,7 @@ class Database:
             return error
         finally:
             if self.conn is not None:
-                self.conn.close()
+                self.conn.rollback()
         return info
 
     def create_tables(self):
@@ -84,8 +84,8 @@ class Database:
                    'Admin') RETURNING user_id;
            """
         )
-        self.run(sql_main)
+        return self.run(sql_main)
 
-    def clean_tables(self):
-        sql = ("DELETE FROM orders", "DELETE FROM users", "DELETE FROM menu")
-        self.run(sql)
+    def drop_tables(self):
+        sql = ("DROP TABLE orders", "DROP TABLE users", "DROP TABLE menu")
+        return self.run(sql)
