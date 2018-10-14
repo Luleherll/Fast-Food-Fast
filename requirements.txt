@@ -3,6 +3,7 @@ gunicorn
 flask-gunicorn
 flask-jwt-extended
 flasgger
+flask-cors
 coveralls
 nose
 pep8

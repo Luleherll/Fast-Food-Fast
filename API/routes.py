@@ -5,6 +5,7 @@ from flask import request, redirect
 from flask_jwt_extended import (JWTManager, create_access_token,
                                 get_jwt_identity, jwt_required)
 from flasgger import Swagger, swag_from
+from flask_cors import CORS
 
 
 app = Flask(__name__)
