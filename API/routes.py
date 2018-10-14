@@ -11,6 +11,7 @@ app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = 'ucanguessit'
 jwt = JWTManager(app)
 Swagger(app)
+CORS(app)
 error = 'You must provide all required fields.'
 
 
