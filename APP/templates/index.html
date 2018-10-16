@@ -9,7 +9,7 @@
         <title>Fast Food</title>
         <link rel="icon" type="image/gif/png" href="images/logo.jpg">
         <link rel="stylesheet" type="text/css" href="static/css/main.css" />
-        <script src="static/js/main.js"></script>
+        
 </head>
 <body onload="current(3)">
        <div class="slogan">Hunger can't wait !<br><span>ORDER NOW.</span></div>
@@ -38,23 +38,24 @@
                 </div>
                     <div class="fields btn"><input type="button" onclick="current(3)" value="Register"></div>
             </form>
-        </div>   
+        </div>
+        
    <form class="slides wrapper fade">
-        Email
-        <div><input class="ins" type="text" placeholder="john@example.com"></div>
+       
+        Username
+        <div><input id="username" class="ins" type="text" placeholder="john"></div>
         Password
-        <div><input class="ins" type="password" placeholder="**********"></div>
-        <div><input class="btn" type="button" onclick="on()" value="LOGIN"></div>
+        <div><input id="password" class="ins" type="password" placeholder="**********"></div>
+        <div><input id="login" class="btn" type="button" value="LOGIN"></div>
         <div><input class="btn" type="button" onclick="current(2)" value="Create Account."></div>
         <a class="heads" onclick="current(1)">I Forgot My Password.</a>
    </form>
-    
-        <div id="overlay">
-           <div>
-               <a href="home.html">User</a>
-               <a href="admin.html">Admin</a>
-            </div>   
-        </div> 
-    
+   <div id="banner" class="fade">
+        <span id="msg"></span>
+        <span id="close">X</span>  
+    </div>
+         
+    <script src="static/js/main.js"></script>
+    <script src="static/js/index.js"></script>
 </body>
 </html>
