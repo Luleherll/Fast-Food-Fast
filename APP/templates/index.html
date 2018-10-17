@@ -22,21 +22,33 @@
             <div class="fields btn"><input type="button" onclick="current(3)" value="Reset Password"></div>
         </form>
     </div>  
-    <div class="slides wrapper fade">
+    <div class="slides wrapper fade min">
             <form method="POST">
                 <div class="fields">
                     Username
-                    <div><input class="ins" type="text" placeholder="john"></div>
-                </div>
-                <div class="fields">
-                   Email
-                    <div><input class="ins" type="text" placeholder="john@example.com"></div>
+                    <div><input id="newUser" class="ins" type="text" placeholder="john"></div>
                 </div>
                 <div class="fields">
                    Password
-                    <div><input class="ins" type="password" placeholder="*****"></div>
+                    <div><input id="newPassword" class="ins" type="password" placeholder="*****"></div>
                 </div>
-                    <div class="fields btn"><input type="button" onclick="current(3)" value="Register"></div>
+                <div class="fields">
+                    Tel
+                    <div><input id="newTel" class="ins" type="text" placeholder="*****"></div>
+                     </div>
+                <div class="fields">
+                   Email
+                    <div><input id="newEmail" class="ins" type="email" placeholder="john@example.com"></div>
+                </div>
+                <div class="fields">
+                    location
+                    <div><input id="location" class="ins" type="text" placeholder=""></div>
+                </div>
+                <div class="fields">
+                    Key Point
+                    <div><input id="keyPoint" class="ins" type="text" placeholder="Plot no/Closiest known place"></div>
+                </div>
+                <div class="fields btn"><input id="signup" type="button" value="Register"></div>
             </form>
         </div>
         
@@ -50,6 +62,12 @@
         <div><input class="btn" type="button" onclick="current(2)" value="Create Account."></div>
         <a class="heads" onclick="current(1)">I Forgot My Password.</a>
    </form>
+   <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span id="remove" class="close">&times;</span>
+            <span id="info"></span>
+        </div>            
+  </div>
    <div id="banner" class="fade">
         <span id="msg"></span>
         <span id="close">X</span>  
