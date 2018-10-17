@@ -1,11 +1,14 @@
-
-
 var btnClose = document.getElementById("close");
-
-btnClose.addEventListener("click", function () {
-      document.getElementById("banner").style.display="none";
+var remove = document.getElementById("remove");
+function close(name) {
+	document.getElementById(name).style.display="none";
+}
+btnClose.addEventListener("click", function(){
+	close('banner')
 });
-
+remove.addEventListener('click', function(){
+	close('myModal')
+});
 
 document.getElementById("login").addEventListener("click", function() {
 	fetch('https://lule-persistent.herokuapp.com/api/v2/auth/login', {
@@ -85,24 +88,37 @@ document.getElementById("signup").addEventListener("click", function() {
 	})
 }).then(function(response) {
 	sessionStorage.setItem('status', response.status)
-	console.log(response.status)
 	return response.json();
 }).then(function(j) {
 	var status=sessionStorage.getItem('status')
 	sessionStorage.removeItem('status')
-	if(status===401){
-       document.getElementById('msg').innerText=j.error;
-       var alert=document.getElementById('banner')
-	   alert.style.display='block';
-	   alert.style.background='rgba(172, 255, 47, 0.356)';
+        
+	if(status==201){
+		document.getElementById('info').innerText=j.msg
+	    document.getElementById('myModal').style.display='block';
+	    current(3)
 	}else if(status==406){
 		document.getElementById('msg').innerText=j.msg;
 		var alert=document.getElementById('banner')
 		alert.style.background='rgb(224, 22, 22)'
 		alert.style.display='block';
 	}else{
-		current(3)
-		document.getElementById('info').innerText=j
-		document.getElementById('myModal').style.display='block';
+		if(j.msg!==undefined){
+			document.getElementById('msg').innerText=j.msg;
+            var alert=document.getElementById('banner')
+	        alert.style.display='block';
+	        alert.style.background='rgb(233, 139, 16)';
+		}else if(j.error!==undefined){
+			document.getElementById('msg').innerText=j.error;
+            var alert=document.getElementById('banner')
+	        alert.style.display='block';
+	        alert.style.background='rgb(233, 139, 16)';
+		}else{
+			document.getElementById('msg').innerText=j;
+            var alert=document.getElementById('banner')
+	        alert.style.display='block';
+	        alert.style.background='rgb(233, 139, 16)';
+		}
+		
 	}
 })});
