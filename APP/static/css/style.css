@@ -76,6 +76,7 @@ body{
 input{
     border: none;
     border-radius: 30px;
+    text-align: center;
 }
 input:hover{
     border: 1px solid yellow;
@@ -178,14 +179,16 @@ input:hover{
     width: 120px;
     height: 120px;
 }
-#accept{
+.accept{
     background-color: darkgreen;
+}
+.decline{
+    background-color: coral;
 }
 .item div span{
     color: greenyellow;
 }
 .item div input{
-    background-color: coral;
     color: wheat;
     font-style: oblique;
     padding: 10px;

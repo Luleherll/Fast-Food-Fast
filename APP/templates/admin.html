@@ -10,9 +10,9 @@
         <link rel="icon" type="image/gif/png" href="static/images/logo.jpg">
         <link rel="stylesheet" type="text/css" media="screen" href="static/css/style.css" />
         <script src="static/js/main.js"></script>
-        <script src="static/js/admin.js"></script>
+        
 </head>
-<body onload="current(2), opt(1)">
+<body onload="current(4), opt(1)">
     <header>
     <nav class="nav-bar">
     <img src="static/images/icon.jpg">
@@ -118,7 +118,7 @@
         </div>
     </div>
 
-    <div class="slides fade">
+    <span class="slides fade">
        <div id="blank"></div>
     <div id="side-bar">
         <div class="title">Most Ordered.</div>
@@ -126,49 +126,15 @@
         <div class="title">Latest Food.</div>
         <img src="images/latest.png" alt="">
     </div>
-    <div class="item">
+    <div class="b item">
         <span class="images">
             <img src="images/bil2.jpg" alt="">
         </span>
-        <div> 1 Chicken Biriyan<br>From: Zzana <span>In: 30 mins</span>
-            <input id="accept" type="button" onclick="current(3)" value="Accept"><input type="button" onclick="current(1)" value="Decline"></div>
-    </div>
-    <div class="item">
-        <span class="images">
-            <img src="images/tik1.jpg" alt="">
+        <div id="orderId"><span>1 Chicken Biriyan</span><br><span>Zzana</span><span>point</span>
+            <input class="accept" id="a" type="button" onclick="current(3)" value="Accept"><input class="decline" id="d" type="button" onclick="current(1)" value="Decline"></div>
         </span>
-        <div> 1 Kababs<br>From: Rubaga <span>In: 1 hr</span>
-            <input id="accept" type="button" onclick="current(3)" value="Accept"><input type="button" onclick="current(1)" value="Decline"></div>
-    </div>
-    <div class="item">
-            <span class="images">
-                    <img src="images/big1.jpg" alt="" >
-                </span>
-            <div>3 Burgers<br>From: Nalya <span>In: 3 hrs</span>
-                <input id="accept" type="button" onclick="current(3)" value="Accept"><input type="button" onclick="current(1)" value="Decline"></div>
-    </div>
-    <div class="item">
-            <span class="images">
-                    <img src="images/taco2.jpg" alt="">
-                </span>
-            <div>4 Beef tacos<br>From: Bukoto <span>In: 40 mins</span>
-                <input id="accept" type="button" onclick="current(3)" value="Accept"><input type="button" onclick="current(1)" value="Decline"></div>
-    </div>
-    <div class="item">
-            <span class="images">
-                    <img src="images/plate1.png" alt="">
-                </span>
-            <div>1 Skyline dish<br>From: Lungujja <span>In: 1 hr</span>
-                <input id="accept" type="button" onclick="current(3)" value="Accept"><input type="button" onclick="current(1)" value="Decline"></div>
-    </div>
-    <div class="item">
-            <span class="images">
-                <img src="images/piz1.jpg" alt="">
-            </span>
-        <div>1 Pizza<br>From: Bukoto <span>In: 1 hr</span>
-            <input id="accept" type="button" onclick="current(3)" value="Accept"><input type="button" onclick="current(1)" value="Decline"></div>
-    </div> 
-    </div>
     
+    </div>
+    <script src="static/js/admin.js"></script>
 </body>
 </html>
