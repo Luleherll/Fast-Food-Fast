@@ -35,6 +35,7 @@ document.getElementById("login").addEventListener("click", function() {
 		alert.style.background='rgb(224, 22, 22)'
 		alert.style.display='block';
 	}else{
+		sessionStorage.setItem('token', JSON.stringify({access:j}))
 		fetch('https://lule-persistent.herokuapp.com/api/v2/orders/', {
     method: 'get',
     mode: 'cors',
