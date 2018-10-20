@@ -35,7 +35,8 @@ document.getElementById("login").addEventListener("click", function() {
 		alert.style.background='rgb(224, 22, 22)'
 		alert.style.display='block';
 	}else{
-		sessionStorage.setItem('token', JSON.stringify({access:j}))
+		
+		sessionStorage.setItem('token', j);
 		fetch('https://lule-persistent.herokuapp.com/api/v2/orders/', {
     method: 'get',
     mode: 'cors',
@@ -46,27 +47,12 @@ document.getElementById("login").addEventListener("click", function() {
 	
    }).then(function(response) {return response.json();}).then(function(res) {
 	   if(res.msg!==undefined){
-		fetch('https://lule-persistent.herokuapp.com/api/v2/menu', {
-			method: 'get',
-			mode: 'cors',
-			headers: new Headers({
-				'Content-Type': 'application/json',
-				'Authorization': 'Bearer '+j
-			})
-			
-		   }).then(function(response) {return response.json();}).then(function(menu) {
-			   sessionStorage.setItem('data', JSON.stringify({menu:menu}));
-	           window.location.replace('http://localhost:5000/home')
-		   })
-		   
+		   sessionStorage.setItem('data', JSON.stringify({menu:menu}));
+	        window.location.replace('http://localhost:5000/home')
 	   }else{
-
 		sessionStorage.setItem('data', JSON.stringify({orders:res}));
 		window.location.replace('http://localhost:5000/admin')
 	   }
-	   
-	   
-	   
    })
      
 	}

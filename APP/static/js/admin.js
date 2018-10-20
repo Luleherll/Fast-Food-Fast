@@ -1,10 +1,15 @@
-var item = sessionStorage.getItem('data');
-var data=JSON.parse(item);
-var token = sessionStorage.getItem('token');
-var pass=JSON.parse(token);
 var divs = document.getElementsByClassName('slides')[3];
-
-data.orders.forEach((order) => {
+fetch('https://lule-persistent.herokuapp.com/api/v2/orders/', {
+			method: 'get',
+			mode: 'cors',
+			headers: new Headers({
+				'Content-Type': 'application/json',
+				'Authorization': 'Bearer '+sessionStorage.getItem('token')
+			})
+			
+}).then(function(response) {return response.json();}).then(function(orders) {
+    console.log(orders)
+	orders.forEach((order) => {
     const div = document.createElement('div');
     const inputs = document.createElement('div');
     const qName = document.createElement('span');
@@ -14,6 +19,7 @@ data.orders.forEach((order) => {
     const decline = document.createElement('input');
     
     div.setAttribute('class', 'item')
+    div.setAttribute('id', order.order_id)
     accept.setAttribute('class', 'accept')
     decline.setAttribute('class', 'decline')
     accept.setAttribute('type', 'button')
@@ -28,15 +34,17 @@ data.orders.forEach((order) => {
     mode: 'cors',
 	headers: new Headers({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer '+pass.access
+        'Authorization': "Bearer "+sessionStorage.getItem('token')
 	}),
 	body: JSON.stringify({
 		"status": "Pending"
 	})
-}).then(function(response) { 
-	return response.json();
-}).then(function(j) { 
-	console.log(j)
+}).then(function(response) {
+    if(response.status==205){
+      window.location.reload();
+    }else{
+
+    }
 })
     })
     decline.addEventListener('click', function() {
@@ -45,13 +53,17 @@ data.orders.forEach((order) => {
     mode: 'cors',
 	headers: new Headers({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer '+pass.access
+        'Authorization': 'Bearer '+sessionStorage.getItem('token')
 	}),
 	body: JSON.stringify({
 		"status": "Declined"
 	})
 }).then(function(response) { 
-	return response.json();
+    if(response.status==205){
+        window.location.reload();
+      }else{
+  
+      }
 })
     })
 
@@ -66,4 +78,6 @@ data.orders.forEach((order) => {
     inputs.appendChild(decline);
     div.appendChild(inputs);
     divs.appendChild(div);
-  });
+  }); 
+})
+
