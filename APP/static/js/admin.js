@@ -1,5 +1,7 @@
-var divs = document.getElementsByClassName('slides')[3];
-fetch('https://lule-persistent.herokuapp.com/api/v2/orders/', {
+var newOrders = document.getElementsByClassName('slides')[3];
+var pendingOrders = document.getElementsByClassName('slides')[2];
+var archive = document.getElementsByClassName('slides')[0];
+fetch('https://lule-persistent.herokuapp.com/api/v2/orders/pending', {
 			method: 'get',
 			mode: 'cors',
 			headers: new Headers({
@@ -77,11 +79,67 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/', {
     inputs.appendChild(accept);
     inputs.appendChild(decline);
     div.appendChild(inputs);
-    divs.appendChild(div);
+    newOrders.appendChild(div);
   }); 
 })
 
+fetch('https://lule-persistent.herokuapp.com/api/v2/orders/pending', {
+			method: 'get',
+			mode: 'cors',
+			headers: new Headers({
+				'Content-Type': 'application/json',
+				'Authorization': 'Bearer '+sessionStorage.getItem('token')
+			})
+			
+}).then(function(response) {return response.json();}).then(function(orders) {
+    console.log(orders)
+	orders.forEach((order) => {
+    const pDiv = document.createElement('div');
+    const pInputs = document.createElement('div');
+    const pName = document.createElement('span');
+    const pPlace = document.createElement('span');
+    const pPrice = document.createElement('span');
+    const complete = document.createElement('input');
+    
+    pDiv.setAttribute('class', 'item')
+    pDiv.setAttribute('id', order.order_id)
+    complete.setAttribute('class', 'accept')
+    complete.setAttribute('type', 'button')
+    complete.setAttribute('value', 'Complete')
 
+    complete.addEventListener('click', function() {
+
+        fetch('https://lule-persistent.herokuapp.com/api/v2/orders/'+order.order_id, {
+    method: 'put',
+    mode: 'cors',
+	headers: new Headers({
+        'Content-Type': 'application/json',
+        'Authorization': "Bearer "+sessionStorage.getItem('token')
+	}),
+	body: JSON.stringify({
+		"status": "Completed"
+	})
+}).then(function(response) {
+    if(response.status==205){
+      window.location.reload();
+    }else{
+
+    }
+})
+    })
+
+    pName.innerText=order.quantity+' '+order.name
+    pName.innerHTML+='<br>'
+    pPlace.innerText=order.location+order.order_id;
+    pPrice.innerText=order.amount
+    pInputs.appendChild(pName);
+    pInputs.appendChild(pPlace);
+    pInputs.appendChild(pPrice);
+    pInputs.appendChild(complete);
+    pDiv.appendChild(pInputs);
+    pendingOrders.appendChild(pDiv);
+  }); 
+})
 document.getElementById('aFood').addEventListener('click', function() {
     document.getElementById('yes').style.display='none';
     fetch('https://lule-persistent.herokuapp.com/api/v2/menu', {
