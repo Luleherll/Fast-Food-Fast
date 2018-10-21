@@ -151,10 +151,11 @@ class Orders:
              location, amount, status)
              VALUES(%s,%s,%s,%s,%s,%s,%s,%s) RETURNING order_id;
             """,)
-            self.db.run(sql, (user['user_id'], food['food_id'], order['name'],
+            info = self.db.run(sql, (user['user_id'], food['food_id'], order['name'],
                               order['quantity'], order['comment'],
                               user['location'], order['quantity']*food['price'],
                               'Queued'), 'INSERT')
+        
         return jsonify(msg='Your order was placed successfully.'), 201
 
     def get_order(self, user_id, order_id):

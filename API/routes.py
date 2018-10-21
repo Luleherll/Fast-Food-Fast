@@ -102,13 +102,15 @@ def place_order():
         quantity = request.get_json()['quantity']
         comment = request.get_json()['comment']
         order = {'name': name, 'quantity': quantity, 'comment': comment}
+        clean = Check().is_clean(order)
+        if type(clean) == tuple:
+            return clean
+        else:
+            response = Orders().make_order(user_id, order)
+            return response
 
-        response = Orders().make_order(user_id, order)
-        return response
     except KeyError:
         return jsonify(error=error), 400
-    except ValueError:
-        return jsonify(error='Please provide valid data types.'), 400
 
 
 @app.route('/api/v2/users/orders', methods=['GET'])
