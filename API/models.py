@@ -55,8 +55,10 @@ class Users:
 
     def user_history(self, user_id):
         orders = self.db.run(("""SELECT * FROM orders WHERE
-                                user_id = %s and status = %s""",),
-                             (user_id, 'Completed'), 'SELECT')
+                                user_id = %s and status = 'Completed' UNION
+                                SELECT * FROM orders WHERE user_id = %s and
+                                status = 'Declined'""",),
+                             (user_id, user_id,), 'SELECT')
 
         return orders
 
@@ -86,8 +88,10 @@ class Menu:
              VALUES(%s,%s,%s,%s) RETURNING food_id;
         """,)
         if Check().is_admin(user_id) is True:
-            self.db.run(sql, (food['name'], food['price'],
-                        food['status'], food['tags']), 'INSERT')
+            info = self.db.run(sql, (food['name'], food['price'],
+                               food['status'], food['tags']), 'INSERT')
+            if info is not None:
+                return jsonify(msg='Food already exists.Try updating.'), 406
             return jsonify(msg='Food option added successfully.'), 201
         else:
             return jsonify(msg='Not Authorized'), 401
@@ -101,25 +105,26 @@ class Menu:
                                 name = %s""",), (name,), 'SELECT')
         return jsonify(food), 200
 
-    def update_food(self, user_id, name, key, value):
+    def update_food(self, user_id, update):
         res = jsonify(msg='Not Authorized'), 401
         if Check().is_admin(user_id) is True:
-            updated = self.db.run(("""UPDATE menu SET {} = %s
-                                WHERE name = %s""".format(key),),
-                                  (value, name,), 'UPDATE')
+            updated = self.db.run(("""UPDATE menu SET price = %s, status = %s,
+                                    tags = %s WHERE name = %s""",),
+                                  (update['price'], update['status'],
+                                  update['tags'], update['name']), 'UPDATE')
+            print(updated)
             if updated != 0:
-                res = jsonify(updated), 205
+                return jsonify(msg='Food updated successfully.'), 205
             else:
-                res = jsonify(msg='Not updated. crosscheck the given values.'),
-                404
+                return jsonify(msg='Not updated. crosscheck the given values.'), 404
         else:
             return res
 
-    def delete_food(self, user_id, food_id):
+    def delete_food(self, user_id, name):
         if Check().is_admin(user_id) is True:
             self.db.run(("""DELETE FROM menu WHERE
-                        food_id = %s""",), (food_id,))
-            return jsonify(msg='Food successfully deleted.'), 100
+                        name = %s""",), (name,))
+            return jsonify(msg='Food successfully deleted.'), 200
         else:
             return jsonify(msg='Not Authorized'), 401
 
@@ -188,11 +193,32 @@ class Orders:
         else:
             return res
 
-    def get_orders(self, user_id):
+    def get_new_orders(self, user_id):
         if Check().is_admin(user_id) is True:
-            orders = self.db.run(("""SELECT * FROM orders""",),
+            orders = self.db.run(("""SELECT * FROM orders WHERE
+                                  status = 'Queued'""",),
+                                 command='SELECT')
+            print(orders)
+            return jsonify(orders), 200
+        else:
+            return jsonify(msg='Not Authorized'), 401
+
+    def get_pending_orders(self, user_id):
+        if Check().is_admin(user_id) is True:
+            orders = self.db.run(("""SELECT * FROM orders WHERE status =
+                                     'Pending'""",),
                                  command='SELECT')
 
+            return jsonify(orders), 200
+        else:
+            return jsonify(msg='Not Authorized'), 401
+    
+    def complete_and_decline(self, user_id):
+        if Check().is_admin(user_id) is True:
+            orders = self.db.run(("""SELECT * FROM orders WHERE status = 'Completed'
+                               UNION all SELECT * FROM orders WHERE status = 'Declined'""",),
+                                 command='SELECT')
+            print(orders)
             return jsonify(orders), 200
         else:
             return jsonify(msg='Not Authorized'), 401
