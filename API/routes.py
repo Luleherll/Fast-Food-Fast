@@ -158,7 +158,26 @@ def update_order(orderId):
 def get_orders():
     "This route returns all orders."
     user_id = get_jwt_identity()
-    response = Orders().get_orders(user_id)
+    response = Orders().get_new_orders(user_id)
+    return response
+
+@app.route('/api/v2/orders/pending', methods=['GET'])
+@jwt_required
+@swag_from('docs/orders.yml')
+def pending_orders():
+    "This route returns all orders."
+    user_id = get_jwt_identity()
+    response = Orders().get_pending_orders(user_id)
+    return response
+
+
+@app.route('/api/v2/orders/archive', methods=['GET'])
+@jwt_required
+@swag_from('docs/orders.yml')
+def archive():
+    "This route returns all orders."
+    user_id = get_jwt_identity()
+    response = Orders().complete_and_decline(user_id)
     return response
 
 
@@ -176,12 +195,50 @@ def menu():
 @swag_from('docs/add_food.yml')
 def add_menu():
     user_id = get_jwt_identity()
+    try:
+        name = request.get_json()['name']
+        price = request.get_json()['price']
+        status = request.get_json()['status']
+        tags = request.get_json()['tags']
+        food = {'name': name, 'price': price, 'status': status,
+                'tags': tags}
+        clean = Check().is_clean(food)
+        if type(clean) == tuple:
+            return clean
+        else:
+            response = Menu().add_food(user_id, food)
+            return response
+    except KeyError:
+        return jsonify(error=error), 400
 
-    name = request.get_json()['name']
-    price = request.get_json()['price']
-    status = request.get_json()['status']
-    tags = request.get_json()['tags']
-    food = {'name': name, 'price': price, 'status': status,
-            'tags': tags}
-    response = Menu().add_food(user_id, food)
-    return response
+
+@app.route('/api/v2/menu', methods=['PUT'])
+@jwt_required
+def update_food():
+    user_id = get_jwt_identity()
+    try:
+        name = request.get_json()['name']
+        price = request.get_json()['price']
+        status = request.get_json()['status']
+        tags = request.get_json()['tags']
+        food = {'name': name, 'price': price, 'status': status,
+                'tags': tags}
+        clean = Check().is_clean(food)
+        if type(clean) == tuple:
+            return clean
+        else:
+            response = Menu().update_food(user_id, food)
+            return response
+    except KeyError:
+        return jsonify(error=error), 400
+
+@app.route('/api/v2/menu', methods=['DELETE'])
+@jwt_required
+def delete_food():
+    user_id = get_jwt_identity()
+    try:
+        name = request.get_json()['name']
+        response = Menu().delete_food(user_id, name)
+        return response
+    except KeyError:
+        return jsonify(error=error), 400

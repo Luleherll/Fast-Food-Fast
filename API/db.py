@@ -3,16 +3,18 @@ from psycopg2.extras import RealDictCursor
 
 
 class Database:
+    """dbname='dd9mb4gqm802l1' user='envcqlrpkysjxa'\
+        host='ec2-23-21-147-71.compute-1.amazonaws.com'\
+    port='5432'\
+    password='428e7756143a868108cd0392055a879b31faae3e92ca3969ea26f14b9709b566'"""
 
     def __init__(self, app):
         if app.config['TESTING'] is True:
             conn = pg.connect(dbname='fasttests', user='postgres',
                               password='0789')
         else:
-            conn = pg.connect("dbname='dd9mb4gqm802l1' user='envcqlrpkysjxa'\
-                               host='ec2-23-21-147-71.compute-1.amazonaws.com'\
-                               port='5432'\
-                                password='428e7756143a868108cd0392055a879b31faae3e92ca3969ea26f14b9709b566'"
+            conn = pg.connect(dbname='fastfood', user='postgres',
+                              password='0789'
                               )
         self.conn = conn
         self.conn.autocommit = True
