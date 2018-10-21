@@ -163,7 +163,6 @@ def get_orders():
 
 @app.route('/api/v2/orders/pending', methods=['GET'])
 @jwt_required
-@swag_from('docs/orders.yml')
 def pending_orders():
     "This route returns all orders."
     user_id = get_jwt_identity()
@@ -173,7 +172,6 @@ def pending_orders():
 
 @app.route('/api/v2/orders/archive', methods=['GET'])
 @jwt_required
-@swag_from('docs/orders.yml')
 def archive():
     "This route returns all orders."
     user_id = get_jwt_identity()
