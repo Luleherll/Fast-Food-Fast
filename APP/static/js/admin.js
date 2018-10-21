@@ -81,3 +81,34 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/', {
   }); 
 })
 
+
+document.getElementById('aFood').addEventListener('click', function() {
+    document.getElementById('yes').style.display='none';
+    fetch('https://lule-persistent.herokuapp.com/api/v2/menu', {
+    method: 'post',
+    mode: 'cors',
+	headers: new Headers({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '+sessionStorage.getItem('token')
+	}),
+	body: JSON.stringify({
+        "name": document.getElementById('newName').value,
+        "price": document.getElementById('newPrice').value,
+        "status": document.getElementById('newStatus').value,
+        "tags": document.getElementById('newTags').value
+	})
+}).then(function(response) {
+    console.log(response.status)
+    sessionStorage.setItem('status', response.status)
+    return response.json();
+}).then(function(res) {
+    console.log(res)
+    var status=sessionStorage.getItem('status')
+    console.log(res.msg)
+    
+	if(status==201){
+		document.getElementById('info').innerText=res.msg
+	    document.getElementById('myModal').style.display='block';
+	}
+})})
+ 

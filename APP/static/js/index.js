@@ -47,7 +47,7 @@ document.getElementById("login").addEventListener("click", function() {
 	
    }).then(function(response) {return response.json();}).then(function(res) {
 	   if(res.msg!==undefined){
-		   sessionStorage.setItem('data', JSON.stringify({menu:menu}));
+		   sessionStorage.setItem('data', JSON.stringify({menu:res}));
 	        window.location.replace('http://localhost:5000/home')
 	   }else{
 		sessionStorage.setItem('data', JSON.stringify({orders:res}));
