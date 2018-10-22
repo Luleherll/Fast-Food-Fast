@@ -1,8 +1,6 @@
 var btnClose = document.getElementById("close");
 var remove = document.getElementById("remove");
-function close(name) {
-	document.getElementById(name).style.display="none";
-}
+
 btnClose.addEventListener("click", function(){
 	close('banner')
 });

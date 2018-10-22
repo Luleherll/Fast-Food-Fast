@@ -5,7 +5,9 @@ function on() {
 function current(n) {
     show(slideIndex = n);
   }
-  
+function close(name) {
+	document.getElementById(name).style.display="none";
+}
   function show(n) {
     var i;
     var slides = document.getElementsByClassName("slides");
