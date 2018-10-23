@@ -28,7 +28,7 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/menu', {
     orderNow.setAttribute('value', 'Order Now')
 
     orderNow.addEventListener('click', function() {
-        document.getElementById('foodName').innerText=food.name+"  || "
+        document.getElementById('foodName').innerText=food.name
         document.getElementById('foodPrice').innerText='Ush '+food.price+' each';
         current(3)
     })
@@ -123,6 +123,7 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/users/history', {
 })
 
 document.getElementById("orderNow").addEventListener("click", function() {
+    var select = document.getElementById('foodQ')
 	fetch('https://lule-persistent.herokuapp.com/api/v2/users/orders', {
     method: 'post',
     mode: 'cors',
@@ -131,8 +132,8 @@ document.getElementById("orderNow").addEventListener("click", function() {
         'Authorization': 'Bearer '+sessionStorage.getItem('token')
 	}),
 	body: JSON.stringify({
-		"name": document.getElementById('foodName').value,
-		"quantity": document.getElementById('foodQ').selectedI
+		"name": document.getElementById('foodName').innerText,
+		"quantity": select.options[select.selectedIndex].text,
 		"comment": document.getElementById('foodComment').value
 
 	})
@@ -141,12 +142,12 @@ document.getElementById("orderNow").addEventListener("click", function() {
 	return response.json();
 }).then(function(j) {
 	var status=sessionStorage.getItem('status')
-	sessionStorage.removeItem('status')
-        
+    sessionStorage.removeItem('status')
+      console.log(j)  
 	if(status==201){
 		document.getElementById('info').innerText=j.msg
 	    document.getElementById('myModal').style.display='block';
-	    current(3)
+	    
 	}else if(status==406){
 		document.getElementById('msg').innerText=j.msg;
 		var alert=document.getElementById('banner')
