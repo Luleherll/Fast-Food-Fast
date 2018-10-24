@@ -32,49 +32,49 @@
             <div class="title">Latest Food.</div>
             <img src="images/latest.png" alt="" >
         </div>
-        <div class="item">
-            <span class="images">
-                <img src="images/bil2.jpg" alt="" >
-            </span>
-            <div> 1 Chicken Biriyan<br>From: Zzana <span>In: 30 mins</span>
-                <br><span id="no">RE: We cannot make it in 30 minutes.   </span><span id="no">Declined</span></div>
-        </div>
-       <div class="item">
-        <span class="images">
-            <img src="images/bil2.jpg" alt="" >
-        </span>
-        <div> 1 Chicken Biriyan<br>From: Bukoto <span>In: 30 mins</span><br><span id="yes">Completed</span></div>
-    </div>
+
     </div>
     <div class="slides fade">
         <div id="blank"></div>
         <div id="side-bar">
             <div class="title">Statistics</div>
             <img src="images/stats.jpg">
+            <div class="title">Make Admin</div>
+            <div id="promote">
+            <input type="text" placeholder="user's name">
+            <input id="makeAdmin" class="accept" type="button" value="Make Admin">
+            </div>
+            <div class="title">Logout</div>
+            <div id="promote">
+                <input id="logout" class="accept" type="button" value="Logout">
+                <input id="switch" class="accept" type="button" value="Switch to User">
+            </div>
         </div>
         <div class="controls">
         <input class="opts" onclick="opt(1)" type="button" value="Add Food"> 
         <input class="opts" onclick="opt(2)" type="button" value="Update Food">
         <input class="opts active" onclick="opt(3)" type="button" value="Delete Food">
         </div>
+        <div id="banner" class="fade">
+            <span id="msg"></span>
+            <span id="close">X</span>  
+        </div>
+        <div id="myModal" class="modal">
+         <div class="modal-content">
+            <span id="info"></span>
+            <input id="remove" class="close" type="button" value='Continue'>
+        </div>          
+      </div>
         <div class="editors action fade">
             <img src="images/big1.jpg" alt="empty"><img src="images/big2.jpg" alt="empty"><img src="images/big3.jpg" alt="empty"><br>
             <input type="file"><input type="file"><input type="file">
-            <div id="banner" class="fade">
-                <span id="msg"></span>
-                <span id="close">X</span>  
-            </div>
+            
             <div>Name:<input id="newName" type="text"></div>
             <div>Price :<input id="newPrice" type="text"></div>
             <div>Status:<input id="newStatus" type="text"></div>
             <div>Tag(s):<input id="newTags" type="text" placeholder="separate with ( , )"></div>
             <div><input id="aFood" type="button" value="Add Food"></div>
-            <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span id="info"></span>
-            <input id="remove" class="close" type="button" value='Continue'>
-        </div>            
-      </div>
+            
         </div>
         <div class="editors action fade">
                 <img src="images/bil2.jpg" alt="empty"><img src="images/bil3.jpg" alt="empty"><img src="images/bil4.jpg" alt="empty"><br>
@@ -83,7 +83,7 @@
                 <div>Price :<input id="uPrice" type="text" placeholder="Ush 30000"></div>
                 <div>Status:<input id="uStatus" type="text" placeholder="Available"></div>
                 <div>Tag(s):<input id="uTags" type="text" placeholder="Dish"></div>
-                <div><input id="uFood" type="button" value="Update Food"></div>
+                <div><input id="show1" type="button" value="Update Food"></div>
         </div>
         <div class="editors action fade">
                 <img src="images/taco2.jpg" alt="empty"><img src="images/Taco3.jpg" alt="empty"><img src="images/taco4.jpg" alt="empty"><br>
@@ -92,7 +92,7 @@
                 <div>Price :<input id="dPrice" type="text" placeholder="Ush 15000"></div>
                 <div>Status:<input id="dStatus" type="text" placeholder="Unavailable"></div>
                 <div>Tag(s):<input id="dTags" type="text" placeholder="Meal"></div>
-                <div><input id="dfood" type="button" value="Remove Food"></div>
+                <div><input id="show2" type="button" value="Remove Food"></div>
         </div>
     </div>
     <div class="slides fade">
@@ -119,22 +119,16 @@
         <div class="title">Latest Food.</div>
         <img src="images/latest.png" alt="">
     </div>
-    <div class="b item">
-        <span class="images">
-            <img src="images/bil2.jpg" alt="">
-        </span>
-        <div id=""><span>1 Chicken Biriyan</span><br><span>Zzana</span><span>point</span>
-            <input class="accept" id="" type="button" onclick="current(3)" value="Accept"><input class="decline" id="d" type="button" onclick="current(1)" value="Decline"></div>
-    </div></div>  
+     </div>  
     
     
-   <div id="confirm1" class="fade">
-        <span id="msg"></span>
-        <span id="close">X</span>  
+   <div class="confirms fade">
+        <span>Are you sure you want to update this food?</span>
+        <div><input class="accept" id="uFood" type="button" value="YES"><input class="decline" type="button" value="NO"></div>
     </div>
-    <div id="confirm2" class="fade">
-        <span id="msg"></span>
-        <span id="close">X</span>  
+    <div class="confirms fade">
+        <span>Are you sure you want to delete this food?</span>
+        <div><input class="accept" id="dFood" type="button" value="YES"><input class="decline" type="button" value="NO"></div>  
     </div>
     <script src="static/js/admin.js"></script>
 </body>
