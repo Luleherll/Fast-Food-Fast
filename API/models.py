@@ -72,7 +72,7 @@ class Users:
             if updated == 0:
                 return jsonify(msg='User not found.'), 404
             else:
-                return jsonify(msg='{} made administrator.'.format(username)), 205
+                return jsonify(msg='{} made administrator.'.format(username)), 200
         else:
             return jsonify(msg='Not Authorized'), 401
 
@@ -115,7 +115,7 @@ class Menu:
                                   update['tags'], update['name']), 'UPDATE')
             print(updated)
             if updated != 0:
-                return jsonify(msg='Food updated successfully.'), 205
+                return jsonify(msg='Food updated successfully.'), 200
             else:
                 return jsonify(msg='Not updated. crosscheck the given values.'), 404
         else:
@@ -178,7 +178,7 @@ class Orders:
                                   (status, datetime.now().strftime("%A, %d. %B %Y %I:%M%p"),
                                    order_id,), 'UPDATE')
             if updated != 0:
-                return jsonify(msg='Successfully updated.'), 205
+                return jsonify(msg='Successfully updated.'), 200
             else:
                 return jsonify(msg='Order not found.'), 404
         else:
