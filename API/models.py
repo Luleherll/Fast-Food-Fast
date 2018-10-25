@@ -1,6 +1,7 @@
 from API.db import Database
 from API.validation import Check
 from flask import jsonify
+from datetime import datetime
 
 
 class Users:
@@ -148,13 +149,13 @@ class Orders:
         else:
             sql = ("""
              INSERT INTO orders(user_id, food_id, name, quantity, comment,
-             location, amount, status)
+             location, amount, status, created_at)
              VALUES(%s,%s,%s,%s,%s,%s,%s,%s) RETURNING order_id;
             """,)
             info = self.db.run(sql, (user['user_id'], food['food_id'], order['name'],
                               order['quantity'], order['comment'],
                               user['location'], order['quantity']*food['price'],
-                              'Queued'), 'INSERT')
+                              'Queued', datetime.now().strftime("%A, %d. %B %Y %I:%M%p")), 'INSERT')
         
         return jsonify(msg='Your order was placed successfully.'), 201
 
@@ -172,9 +173,10 @@ class Orders:
 
     def update_order(self, user_id, order_id, status):
         if Check().is_admin(user_id) is True:
-            updated = self.db.run(("""UPDATE orders SET status = %s
+            updated = self.db.run(("""UPDATE orders SET status = %s, ended_at = %s
                                 WHERE order_id = %s""",),
-                                  (status, order_id,), 'UPDATE')
+                                  (status, datetime.now().strftime("%A, %d. %B %Y %I:%M%p"),
+                                   order_id,), 'UPDATE')
             if updated != 0:
                 return jsonify(msg='Successfully updated.'), 205
             else:
@@ -213,7 +215,7 @@ class Orders:
             return jsonify(orders), 200
         else:
             return jsonify(msg='Not Authorized'), 401
-    
+
     def complete_and_decline(self, user_id):
         if Check().is_admin(user_id) is True:
             orders = self.db.run(("""SELECT * FROM orders WHERE status = 'Completed'
