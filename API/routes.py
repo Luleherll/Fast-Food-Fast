@@ -6,10 +6,12 @@ from flask_jwt_extended import (JWTManager, create_access_token,
                                 get_jwt_identity, jwt_required)
 from flasgger import Swagger, swag_from
 from flask_cors import CORS
+import datetime
 
 
 app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = 'ucanguessit'
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(days=2)
 jwt = JWTManager(app)
 Swagger(app)
 CORS(app)
