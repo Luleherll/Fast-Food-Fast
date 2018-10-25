@@ -62,18 +62,23 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/users/orders', {
     const pName = document.createElement('span');
     const pPlace = document.createElement('span');
     const pPrice = document.createElement('span');
-    const pending = document.createElement('span');
+    const time = document.createElement('span');
+    const pending = document.createElement('input');
     
     pDiv.setAttribute('class', 'item')
     pDiv.setAttribute('id', order.order_id)
     pending.setAttribute('class', 'accept')
+    time.setAttribute('class', 'accept')
+    pending.setAttribute('type', 'button')
+    pending.setAttribute('value', 'Pending..')
 
-    pName.innerText=order.quantity+' '+order.name
-    pName.innerHTML+='<br>'
+    pName.innerText=order.quantity+' '+order.name+' || Started At:'
+    time.innerText=order.ended_at
+    time.innerHTML+='<br>'
     pPlace.innerText='From: '+order.location;
     pPrice.innerText=' Price: Ush'+order.amount
-    pending.innerText='Pending..'
     pInputs.appendChild(pName);
+    pInputs.appendChild(time);
     pInputs.appendChild(pPlace);
     pInputs.appendChild(pPrice);
     pInputs.appendChild(pending);
@@ -106,7 +111,7 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/users/history', {
 
 
     pName.innerText=order.quantity+' '+order.name
-    
+    pName.innerHTML+=' || '
     pTime.innerText='Delivered At: '+order.ended_at;
     pPrice.innerText=' Price: Ush'+order.amount
     pPrice.innerHTML+='<br>'
@@ -122,6 +127,10 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/users/history', {
   }); 
 })
 
+document.getElementById('remove').addEventListener("click", function(){
+	document.getElementById('myModal').style.display='none'
+});
+
 document.getElementById("orderNow").addEventListener("click", function() {
     var select = document.getElementById('foodQ')
 	fetch('https://lule-persistent.herokuapp.com/api/v2/users/orders', {
@@ -133,7 +142,7 @@ document.getElementById("orderNow").addEventListener("click", function() {
 	}),
 	body: JSON.stringify({
 		"name": document.getElementById('foodName').innerText,
-		"quantity": select.options[select.selectedIndex].text,
+		"quantity": parseInt(select.options[select.selectedIndex].text, 10) ,
 		"comment": document.getElementById('foodComment').value
 
 	})

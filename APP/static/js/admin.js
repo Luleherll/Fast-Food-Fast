@@ -20,6 +20,7 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/', {
     const qName = document.createElement('span');
     const place = document.createElement('span');
     const price = document.createElement('span');
+    const time = document.createElement('span');
     const accept = document.createElement('input');
     const decline = document.createElement('input');
     
@@ -31,6 +32,7 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/', {
     decline.setAttribute('type', 'button')
     accept.setAttribute('value', 'Accept')
     decline.setAttribute('value', 'Decline')
+    time.setAttribute('class', 'accept')
 
     accept.addEventListener('click', function() {
 
@@ -45,7 +47,7 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/', {
 		"status": "Pending"
 	})
 }).then(function(response) {
-    if(response.status==205){
+    if(response.status==200){
       window.location.reload();
     }else{
 
@@ -64,7 +66,7 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/', {
 		"status": "Declined"
 	})
 }).then(function(response) { 
-    if(response.status==205){
+    if(response.status==200){
         window.location.reload();
       }else{
   
@@ -72,11 +74,13 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/', {
 })
     })
 
-    qName.innerText=order.quantity+' '+order.name
-    qName.innerHTML+='<br>'
+    qName.innerText=order.quantity+' '+order.name+' || Ordered At:'
+    time.innerText=order.created_at
+    time.innerHTML+='<br>'
     place.innerText='From: '+order.location;
     price.innerText=' Price: Ush'+order.amount
     inputs.appendChild(qName);
+    inputs.appendChild(time);
     inputs.appendChild(place);
     inputs.appendChild(price);
     inputs.appendChild(accept);
@@ -102,10 +106,12 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/pending', {
     const pName = document.createElement('span');
     const pPlace = document.createElement('span');
     const pPrice = document.createElement('span');
+    const time = document.createElement('span');
     const complete = document.createElement('input');
     
     pDiv.setAttribute('class', 'item')
     pDiv.setAttribute('id', order.order_id)
+    time.setAttribute('class', 'accept')
     complete.setAttribute('class', 'accept')
     complete.setAttribute('type', 'button')
     complete.setAttribute('value', 'Complete')
@@ -123,7 +129,7 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/pending', {
 		"status": "Completed"
 	})
 }).then(function(response) {
-    if(response.status==205){
+    if(response.status==200){
       window.location.reload();
     }else{
 
@@ -131,11 +137,13 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/pending', {
 })
     })
 
-    pName.innerText=order.quantity+' '+order.name
-    pName.innerHTML+='<br>'
+    pName.innerText=order.quantity+' '+order.name+' || Started At:'
+    time.innerText=order.ended_at
+    time.innerHTML+='<br>'
     pPlace.innerText='From: '+order.location;
     pPrice.innerText=' Price: Ush'+order.amount
     pInputs.appendChild(pName);
+    pInputs.appendChild(time);
     pInputs.appendChild(pPlace);
     pInputs.appendChild(pPrice);
     pInputs.appendChild(complete);
@@ -160,6 +168,7 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/archive', {
     const pName = document.createElement('span');
     const pPlace = document.createElement('span');
     const pPrice = document.createElement('span');
+    const time = document.createElement('span');
     const state = document.createElement('span');
     const del = document.createElement('input');
     
@@ -167,6 +176,7 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/archive', {
     pDiv.setAttribute('id', order.order_id)
     state.setAttribute('class', 'decline')
     del.setAttribute('class', 'decline')
+    time.setAttribute('class', 'accept')
     del.setAttribute('type', 'button')
     del.setAttribute('value', 'Delete')
 
@@ -180,20 +190,18 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/archive', {
         'Authorization': "Bearer "+sessionStorage.getItem('token')
 	})
 }).then(function(response) {
-    if(response.status==205){
-      window.location.reload();
-    }else{
-
-    }
+    window.location.reload()
 })
     })
 
-    pName.innerText=order.quantity+' '+order.name
-    pName.innerHTML+='<br>'
+    pName.innerText=order.quantity+' '+order.name+' || Delivered At:'
+    time.innerText=order.ended_at
+    time.innerHTML+='<br>'
     pPlace.innerText='From: '+order.location;
     pPrice.innerText=' Price: Ush'+order.amount+'  '
     state.innerText=order.status
     pInputs.appendChild(pName);
+    pInputs.appendChild(time);
     pInputs.appendChild(pPlace);
     pInputs.appendChild(pPrice);
     pInputs.appendChild(state);
@@ -296,6 +304,16 @@ document.getElementById('logout').addEventListener("click", function(){
 document.getElementById('switch').addEventListener("click", function(){
     window.location.replace('http://localhost:5000/home')
 });
+document.getElementById('remove').addEventListener("click", function(){
+	document.getElementById('myModal').style.display='none'
+});
+document.getElementsByClassName('exit')[0].addEventListener("click", function(){
+	document.getElementsByClassName('confirms')[0].style.display='none'
+});
+document.getElementsByClassName('exit')[1].addEventListener("click", function(){
+	document.getElementsByClassName('confirms')[1].style.display='none'
+});
+
 document.getElementById('uFood').addEventListener('click', function() {
     document.getElementsByClassName('confirms')[0].style.display='none';
     fetch('https://lule-persistent.herokuapp.com/api/v2/menu', {
@@ -321,7 +339,7 @@ document.getElementById('uFood').addEventListener('click', function() {
     sessionStorage.removeItem('status')
     console.log(res.msg)
     
-	if(status==205){
+	if(status==200){
 		document.getElementById('info').innerText=res.msg
 	    document.getElementById('myModal').style.display='block';
 	}else if(status==406){
@@ -401,7 +419,7 @@ document.getElementById('makeAdmin').addEventListener('click', function() {
     sessionStorage.removeItem('status')
     console.log(res.msg)
     
-	if(status==205){
+	if(status==200){
 		document.getElementById('info').innerText=res.msg
 	    document.getElementById('myModal').style.display='block';
 	}else if(status==406){
