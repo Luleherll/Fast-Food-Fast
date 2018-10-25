@@ -192,7 +192,7 @@ class Orders:
             info = self.db.run(("""DELETE FROM orders WHERE
                         order_id = %s""",), (order_id,))
             if info is not None:
-                res = jsonify(msg='Order successfully deleted.'), 100
+                res = jsonify(msg='Order successfully deleted.'), 200
             else:
                 res = jsonify(msg='Not deleted. does it exist ?'), 404
         else:
