@@ -156,6 +156,8 @@ class Orders:
                               order['quantity'], order['comment'],
                               user['location'], order['quantity']*food['price'],
                               'Queued', datetime.now().strftime("%A, %d. %B %Y %I:%M%p")), 'INSERT')
+            if info is not None:
+                return jsonify(msg=str(info)), 201
         
         return jsonify(msg='Your order was placed successfully.'), 201
 
