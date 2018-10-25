@@ -154,6 +154,15 @@ def update_order(orderId):
     status = request.get_json()['status']
     response = Orders().update_order(user_id, orderId, status)
     return response
+  
+  
+@app.route('/api/v2/orders/<int:orderId>', methods=['DELETE'])
+@jwt_required
+def delete_order(orderId):
+    user_id = get_jwt_identity()
+    "This route deletes a particular order."
+    response = Orders().delete_order(user_id, orderId)
+    return response
 
 
 @app.route('/api/v2/orders/', methods=['GET'])
