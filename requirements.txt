@@ -1,0 +1,10 @@
+Flask
+gunicorn
+flask-gunicorn
+flask-jwt-extended
+flask-cors
+coveralls
+nose
+pep8
+psycopg2
+pylint
