@@ -17,7 +17,7 @@
         <form method="POST">
             <div class="fields">
                Enter Your Email
-                <div><input class="ins" type="text" placeholder="john@example.com"></div>
+                <div><input class="ins" type="text" placeholder="john@example.com" required="required"></div>
             </div>
             <div class="fields btn"><input type="button" onclick="current(3)" value="Reset Password"></div>
         </form>
@@ -26,27 +26,27 @@
             <form method="POST">
                 <div class="fields">
                     Username
-                    <div><input id="newUser" class="ins" type="text" placeholder="john"></div>
+                    <div><input id="newUser" class="ins" type="text" placeholder="john" required="required"></div>
                 </div>
                 <div class="fields">
                    Password
-                    <div><input id="newPassword" class="ins" type="password" placeholder="*****"></div>
+                    <div><input id="newPassword" class="ins" type="password" placeholder="*****" required="required"></div>
                 </div>
                 <div class="fields">
                     Tel
-                    <div><input id="newTel" class="ins" type="text" placeholder="*****"></div>
+                    <div><input id="newTel" class="ins" type="text" placeholder="+256"></div>
                      </div>
                 <div class="fields">
                    Email
-                    <div><input id="newEmail" class="ins" type="email" placeholder="john@example.com"></div>
+                    <div><input id="newEmail" class="ins" type="email" placeholder="john@example.com" required="required"></div>
                 </div>
                 <div class="fields">
                     location
-                    <div><input id="location" class="ins" type="text" placeholder=""></div>
+                    <div><input id="location" class="ins" type="text" placeholder="" required="required"></div>
                 </div>
                 <div class="fields">
                     Key Point
-                    <div><input id="keyPoint" class="ins" type="text" placeholder="Plot no/Closiest known place"></div>
+                    <div><input id="keyPoint" class="ins" type="text" placeholder="Plot no/Closiest known place" required="required"></div>
                 </div>
                 <div class="fields btn"><input id="signup" type="button" value="Register"></div>
             </form>
@@ -55,9 +55,9 @@
    <form class="slides wrapper fade">
        
         Username
-        <div><input id="username" class="ins" type="text" placeholder="john"></div>
+        <div><input id="username" class="ins" type="text" placeholder="john" required="required"></div>
         Password
-        <div><input id="password" class="ins" type="password" placeholder="**********"></div>
+        <div><input id="password" class="ins" type="password" placeholder="**********" required="required"></div>
         <div><input id="login" class="btn" type="button" value="LOGIN"></div>
         <div><input class="btn" type="button" onclick="current(2)" value="Create Account."></div>
         <a class="heads" onclick="current(1)">I Forgot My Password.</a>

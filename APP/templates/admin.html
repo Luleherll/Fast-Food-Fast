@@ -41,7 +41,7 @@
             <img src="images/stats.jpg">
             <div class="title">Make Admin</div>
             <div id="promote">
-            <input type="text" placeholder="user's name">
+            <input id="userToPromote" type="text" placeholder="user's name" required="required">
             <input id="makeAdmin" class="accept" type="button" value="Make Admin">
             </div>
             <div class="title">Logout</div>
@@ -69,10 +69,10 @@
             <img src="images/big1.jpg" alt="empty"><img src="images/big2.jpg" alt="empty"><img src="images/big3.jpg" alt="empty"><br>
             <input type="file"><input type="file"><input type="file">
             
-            <div>Name:<input id="newName" type="text"></div>
-            <div>Price :<input id="newPrice" type="text"></div>
-            <div>Status:<input id="newStatus" type="text"></div>
-            <div>Tag(s):<input id="newTags" type="text" placeholder="separate with ( , )"></div>
+            <div>Name:<input id="newName" type="text" required="required"></div>
+            <div>Price :<input id="newPrice" type="text" required="required"></div>
+            <div>Status:<input id="newStatus" type="text" required="required"></div>
+            <div>Tag(s):<input id="newTags" type="text" placeholder="separate with ( , )" required="required"></div>
             <div><input id="aFood" type="button" value="Add Food"></div>
             
         </div>
@@ -80,18 +80,18 @@
                 <img src="images/bil2.jpg" alt="empty"><img src="images/bil3.jpg" alt="empty"><img src="images/bil4.jpg" alt="empty"><br>
                 <input type="file"><input type="file"><input type="file">
                 <div>Name:<select></select></div>
-                <div>Price :<input id="uPrice" type="text" placeholder="Ush 30000"></div>
-                <div>Status:<input id="uStatus" type="text" placeholder="Available"></div>
-                <div>Tag(s):<input id="uTags" type="text" placeholder="Dish"></div>
+                <div>Price :<input id="uPrice" type="text" placeholder="Ush 30000" required="required"></div>
+                <div>Status:<input id="uStatus" type="text" placeholder="Available" required="required"></div>
+                <div>Tag(s):<input id="uTags" type="text" placeholder="Dish" required="required"></div>
                 <div><input id="show1" type="button" value="Update Food"></div>
         </div>
         <div class="editors action fade">
                 <img src="images/taco2.jpg" alt="empty"><img src="images/Taco3.jpg" alt="empty"><img src="images/taco4.jpg" alt="empty"><br>
                 <input type="file"><input type="file"><input type="file">
                 <div>Name:<select></select></div>
-                <div>Price :<input id="dPrice" type="text" placeholder="Ush 15000"></div>
-                <div>Status:<input id="dStatus" type="text" placeholder="Unavailable"></div>
-                <div>Tag(s):<input id="dTags" type="text" placeholder="Meal"></div>
+                <div>Price :<input id="dPrice" type="text" placeholder="Ush 15000" required="required"></div>
+                <div>Status:<input id="dStatus" type="text" placeholder="Unavailable" required="required"></div>
+                <div>Tag(s):<input id="dTags" type="text" placeholder="Meal" required="required"></div>
                 <div><input id="show2" type="button" value="Remove Food"></div>
         </div>
     </div>

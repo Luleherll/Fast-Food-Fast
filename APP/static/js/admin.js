@@ -289,6 +289,13 @@ document.getElementById('show1').addEventListener("click", function(){
 document.getElementById('show2').addEventListener("click", function(){
 	document.getElementsByClassName('confirms')[1].style.display='block'
 });
+document.getElementById('logout').addEventListener("click", function(){
+    sessionStorage.removeItem('token')
+    window.location.replace('http://localhost:5000/')
+});
+document.getElementById('switch').addEventListener("click", function(){
+    window.location.replace('http://localhost:5000/home')
+});
 document.getElementById('uFood').addEventListener('click', function() {
     document.getElementsByClassName('confirms')[0].style.display='none';
     fetch('https://lule-persistent.herokuapp.com/api/v2/menu', {
@@ -355,6 +362,46 @@ document.getElementById('dFood').addEventListener('click', function() {
     console.log(res.msg)
     
 	if(status==200){
+		document.getElementById('info').innerText=res.msg
+	    document.getElementById('myModal').style.display='block';
+	}else if(status==406){
+        document.getElementById('msg').innerText=res.msg
+        document.getElementById('banner').style.background='rgb(175, 9, 9)';
+        document.getElementById('banner').style.display='block';
+    }else{
+        if(res.msg!==undefined){
+            document.getElementById('msg').innerText=res.msg
+            document.getElementById('banner').style.background='rgba(90, 41, 21, 0.781)';
+            document.getElementById('banner').style.display='block';
+        }else{
+            document.getElementById('msg').innerText=res.error
+            document.getElementById('banner').style.display='block';
+        }
+    }
+})})
+document.getElementById('makeAdmin').addEventListener('click', function() {
+    document.getElementsByClassName('confirms')[1].style.display='none';
+    fetch('https://lule-persistent.herokuapp.com/api/v2/auth/admin', {
+    method: 'put',
+    mode: 'cors',
+	headers: new Headers({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '+sessionStorage.getItem('token')
+	}),
+	body: JSON.stringify({
+        "username": document.getElementById('userToPromote').value,
+	})
+}).then(function(response) {
+    console.log(response.status)
+    sessionStorage.setItem('status', response.status)
+    return response.json();
+}).then(function(res) {
+    
+    var status=sessionStorage.getItem('status')
+    sessionStorage.removeItem('status')
+    console.log(res.msg)
+    
+	if(status==205){
 		document.getElementById('info').innerText=res.msg
 	    document.getElementById('myModal').style.display='block';
 	}else if(status==406){

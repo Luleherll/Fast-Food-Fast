@@ -173,3 +173,7 @@ document.getElementById("orderNow").addEventListener("click", function() {
 		
 	}
 })});
+document.getElementById('logout').addEventListener("click", function(){
+    sessionStorage.removeItem('token')
+    window.location.replace('http://localhost:5000/')
+});
