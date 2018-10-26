@@ -85,12 +85,13 @@ class Menu:
 
     def add_food(self, user_id, food):
         sql = ("""
-        INSERT INTO menu(name, price, status, tags)
-             VALUES(%s,%s,%s,%s) RETURNING food_id;
+        INSERT INTO menu(name, price, status, tags, img1, img2, img3)
+             VALUES(%s,%s,%s,%s,%s,%s,%s) RETURNING food_id;
         """,)
         if Check().is_admin(user_id) is True:
             info = self.db.run(sql, (food['name'], food['price'],
-                               food['status'], food['tags']), 'INSERT')
+                               food['status'], food['tags'], food['img1'],
+                               food['img2'], food['img3']), 'INSERT')
             if info is not None:
                 return jsonify(msg='Food already exists.Try updating.'), 406
             return jsonify(msg='Food option added successfully.'), 201
@@ -110,9 +111,10 @@ class Menu:
         res = jsonify(msg='Not Authorized'), 401
         if Check().is_admin(user_id) is True:
             updated = self.db.run(("""UPDATE menu SET price = %s, status = %s,
-                                    tags = %s WHERE name = %s""",),
+                                    tags = %s, img1 = %s, img2 = %s, img3 = %s WHERE name = %s""",),
                                   (update['price'], update['status'],
-                                  update['tags'], update['name']), 'UPDATE')
+                                  update['tags'], update['img1'],
+                               update['img2'], update['img3'], update['name']), 'UPDATE')
             print(updated)
             if updated != 0:
                 return jsonify(msg='Food updated successfully.'), 200
