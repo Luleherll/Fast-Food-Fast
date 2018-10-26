@@ -231,12 +231,15 @@ def add_menu():
 def update_food():
     user_id = get_jwt_identity()
     try:
+        img1 = request.get_json()['img1']
+        img2 = request.get_json()['img2']
+        img3 = request.get_json()['img3']
         name = request.get_json()['name']
         price = request.get_json()['price']
         status = request.get_json()['status']
         tags = request.get_json()['tags']
         food = {'name': name, 'price': price, 'status': status,
-                'tags': tags}
+                'tags': tags, 'img1': img1, 'img2': img2, 'img3': img3}
         clean = Check().is_clean(food)
         if type(clean) == tuple:
             return clean
