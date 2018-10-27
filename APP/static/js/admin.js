@@ -23,6 +23,8 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/', {
     const time = document.createElement('span');
     const accept = document.createElement('input');
     const decline = document.createElement('input');
+    const images = document.createElement('span');
+    const img1 = document.createElement('img');
     
     div.setAttribute('class', 'item')
     div.setAttribute('id', order.order_id)
@@ -33,6 +35,9 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/', {
     accept.setAttribute('value', 'Accept')
     decline.setAttribute('value', 'Decline')
     time.setAttribute('class', 'accept')
+    images.setAttribute('class', 'images')
+    img1.setAttribute('src', order.img1)
+    console.log(order.img1)
 
     accept.addEventListener('click', function() {
 
@@ -85,6 +90,8 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/', {
     inputs.appendChild(price);
     inputs.appendChild(accept);
     inputs.appendChild(decline);
+    images.appendChild(img1);
+    div.appendChild(images);
     div.appendChild(inputs);
     newOrders.appendChild(div);
   }); 
@@ -108,6 +115,8 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/pending', {
     const pPrice = document.createElement('span');
     const time = document.createElement('span');
     const complete = document.createElement('input');
+    const images = document.createElement('span');
+    const img1 = document.createElement('img');
     
     pDiv.setAttribute('class', 'item')
     pDiv.setAttribute('id', order.order_id)
@@ -115,6 +124,8 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/pending', {
     complete.setAttribute('class', 'accept')
     complete.setAttribute('type', 'button')
     complete.setAttribute('value', 'Complete')
+    images.setAttribute('class', 'images')
+    img1.setAttribute('src', order.img1)
 
     complete.addEventListener('click', function() {
 
@@ -147,6 +158,8 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/pending', {
     pInputs.appendChild(pPlace);
     pInputs.appendChild(pPrice);
     pInputs.appendChild(complete);
+    images.appendChild(img1);
+    pDiv.appendChild(images);
     pDiv.appendChild(pInputs);
     pendingOrders.appendChild(pDiv);
   }); 
@@ -171,6 +184,8 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/archive', {
     const time = document.createElement('span');
     const state = document.createElement('span');
     const del = document.createElement('input');
+    const images = document.createElement('span');
+    const img1 = document.createElement('img');
     
     pDiv.setAttribute('class', 'item')
     pDiv.setAttribute('id', order.order_id)
@@ -179,6 +194,8 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/archive', {
     time.setAttribute('class', 'accept')
     del.setAttribute('type', 'button')
     del.setAttribute('value', 'Delete')
+    images.setAttribute('class', 'images')
+    img1.setAttribute('src', order.img1)
 
     del.addEventListener('click', function() {
 
@@ -206,6 +223,8 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/archive', {
     pInputs.appendChild(pPrice);
     pInputs.appendChild(state);
     pInputs.appendChild(del);
+    images.appendChild(img1);
+    pDiv.appendChild(images);
     pDiv.appendChild(pInputs);
     archive.appendChild(pDiv);
   }); 
@@ -229,6 +248,9 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/menu', {
        
        updateSelect.addEventListener('change', function(){
          if(updateSelect.options[updateSelect.selectedIndex].text==food.name){
+           document.getElementsByClassName('uImages')[0].setAttribute('src', food.img1)
+           document.getElementsByClassName('uImages')[1].setAttribute('src', food.img2)
+           document.getElementsByClassName('uImages')[2].setAttribute('src', food.img3)
            document.getElementById('uPrice').value = food.price
            document.getElementById('uStatus').value = food.status
            document.getElementById('uTags').value = food.tags
@@ -236,9 +258,12 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/menu', {
       });
        deleteSelect.addEventListener('change', function(){
     if(deleteSelect.options[deleteSelect.selectedIndex].text==food.name){
-      document.getElementById('dPrice').value = food.price
-      document.getElementById('dStatus').value = food.status
-      document.getElementById('dTags').value = food.tags
+        document.getElementsByClassName('dImages')[0].setAttribute('src', food.img1)
+        document.getElementsByClassName('dImages')[1].setAttribute('src', food.img2)
+        document.getElementsByClassName('dImages')[2].setAttribute('src', food.img3)
+        document.getElementById('dPrice').value = food.price
+        document.getElementById('dStatus').value = food.status
+        document.getElementById('dTags').value = food.tags
   }
 });
     })
@@ -258,6 +283,9 @@ document.getElementById('aFood').addEventListener('click', function() {
         'Authorization': 'Bearer '+sessionStorage.getItem('token')
 	}),
 	body: JSON.stringify({
+        "img1": sessionStorage.getItem('img1'),
+        "img2": sessionStorage.getItem('img2'),
+        "img3": sessionStorage.getItem('img3'),
         "name": document.getElementById('newName').value,
         "price": document.getElementById('newPrice').value,
         "status": document.getElementById('newStatus').value,
@@ -268,6 +296,9 @@ document.getElementById('aFood').addEventListener('click', function() {
     sessionStorage.setItem('status', response.status)
     return response.json();
 }).then(function(res) {
+    sessionStorage.removeItem('img1')
+    sessionStorage.removeItem('img2')
+    sessionStorage.removeItem('img3')
     console.log(res)
     var status=sessionStorage.getItem('status')
     console.log(res.msg)
@@ -312,6 +343,46 @@ document.getElementsByClassName('exit')[0].addEventListener("click", function(){
 });
 document.getElementsByClassName('exit')[1].addEventListener("click", function(){
 	document.getElementsByClassName('confirms')[1].style.display='none'
+});
+document.getElementById('newImg1').addEventListener("change", function upload(){
+    fetch("https://api.cloudinary.com/v1_1/lule/image/upload", {
+        method: 'post',
+        redirect: 'follow',
+        body: new FormData(document.getElementById('xform'))
+      }).then(function(response) {
+        
+        return response.json();
+      }).then(function(j) {
+        document.getElementsByClassName('newImages')[0].setAttribute('src', j["secure_url"])
+        sessionStorage.setItem('img1', j["secure_url"])
+        console.log(j)
+      })
+});
+document.getElementById('newImg2').addEventListener("change", function upload(){
+    fetch("https://api.cloudinary.com/v1_1/lule/image/upload", {
+        method: 'post',
+        redirect: 'follow',
+        body: new FormData(document.getElementById('yform'))
+      }).then(function(response) {
+        return response.json();
+      }).then(function(j) {
+        document.getElementsByClassName('newImages')[1].setAttribute('src', j["secure_url"])
+        sessionStorage.setItem('img2', j["secure_url"])
+        console.log(j)
+      })
+});
+document.getElementById('newImg3').addEventListener("change", function upload(){
+    fetch("https://api.cloudinary.com/v1_1/lule/image/upload", {
+        method: 'post',
+        redirect: 'follow',
+        body: new FormData(document.getElementById('zform'))
+      }).then(function(response) {
+        return response.json();
+      }).then(function(j) {
+        document.getElementsByClassName('newImages')[2].setAttribute('src', j["secure_url"])
+        sessionStorage.setItem('img3', j["secure_url"])
+        console.log(j)
+      })
 });
 
 document.getElementById('uFood').addEventListener('click', function() {

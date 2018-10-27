@@ -20,14 +20,20 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/menu', {
     const pStatus = document.createElement('span');
     const pPrice = document.createElement('span');
     const orderNow = document.createElement('input');
+    const images = document.createElement('span');
+    const img1 = document.createElement('img');
+    const img2 = document.createElement('img');
+    const img3 = document.createElement('img');
     
     pDiv.setAttribute('class', 'item')
     pDiv.setAttribute('id', food.food_id)
     orderNow.setAttribute('class', 'decline')
     orderNow.setAttribute('type', 'button')
     orderNow.setAttribute('value', 'Order Now')
+    images.setAttribute('class', 'images')
 
     orderNow.addEventListener('click', function() {
+        document.getElementById('orderImage').setAttribute('src', food.img1)
         document.getElementById('foodName').innerText=food.name
         document.getElementById('foodPrice').innerText='Ush '+food.price+' each';
         current(3)
@@ -37,10 +43,17 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/menu', {
     pName.innerHTML+='<br>'
     pStatus.innerText=food.status;
     pPrice.innerText=' Price: Ush'+food.price
+    img1.setAttribute('src', food.img1)
+    img2.setAttribute('src', food.img2)
+    img3.setAttribute('src', food.img3)
+    images.appendChild(img1)
+    images.appendChild(img2)
+    images.appendChild(img3)
     pInputs.appendChild(pName);
     pInputs.appendChild(pStatus);
     pInputs.appendChild(pPrice);
     pInputs.appendChild(orderNow);
+    pDiv.appendChild(images)
     pDiv.appendChild(pInputs);
     home.appendChild(pDiv);
   }); 
@@ -64,6 +77,8 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/users/orders', {
     const pPrice = document.createElement('span');
     const time = document.createElement('span');
     const pending = document.createElement('input');
+    const images = document.createElement('span');
+    const img1 = document.createElement('img');
     
     pDiv.setAttribute('class', 'item')
     pDiv.setAttribute('id', order.order_id)
@@ -71,6 +86,8 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/users/orders', {
     time.setAttribute('class', 'accept')
     pending.setAttribute('type', 'button')
     pending.setAttribute('value', 'Pending..')
+    images.setAttribute('class', 'images')
+    img1.setAttribute('src', order.img1)
 
     pName.innerText=order.quantity+' '+order.name+' || Started At:'
     time.innerText=order.ended_at
@@ -82,6 +99,8 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/users/orders', {
     pInputs.appendChild(pPlace);
     pInputs.appendChild(pPrice);
     pInputs.appendChild(pending);
+    images.appendChild(img1);
+    pDiv.appendChild(images);
     pDiv.appendChild(pInputs);
     pendingOrders.appendChild(pDiv);
   }); 
@@ -101,27 +120,32 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/users/history', {
     const pDiv = document.createElement('div');
     const pInputs = document.createElement('div');
     const pName = document.createElement('span');
-    const pTime = document.createElement('span');
+    const pstate = document.createElement('span');
     const pPrice = document.createElement('span');
-    const state = document.createElement('span');
+    const time = document.createElement('span');
+    const images = document.createElement('span');
+    const img1 = document.createElement('img');
     
     pDiv.setAttribute('class', 'item')
     pDiv.setAttribute('id', order.order_id)
-    state.setAttribute('class', 'decline')
+    pstate.setAttribute('class', 'accept')
+    time.setAttribute('class', 'accept')
+    images.setAttribute('class', 'images')
+    img1.setAttribute('src', order.img1)
 
-
-    pName.innerText=order.quantity+' '+order.name
-    pName.innerHTML+=' || '
-    pTime.innerText='Delivered At: '+order.ended_at;
+    pName.innerText=order.quantity+' '+order.name+' || '
+    time.innerText='Delivered At: '+order.ended_at
+    pstate.innerText=order.status
+    pstate.innerHTML+='<br>'
     pPrice.innerText=' Price: Ush'+order.amount
     pPrice.innerHTML+='<br>'
-    state.innerText=order.status
-    state.innerHTML+='<br>'
     pInputs.appendChild(pName);
-    pInputs.appendChild(state);
+    pInputs.appendChild(pstate);
     pInputs.appendChild(pPrice);
-    pInputs.appendChild(pTime);
+    pInputs.appendChild(time);
     
+    images.appendChild(img1);
+    pDiv.appendChild(images);
     pDiv.appendChild(pInputs);
     myHistory.appendChild(pDiv);
   }); 

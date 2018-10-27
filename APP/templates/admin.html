@@ -66,8 +66,18 @@
         </div>          
       </div>
         <div class="editors action fade">
-            <img src="images/big1.jpg" alt="empty"><img src="images/big2.jpg" alt="empty"><img src="images/big3.jpg" alt="empty"><br>
-            <input type="file"><input type="file"><input type="file">
+            <img class="newImages" alt="empty">
+            <img class="newImages" alt="empty">
+            <img class="newImages" alt="empty"><br>
+            <form action="" method="post" enctype="multipart/form-data" id="xform">
+                <input class="preset" type="text" name="upload_preset" value="b75vyio4">
+                 <input id="newImg1" type="file" name="file"></form>
+            <form action="" method="post" enctype="multipart/form-data" id="yform">
+                <input class="preset" type="text" name="upload_preset" value="b75vyio4">
+                 <input id="newImg2" type="file" name="file"></form>
+            <form action="" method="post" enctype="multipart/form-data" id="zform">
+                <input class="preset" type="text" name="upload_preset" value="b75vyio4">
+                <input id="newImg3" type="file" name="file"></form> 
             
             <div>Name:<input id="newName" type="text" required="required"></div>
             <div>Price :<input id="newPrice" type="text" required="required"></div>
@@ -77,8 +87,10 @@
             
         </div>
         <div class="editors action fade">
-                <img src="images/bil2.jpg" alt="empty"><img src="images/bil3.jpg" alt="empty"><img src="images/bil4.jpg" alt="empty"><br>
-                <input type="file"><input type="file"><input type="file">
+                <img class="uImages" alt="empty">
+                <img class="uImages" alt="empty">
+                <img class="uImages" alt="empty"><br>
+                <input id="uImg1" type="file"><input id="uImg2" type="file"><input id="uImg3" type="file">
                 <div>Name:<select></select></div>
                 <div>Price :<input id="uPrice" type="text" placeholder="Ush 30000" required="required"></div>
                 <div>Status:<input id="uStatus" type="text" placeholder="Available" required="required"></div>
@@ -86,8 +98,10 @@
                 <div><input id="show1" type="button" value="Update Food"></div>
         </div>
         <div class="editors action fade">
-                <img src="images/taco2.jpg" alt="empty"><img src="images/Taco3.jpg" alt="empty"><img src="images/taco4.jpg" alt="empty"><br>
-                <input type="file"><input type="file"><input type="file">
+                <img class="dImages" alt="empty">
+                <img class="dImages" alt="empty">
+                <img class="dImages" alt="empty"><br>
+
                 <div>Name:<select></select></div>
                 <div>Price :<input id="dPrice" type="text" placeholder="Ush 15000" required="required"></div>
                 <div>Status:<input id="dStatus" type="text" placeholder="Unavailable" required="required"></div>
