@@ -152,7 +152,7 @@ class Orders:
             sql = ("""
              INSERT INTO orders(user_id, food_id, name, quantity, comment,
              location, amount, status, created_at, img1)
-             VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s) RETURNING order_id;
+             VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) RETURNING order_id;
             """,)
             info = self.db.run(sql, (user['user_id'], food['food_id'], order['name'],
                               order['quantity'], order['comment'],
