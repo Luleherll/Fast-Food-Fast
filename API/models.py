@@ -151,13 +151,14 @@ class Orders:
         else:
             sql = ("""
              INSERT INTO orders(user_id, food_id, name, quantity, comment,
-             location, amount, status, created_at)
+             location, amount, status, created_at, img1)
              VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s) RETURNING order_id;
             """,)
             info = self.db.run(sql, (user['user_id'], food['food_id'], order['name'],
                               order['quantity'], order['comment'],
                               user['location'], order['quantity']*food['price'],
-                              'Queued', datetime.now().strftime("%A, %d. %B %Y %I:%M%p")), 'INSERT')
+                              'Queued', datetime.now().strftime("%A, %d. %B %Y %I:%M%p"),
+                               food['img1']), 'INSERT')
             if info is not None:
                 return jsonify(msg=str(info)), 201
         
