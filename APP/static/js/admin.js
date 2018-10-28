@@ -95,7 +95,15 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/', {
     div.appendChild(inputs);
     newOrders.appendChild(div);
   }); 
-})
+}).catch(function(error) {
+    if(error=="TypeError: NetworkError when attempting to fetch resource."){
+        document.getElementById('info').innerText='Please check your internet connection.'
+	    document.getElementById('myModal').style.display='block';
+    }else if("TypeError: orders.forEach is not a function"){
+        window.location.replace('http://lule-foods.herokuapp.com/')
+    }
+    
+});
 
 fetch('https://lule-persistent.herokuapp.com/api/v2/orders/pending', {
 			method: 'get',
@@ -163,7 +171,15 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/pending', {
     pDiv.appendChild(pInputs);
     pendingOrders.appendChild(pDiv);
   }); 
-})
+}).catch(function(error) {
+    if(error=="TypeError: NetworkError when attempting to fetch resource."){
+        document.getElementById('info').innerText='Please check your internet connection.'
+	    document.getElementById('myModal').style.display='block';
+    }else if("TypeError: orders.forEach is not a function"){
+        window.location.replace('http://lule-foods.herokuapp.com/')
+    }
+    
+});
 
 fetch('https://lule-persistent.herokuapp.com/api/v2/orders/archive', {
 			method: 'get',
@@ -228,7 +244,13 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/archive', {
     pDiv.appendChild(pInputs);
     archive.appendChild(pDiv);
   }); 
-})
+}).catch(function(error) {
+    if(error=="TypeError: NetworkError when attempting to fetch resource."){
+        document.getElementById('info').innerText='Please check your internet connection.'
+	    document.getElementById('myModal').style.display='block';
+    }else if("TypeError: orders.forEach is not a function"){
+        window.location.replace('http://lule-foods.herokuapp.com/')
+    }})
 fetch('https://lule-persistent.herokuapp.com/api/v2/menu', {
 			method: 'get',
 			mode: 'cors',
@@ -267,7 +289,15 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/menu', {
   }
 });
     })
-})
+}).catch(function(error) {
+    if(error=="TypeError: NetworkError when attempting to fetch resource."){
+        document.getElementById('info').innerText='Please check your internet connection.'
+	    document.getElementById('myModal').style.display='block';
+    }else if("TypeError: menu.forEach is not a function"){
+        window.location.replace('http://lule-foods.herokuapp.com/')
+    }
+    
+});
 
 document.getElementById('close').addEventListener("click", function(){
 	close('banner')
@@ -320,7 +350,12 @@ document.getElementById('aFood').addEventListener('click', function() {
             document.getElementById('banner').style.display='block';
         }
     }
-})})
+}).catch(function(error) {
+    if(error=="TypeError: NetworkError when attempting to fetch resource."){
+        document.getElementById('info').innerText='Please check your internet connection.'
+	    document.getElementById('myModal').style.display='block';}
+    
+});})
 
 document.getElementById('show1').addEventListener("click", function(){
 	document.getElementsByClassName('confirms')[0].style.display='block'
@@ -330,10 +365,10 @@ document.getElementById('show2').addEventListener("click", function(){
 });
 document.getElementById('logout').addEventListener("click", function(){
     sessionStorage.removeItem('token')
-    window.location.replace('http://localhost:5000/')
+    window.location.replace('http://lule-foods.herokuapp.com/')
 });
 document.getElementById('switch').addEventListener("click", function(){
-    window.location.replace('http://localhost:5000/home')
+    window.location.replace('http://lule-foods.herokuapp.com/home')
 });
 document.getElementById('remove').addEventListener("click", function(){
 	document.getElementById('myModal').style.display='none'
@@ -427,7 +462,12 @@ document.getElementById('uFood').addEventListener('click', function() {
             document.getElementById('banner').style.display='block';
         }
     }
-})})
+}).catch(function(error) {
+    if(error=="TypeError: NetworkError when attempting to fetch resource."){
+        document.getElementById('info').innerText='Please check your internet connection.'
+	    document.getElementById('myModal').style.display='block';}
+    
+});})
 document.getElementById('dFood').addEventListener('click', function() {
     document.getElementsByClassName('confirms')[1].style.display='none';
     fetch('https://lule-persistent.herokuapp.com/api/v2/menu', {
@@ -467,7 +507,12 @@ document.getElementById('dFood').addEventListener('click', function() {
             document.getElementById('banner').style.display='block';
         }
     }
-})})
+}).catch(function(error) {
+    if(error=="TypeError: NetworkError when attempting to fetch resource."){
+        document.getElementById('info').innerText='Please check your internet connection.'
+	    document.getElementById('myModal').style.display='block';}
+    
+});})
 document.getElementById('makeAdmin').addEventListener('click', function() {
     document.getElementsByClassName('confirms')[1].style.display='none';
     fetch('https://lule-persistent.herokuapp.com/api/v2/auth/admin', {
@@ -507,4 +552,9 @@ document.getElementById('makeAdmin').addEventListener('click', function() {
             document.getElementById('banner').style.display='block';
         }
     }
-})})
+}).catch(function(error) {
+    if(error=="TypeError: NetworkError when attempting to fetch resource."){
+        document.getElementById('info').innerText='Please check your internet connection.'
+	    document.getElementById('myModal').style.display='block';};
+    
+});})

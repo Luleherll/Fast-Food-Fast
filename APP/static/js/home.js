@@ -57,7 +57,15 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/menu', {
     pDiv.appendChild(pInputs);
     home.appendChild(pDiv);
   }); 
-})
+}).catch(function(error) {
+    if(error=="TypeError: NetworkError when attempting to fetch resource."){
+        document.getElementById('info').innerText='Please check your internet connection.'
+	    document.getElementById('myModal').style.display='block';
+    }else if("TypeError: menu.forEach is not a function"){
+        window.location.replace('http://lule-foods.herokuapp.com/')
+    }
+    
+});
 
 fetch('https://lule-persistent.herokuapp.com/api/v2/users/orders', {
 			method: 'get',
@@ -104,7 +112,15 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/users/orders', {
     pDiv.appendChild(pInputs);
     pendingOrders.appendChild(pDiv);
   }); 
-})
+}).catch(function(error) {
+    if(error=="TypeError: NetworkError when attempting to fetch resource."){
+        document.getElementById('info').innerText='Please check your internet connection.'
+	    document.getElementById('myModal').style.display='block';
+    }else if("TypeError: orders.forEach is not a function"){
+        window.location.replace('http://lule-foods.herokuapp.com/')
+    }
+    
+});
 
 fetch('https://lule-persistent.herokuapp.com/api/v2/users/history', {
 			method: 'get',
@@ -149,7 +165,15 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/users/history', {
     pDiv.appendChild(pInputs);
     myHistory.appendChild(pDiv);
   }); 
-})
+}).catch(function(error) {
+    if(error=="TypeError: NetworkError when attempting to fetch resource."){
+        document.getElementById('info').innerText='Please check your internet connection.'
+	    document.getElementById('myModal').style.display='block';
+    }else if("TypeError: orders.forEach is not a function"){
+        window.location.replace('http://lule-foods.herokuapp.com/')
+    }
+    
+});
 
 document.getElementById('remove').addEventListener("click", function(){
 	document.getElementById('myModal').style.display='none'
@@ -208,5 +232,5 @@ document.getElementById("orderNow").addEventListener("click", function() {
 })});
 document.getElementById('logout').addEventListener("click", function(){
     sessionStorage.removeItem('token')
-    window.location.replace('http://localhost:5000/')
+    window.location.replace('http://lule-foods.herokuapp.com/')
 });

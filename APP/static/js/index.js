@@ -45,11 +45,9 @@ document.getElementById("login").addEventListener("click", function() {
 	
    }).then(function(response) {return response.json();}).then(function(res) {
 	   if(res.msg!==undefined){
-		   sessionStorage.setItem('data', JSON.stringify({menu:res}));
-	        window.location.replace('http://localhost:5000/home')
+	        window.location.replace('http://lule-foods.herokuapp.com/home')
 	   }else{
-		sessionStorage.setItem('data', JSON.stringify({orders:res}));
-		window.location.replace('http://localhost:5000/admin')
+		    window.location.replace('http://lule-foods.herokuapp.com/admin')
 	   }
    })
      
