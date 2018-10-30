@@ -1,3 +1,241 @@
+
+@media only screen and (max-width: 400px) {
+
+    .modal-content {
+    margin: 80% auto;
+    padding: 1px;
+    width: 100%;
+    font-size: 20px;
+}
+  #side-bar{display: none;}
+  .item{
+      width: 100%;
+      font-size: 17px;
+      height: fit-content;
+    }
+  .action{
+      width: 100%;
+      font-size: 30px;
+    }
+  .action img{height: 80px;}
+   .action input[type='text'], .action select{
+    width: 60%;
+}
+ .nav-bar img{display: none;}
+ #search{
+     margin-left: 5%;
+    }
+    #search input[type='search']{
+        margin-left: 5%;
+        width: 70%;
+        height: 30px;
+    }
+    .nav-bar a {
+        width: 100%;
+        display: block;
+    }
+  #looker{
+    margin-right: 25%;
+}
+.images img{
+    width: 50px;
+    height: 50px;
+}
+.item div input{
+    color: wheat;
+    font-style: oblique;
+    font-size: 20px;
+    width: 100%;
+    display: block;
+}
+    .item div span{ 
+    width: 100%;
+    display: block;
+}
+#foodQ{width: 40%;text-align: center;font-size: 20px;display: block;}
+#foodComment{width: 80%;display: block;}
+.item div{
+    margin-top: 5px;
+}
+.dropdown {
+    float: none;
+    width: 100%;
+    display: block;
+  }
+  .modal-content {
+    margin: 80% auto;
+    padding: 1px;
+    width: 100%;
+    font-size: 20px;
+}
+#banner {
+    font-size: 20px;
+    top:0;
+    width: 100%;
+}
+#mheader{display: none;}
+#blank{
+    background-color: transparent;
+    height: 150px;
+    width: 100%;
+}
+  }
+  
+
+@media only screen and (min-width: 401px) and (max-width: 960px) {
+    
+    .modal-content {
+    margin: 60% auto;
+    padding: 1px;
+    width: 100%;
+    font-size: 30px;
+}
+   #side-bar{display: none;}
+   .nav-bar{
+    height: 100%;
+    width: 30%;
+    position: fixed;
+    font-size: 30px;
+   }
+   .nav-bar a, #search{
+    float: none;
+    width: 100%;
+    display: block;
+}
+    .action,.controls, #mheader{
+        float: right;
+      width: 68%;
+      font-size: 30px;
+    }
+  .action img{height: 80px;}
+   .action input[type='text'], .action select{
+    width: 60%;
+}
+  
+.controls input{
+    width: 30%;
+    height: 70px;
+    background-color: yellowgreen;
+}
+   #blank{height: 70px;width: 68%;}
+    #mheader{
+        margin-bottom: 40px;
+        text-align: center;
+        color: whitesmoke;
+        border-bottom: 2px solid yellow;
+        position: fixed;
+        margin-left: 30%;
+        background-color: yellowgreen;
+    }
+    #search input[type='search']{
+        margin-left: 10%;
+        width: 60%;
+        height: 40px;
+    }
+    .images img{
+    width: 50px;
+    height: 50px;
+}
+   .item{
+      float: right;
+      width: 68%;
+      font-size: 20px;
+      height: fit-content;
+    }
+.item div input{
+    color: wheat;
+    font-style: oblique;
+    font-size: 20px;
+    float: right;
+    width: 100%;
+    display: block;
+}
+    .item div span{ 
+    float: right;
+    width: 100%;
+    display: block;
+}
+#foodQ{width: 40%;text-align: center;font-size: 20px;display: block;}
+#foodComment{width: 80%;display: block;}
+  }
+  
+@media only screen and (min-width: 961px) {
+   
+.modal-content { 
+    margin: 15% auto;
+    padding: 30px;
+    width: 80%;
+    font-size: 40px;
+}
+.item{
+    float: left;
+    width: 70%;
+    font-size: 25px;
+    height: fit-content;
+}
+.action{
+    width: 60%;
+    font-size: 40px;
+}
+.action img{height: 150px;}
+  .action input[type='text'], .action select{
+    width: 50%;
+}
+.controls{width: 60%;}
+.controls input{
+    font-size: 20px;
+}
+.nav-bar a{float: right;font-size: 17px;padding: 14px 16px;}
+#search{
+    margin-left: 15%;
+    position: absolute;
+    top: 30%;
+    
+}
+.images img{
+    width: 10%;
+    height: 120px;
+}
+.item div input{
+    color: wheat;
+    font-style: oblique;
+    padding: 8px;
+    width: 180px;
+    font-size: 20px;
+    margin-left: 10px;
+}
+.item div{
+    float: right;
+    margin-top: 10px;
+}
+.dropdown {
+    float: right;
+  }
+  .modal-content {
+    margin: 15% auto;
+    padding: 30px;
+    width: 80%;
+    font-size: 40px;
+}
+#banner {
+    font-size: 25px;
+    top:0;
+    width: 40%;
+}
+#foodQ{width: 10%;text-align: center;font-size: 20px;}
+#foodComment{width: 20%;}
+#mheader{display: none;}
+#blank{
+    background-color: transparent;
+    height: 150px;
+    width: 100%;
+}
+    #search input[type='search']{
+    width: 250px;
+    height: 30px;
+}
+  }
+
 header{
     position: fixed;
     width: 100%;
@@ -9,21 +247,15 @@ body{
 .nav-bar {
     background-color: yellowgreen;
     box-shadow: 0px 2px rgba(102, 100, 100, 0.5);
-    
     cursor: pointer;
 }
 .nav-bar a {
-    float: right;
     color: white;
     text-align: center;
-    padding: 14px 16px;
     text-decoration: none;
-    font-size: 17px;
     font-weight: bold;
 }
-.dropdown {
-    float: right;
-  }
+
 .dropdown .dropbtn {
     font-size: 17px; 
     border: none;
@@ -65,14 +297,7 @@ body{
     color: rgb(44, 41, 41);
 }
 
-#search{
-    margin-left: 25%;
-    position: absolute;
-    top: 30%;
-    width: 250px;
-    height: 30px;
-    text-align: center;
-}
+
 input{
     border: none;
     border-radius: 30px;
@@ -81,21 +306,8 @@ input{
 input:hover{
     border: 1px solid yellow;
 }
-#looker{
-    position: absolute;
-    margin-left: 45%;
-    top: 30%;
-    width: 30px;
-    height: 33px;
-    background-image: url('../images/search.jpg');
-    background-color: transparent;
-}
-#blank{
-    background-color: transparent;
-    height: 100px;
-    width: 100%;
-}
 #side-bar{
+    
     height: 100%;
     width: 30%;
     position: fixed;
@@ -114,18 +326,14 @@ input:hover{
 }
 .item{
     background-color: transparent;
-    height: 120px;
-    width: 70%;
     margin-bottom: 10px;
-    font-size: 25px;
     border: 2px solid yellowgreen;
 }
 .action{
     background-color: yellowgreen;
     height: auto;
-    width: 60%;
+
     margin-bottom: 10px;
-    font-size: 40px;
     
     cursor: pointer;
 }
@@ -133,7 +341,6 @@ input:hover{
         width: 30%;
 }
 .action input[type='text'], .action select{
-    width: 50%;
     height: 30px;
     text-align: center;
     font-size: 50%;
@@ -148,37 +355,28 @@ input:hover{
 }
 .action img{
     width: 30%;
-    height: 150px;
+    
 }
 .disappear{
     display: none;
 
 }
 .controls{
-    border-bottom: 1px solid yellow;
-    width: 60%;
-    
+    border-bottom: 1px solid yellow
 }
 .controls input{
     width: 30%;
     height: 70px;
     background-color: yellowgreen;
-    font-size: 20px;
+}
+#looker{
+    position: absolute;
+    width: 30px;
+    height: 33px;
+    background-image: url('../images/search.jpg');
+    background-color: transparent;
 }
 
-
-
-.item div{
-    float: right;
-    margin-top: 30px;
-}
-.images{
-    float: left;
-}
-.images img{
-    width: 120px;
-    height: 120px;
-}
 .accept{
     background-color: darkgreen;
 }
@@ -188,14 +386,7 @@ input:hover{
 .item div span{
     color: greenyellow;
 }
-.item div input{
-    color: wheat;
-    font-style: oblique;
-    padding: 10px;
-    width: 180px;
-    font-size: 20px;
-    margin-left: 30px;
-}
+
 .slides{
     display: none;
 }
@@ -218,11 +409,8 @@ input:hover{
     display: none;
     background-color: rgba(90, 41, 21, 0.781);
     border: 1px solid yellow;
-    font-size: 25px;
     color: black;
     border-radius: 0px 30px 30px 0px ;
-    top:0;
-    width: 40%;
 }
 #close{
     background-color: yellow;
@@ -244,11 +432,7 @@ input:hover{
 }
 .modal-content {
     background-color: snow;
-    margin: 15% auto;
-    padding: 30px;
     border: 2px solid rgba(231, 227, 10, 0.582);
-    width: 80%;
-    font-size: 40px;
     align-items: center;
 }
 .confirms{
@@ -280,8 +464,7 @@ input:hover{
     text-decoration: none;
     cursor: pointer;
 }
-#foodQ{width: 10%;text-align: center;font-size: 20px;}
-#foodComment{width: 20%;}
+
 #promote input{font-size: 25px; margin: 2%;}
 form{display: inline;}
 .preset{display: none;}

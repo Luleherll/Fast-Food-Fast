@@ -100,7 +100,7 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/', {
         document.getElementById('info').innerText='Please check your internet connection.'
 	    document.getElementById('myModal').style.display='block';
     }else if("TypeError: orders.forEach is not a function"){
-        window.location.replace('http://lule-foods.herokuapp.com/')
+        window.location.replace('http://localhost:5000/')
     }
     
 });
@@ -176,7 +176,7 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/pending', {
         document.getElementById('info').innerText='Please check your internet connection.'
 	    document.getElementById('myModal').style.display='block';
     }else if("TypeError: orders.forEach is not a function"){
-        window.location.replace('http://lule-foods.herokuapp.com/')
+        window.location.replace('http://localhost:5000/')
     }
     
 });
@@ -249,7 +249,7 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/archive', {
         document.getElementById('info').innerText='Please check your internet connection.'
 	    document.getElementById('myModal').style.display='block';
     }else if("TypeError: orders.forEach is not a function"){
-        window.location.replace('http://lule-foods.herokuapp.com/')
+        window.location.replace('http://localhost:5000/')
     }})
 fetch('https://lule-persistent.herokuapp.com/api/v2/menu', {
 			method: 'get',
@@ -294,7 +294,7 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/menu', {
         document.getElementById('info').innerText='Please check your internet connection.'
 	    document.getElementById('myModal').style.display='block';
     }else if("TypeError: menu.forEach is not a function"){
-        window.location.replace('http://lule-foods.herokuapp.com/')
+        window.location.replace('http://localhost:5000/')
     }
     
 });
@@ -365,10 +365,10 @@ document.getElementById('show2').addEventListener("click", function(){
 });
 document.getElementById('logout').addEventListener("click", function(){
     sessionStorage.removeItem('token')
-    window.location.replace('http://lule-foods.herokuapp.com/')
+    window.location.replace('http://localhost:5000/')
 });
 document.getElementById('switch').addEventListener("click", function(){
-    window.location.replace('http://lule-foods.herokuapp.com/home')
+    window.location.replace('http://localhost:5000/home')
 });
 document.getElementById('remove').addEventListener("click", function(){
 	document.getElementById('myModal').style.display='none'
@@ -430,6 +430,9 @@ document.getElementById('uFood').addEventListener('click', function() {
         'Authorization': 'Bearer '+sessionStorage.getItem('token')
 	}),
 	body: JSON.stringify({
+        "img1": document.getElementsByClassName('uImages')[0].src,
+        "img2": document.getElementsByClassName('uImages')[1].src,
+        "img3": document.getElementsByClassName('uImages')[2].src,
         "name": updateSelect.options[updateSelect.selectedIndex].text,
         "price": document.getElementById('uPrice').value,
         "status": document.getElementById('uStatus').value,

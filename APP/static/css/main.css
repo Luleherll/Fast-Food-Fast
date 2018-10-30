@@ -13,28 +13,79 @@
     .wrapper{
         position: absolute;
         top: 25%;
-
+        font-size: 30px;
+        width: 90%;
+        height: auto;
+        margin-left: 2%;
     }
-    
+    .slogan{display: none;}
+    .min{top: 15%;}
+    .ins{
+        margin-top: 10px;
+        margin-bottom: 10px;
+        width: 80%;
+    }
+    .fields{font-size: 15px;}
+    #banner{
+        position: absolute;
+        top: 10%;
+        margin-left: 2%;
+        width: 90%;
+        font-size: 20px;
+      }
+    .modal-content {
+    margin: 80% auto;
+    padding: 1px;
+    width: 100%;
+    font-size: 20px;
+}
   }
   
 
 @media only screen and (min-width: 401px) and (max-width: 960px) {
     body {
-      background-image: none;
-      background-color: yellowgreen;
+        background-image: url('../images/fastfood.jpg');
+        background-size: 230%;
     }
     header{
-        background-color: yellowgreen;
+        font-size: 40px;
+        font-style: none;
         color: whitesmoke;
-        font-size: 20px;
+        text-align: center;
     }
-    
+    .slogan{display: none;}
+    .wrapper{
+        top: 20%;
+        font-size: 30px;
+        width: 70%;
+        height: fit-content;
+        margin-left: 10%;
+    }
+    .ins{
+        margin-top: 20px;
+        margin-bottom: 20px;
+        width: 80%;
+    }
+    .min{top: 15%;}
+    .fields{font-size: 20px;}
+    #banner{
+        position: absolute;
+        top: 15%;
+        margin-left: 10%;
+        width: 80%;
+        font-size: 20px;
+      }
+    .modal-content {
+    margin: 60% auto;
+    padding: 1px;
+    width: 100%;
+    font-size: 30px;
+}
   }
   
 @media only screen and (min-width: 961px) {
     body{
-    background-image: url('../images/fastfood.jpg') ;
+    background-image: url('../images/fastfood.jpg');
     background-size: 100%;
   }
   .slogan{
@@ -48,9 +99,33 @@
    header{display: none;}
    .wrapper{
     top: 10%;
+    font-size: 30px;
+    width: fit-content;
+    height: fit-content;
+}
+.min{
+    font-size: 10px;
+}
+.ins{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 320px;
+}
+   .fields{font-size: 25px;}
+  a{ margin-left: 5%;}
+  #banner{
+    top:0;
+    width: 40%;
+    font-size: 25px;
+  }
+    .modal-content { 
+    margin: 15% auto;
+    padding: 30px;
+    width: 80%;
+    font-size: 40px;
 }
   }
-  header{
+header{
     background-color: yellowgreen;
     border: 1px solid yellow;
     border-radius: 30px;
@@ -58,26 +133,22 @@
 .wrapper{
     position: absolute;
     background-color: rgba(172, 255, 47, 0.356);
-    width: fit-content;
-    height: fit-content;
+    
     border: 1px solid yellow;
     border-radius: 30px;
     text-align: center;
-    font-size: 30px;
+    
     font-style: bold;
     color:white;
 }
-
-
-
-
 .ins{
-    margin-top: 30px;
-    margin-bottom: 30px;
     font-style: italic;
-    width: 320px;
     color:black;
 }
+
+
+
+
 input{
     padding: 10px;
     border: none;
@@ -91,7 +162,6 @@ input{
 }
 .fields{
     padding-left: 2%;
-    font-size: 25px;
     color: white;
     text-align: center;
 }
@@ -108,7 +178,7 @@ input{
       height: 50px;
     }
 a{
-    margin-left: 5%;
+   
     color:darkred;
     cursor: pointer;
 }
@@ -128,11 +198,10 @@ a{
     display: none;
     background-color: rgba(255, 72, 0, 0.781);
     border: 1px solid yellow;
-    font-size: 25px;
+    
     color: black;
     border-radius: 0px 30px 30px 0px ;
-    top:0;
-    width: 40%;
+    
 }
 #close{
     background-color: yellow;
@@ -154,11 +223,7 @@ a{
 }
 .modal-content {
     background-color: rgba(172, 255, 47, 0.63);
-    margin: 15% auto;
-    padding: 30px;
     border: 1px solid rgb(231, 228, 10);
-    width: 80%;
-    font-size: 40px;
     align-items: center;
 }
 .close {
@@ -175,9 +240,7 @@ a{
     text-decoration: none;
     cursor: pointer;
 }
-.min{
-    font-size: 10px;
-}
+
 .min input{
     margin-top: 5px;
     margin-bottom: 5px;
