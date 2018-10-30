@@ -12,7 +12,6 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/menu', {
 			})
 			
 }).then(function(response) {return response.json();}).then(function(menu) {
-    console.log(menu)
 	menu.forEach((food) => {
     const pDiv = document.createElement('div');
     const pInputs = document.createElement('div');
@@ -67,7 +66,7 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/menu', {
         document.getElementById('info').innerText='Please check your internet connection.'
 	    document.getElementById('myModal').style.display='block';
     }else if("TypeError: menu.forEach is not a function"){
-        window.location.replace('http://localhost:5000/')
+        window.location.replace('http://lule-foods.herokuapp.com/')
     }
     
 });
@@ -81,7 +80,6 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/users/orders', {
 			})
 			
 }).then(function(response) {return response.json();}).then(function(orders) {
-    console.log(orders)
 	orders.forEach((order) => {
     const pDiv = document.createElement('div');
     const pInputs = document.createElement('div');
@@ -122,7 +120,7 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/users/orders', {
         document.getElementById('info').innerText='Please check your internet connection.'
 	    document.getElementById('myModal').style.display='block';
     }else if("TypeError: orders.forEach is not a function"){
-        window.location.replace('http://localhost:5000/')
+        window.location.replace('http://lule-foods.herokuapp.com/')
     }
     
 });
@@ -136,7 +134,6 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/users/history', {
 			})
 			
 }).then(function(response) {return response.json();}).then(function(orders) {
-    console.log(orders)
 	orders.forEach((order) => {
     const pDiv = document.createElement('div');
     const pInputs = document.createElement('div');
@@ -175,7 +172,7 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/users/history', {
         document.getElementById('info').innerText='Please check your internet connection.'
 	    document.getElementById('myModal').style.display='block';
     }else if("TypeError: orders.forEach is not a function"){
-        window.location.replace('http://localhost:5000/')
+        window.location.replace('http://lule-foods.herokuapp.com/')
     }
     
 });
@@ -204,8 +201,7 @@ document.getElementById("orderNow").addEventListener("click", function() {
 	return response.json();
 }).then(function(j) {
 	var status=sessionStorage.getItem('status')
-    sessionStorage.removeItem('status')
-      console.log(j)  
+    sessionStorage.removeItem('status') 
 	if(status==201){
 		document.getElementById('info').innerText=j.msg
 	    document.getElementById('myModal').style.display='block';
@@ -237,5 +233,5 @@ document.getElementById("orderNow").addEventListener("click", function() {
 })});
 document.getElementById('logout').addEventListener("click", function(){
     sessionStorage.removeItem('token')
-    window.location.replace('http://localhost:5000/')
+    window.location.replace('http://lule-foods.herokuapp.com/')
 });

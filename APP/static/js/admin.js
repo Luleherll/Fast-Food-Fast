@@ -13,7 +13,6 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/', {
 			})
 			
 }).then(function(response) {return response.json();}).then(function(orders) {
-    console.log(orders)
 	orders.forEach((order) => {
     const div = document.createElement('div');
     const inputs = document.createElement('div');
@@ -37,7 +36,6 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/', {
     time.setAttribute('class', 'accept')
     images.setAttribute('class', 'images')
     img1.setAttribute('src', order.img1)
-    console.log(order.img1)
 
     accept.addEventListener('click', function() {
 
@@ -100,7 +98,7 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/', {
         document.getElementById('info').innerText='Please check your internet connection.'
 	    document.getElementById('myModal').style.display='block';
     }else if("TypeError: orders.forEach is not a function"){
-        window.location.replace('http://localhost:5000/')
+        window.location.replace('http://lule-foods.herokuapp.com/')
     }
     
 });
@@ -114,7 +112,6 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/pending', {
 			})
 			
 }).then(function(response) {return response.json();}).then(function(orders) {
-    console.log(orders)
 	orders.forEach((order) => {
     const pDiv = document.createElement('div');
     const pInputs = document.createElement('div');
@@ -176,7 +173,7 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/pending', {
         document.getElementById('info').innerText='Please check your internet connection.'
 	    document.getElementById('myModal').style.display='block';
     }else if("TypeError: orders.forEach is not a function"){
-        window.location.replace('http://localhost:5000/')
+        window.location.replace('http://lule-foods.herokuapp.com/')
     }
     
 });
@@ -190,7 +187,6 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/archive', {
 			})
 			
 }).then(function(response) {return response.json();}).then(function(orders) {
-    console.log(orders)
 	orders.forEach((order) => {
     const pDiv = document.createElement('div');
     const pInputs = document.createElement('div');
@@ -249,7 +245,7 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/orders/archive', {
         document.getElementById('info').innerText='Please check your internet connection.'
 	    document.getElementById('myModal').style.display='block';
     }else if("TypeError: orders.forEach is not a function"){
-        window.location.replace('http://localhost:5000/')
+        window.location.replace('http://lule-foods.herokuapp.com/')
     }})
 fetch('https://lule-persistent.herokuapp.com/api/v2/menu', {
 			method: 'get',
@@ -294,7 +290,7 @@ fetch('https://lule-persistent.herokuapp.com/api/v2/menu', {
         document.getElementById('info').innerText='Please check your internet connection.'
 	    document.getElementById('myModal').style.display='block';
     }else if("TypeError: menu.forEach is not a function"){
-        window.location.replace('http://localhost:5000/')
+        window.location.replace('http://lule-foods.herokuapp.com/')
     }
     
 });
@@ -322,16 +318,13 @@ document.getElementById('aFood').addEventListener('click', function() {
         "tags": document.getElementById('newTags').value
 	})
 }).then(function(response) {
-    console.log(response.status)
     sessionStorage.setItem('status', response.status)
     return response.json();
 }).then(function(res) {
     sessionStorage.removeItem('img1')
     sessionStorage.removeItem('img2')
     sessionStorage.removeItem('img3')
-    console.log(res)
     var status=sessionStorage.getItem('status')
-    console.log(res.msg)
     
 	if(status==201){
 		document.getElementById('info').innerText=res.msg
@@ -365,10 +358,10 @@ document.getElementById('show2').addEventListener("click", function(){
 });
 document.getElementById('logout').addEventListener("click", function(){
     sessionStorage.removeItem('token')
-    window.location.replace('http://localhost:5000/')
+    window.location.replace('http://lule-foods.herokuapp.com/')
 });
 document.getElementById('switch').addEventListener("click", function(){
-    window.location.replace('http://localhost:5000/home')
+    window.location.replace('http://lule-foods.herokuapp.com/home')
 });
 document.getElementById('remove').addEventListener("click", function(){
 	document.getElementById('myModal').style.display='none'
@@ -390,7 +383,6 @@ document.getElementById('newImg1').addEventListener("change", function upload(){
       }).then(function(j) {
         document.getElementsByClassName('newImages')[0].setAttribute('src', j["secure_url"])
         sessionStorage.setItem('img1', j["secure_url"])
-        console.log(j)
       })
 });
 document.getElementById('newImg2').addEventListener("change", function upload(){
@@ -403,7 +395,6 @@ document.getElementById('newImg2').addEventListener("change", function upload(){
       }).then(function(j) {
         document.getElementsByClassName('newImages')[1].setAttribute('src', j["secure_url"])
         sessionStorage.setItem('img2', j["secure_url"])
-        console.log(j)
       })
 });
 document.getElementById('newImg3').addEventListener("change", function upload(){
@@ -416,7 +407,6 @@ document.getElementById('newImg3').addEventListener("change", function upload(){
       }).then(function(j) {
         document.getElementsByClassName('newImages')[2].setAttribute('src', j["secure_url"])
         sessionStorage.setItem('img3', j["secure_url"])
-        console.log(j)
       })
 });
 
@@ -439,14 +429,12 @@ document.getElementById('uFood').addEventListener('click', function() {
         "tags": document.getElementById('uTags').value
 	})
 }).then(function(response) {
-    console.log(response.status)
     sessionStorage.setItem('status', response.status)
     return response.json();
 }).then(function(res) {
     
     var status=sessionStorage.getItem('status')
     sessionStorage.removeItem('status')
-    console.log(res.msg)
     
 	if(status==200){
 		document.getElementById('info').innerText=res.msg
@@ -484,14 +472,12 @@ document.getElementById('dFood').addEventListener('click', function() {
         "name": updateSelect.options[updateSelect.selectedIndex].text,
 	})
 }).then(function(response) {
-    console.log(response.status)
     sessionStorage.setItem('status', response.status)
     return response.json();
 }).then(function(res) {
     
     var status=sessionStorage.getItem('status')
     sessionStorage.removeItem('status')
-    console.log(res.msg)
     
 	if(status==200){
 		document.getElementById('info').innerText=res.msg
@@ -529,14 +515,12 @@ document.getElementById('makeAdmin').addEventListener('click', function() {
         "username": document.getElementById('userToPromote').value,
 	})
 }).then(function(response) {
-    console.log(response.status)
     sessionStorage.setItem('status', response.status)
     return response.json();
 }).then(function(res) {
     
     var status=sessionStorage.getItem('status')
     sessionStorage.removeItem('status')
-    console.log(res.msg)
     
 	if(status==200){
 		document.getElementById('info').innerText=res.msg
