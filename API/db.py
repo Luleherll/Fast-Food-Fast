@@ -71,6 +71,9 @@ class Database:
                 location VARCHAR(255) NOT NULL,
                 amount INTEGER NOT NULL,
                 status VARCHAR(255) NOT NULL,
+                created_at VARCHAR,
+                ended_at VARCHAR,
+                img1 VARCHAR,
                 FOREIGN KEY (food_id) REFERENCES menu (food_id)
                     ON UPDATE CASCADE ON DELETE CASCADE,
                 FOREIGN KEY (user_id) REFERENCES users (user_id)
@@ -82,6 +85,19 @@ class Database:
                           role)
              VALUES('tanner','pass','0777','tom@dev.com','Bukoto','Andela',
                    'Admin') RETURNING user_id;
+           """,
+           """
+               INSERT INTO menu(food_id, img1, img2, img3, name, price,
+                                status,
+                          tags)
+             VALUES('1', 'tanner.jpg','tanne.jpg','tann.jpg','coveralls','1000','Available',
+                   'meal') RETURNING food_id;
+           """,
+           """
+               INSERT INTO orders(order_id, user_id, food_id, name, quantity, comment,
+                                location, amount, status, created_at, img1)
+             VALUES('1','1','coveralls','1','hurry','Bukoto','1000','Queued',
+                   '10/11/18','tanner.jpg');
            """
         )
         return self.run(sql_main)

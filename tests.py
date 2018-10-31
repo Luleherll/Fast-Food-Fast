@@ -92,7 +92,24 @@ class TestApi(unittest.TestCase):
         token = get_token(self.app)
         response = self.app.get('/api/v2/menu', headers={'Authorization':
                                 'Bearer {}'.format(token)})
-        self.assertEqual([], response.json)
+        self.assertEqual([{'food_id': 1, 'img1': 'tanner.jpg',
+                           'img2': 'tanne.jpg', 'img3': 'tann.jpg',
+                           'name': 'coveralls', 'price': 1000,
+                           'status': 'Available', 'tags': 'meal'}],
+                         response.json)
+        self.assertEqual(200, response.status_code)
+
+    def test_update_menu(self):
+        token = get_token(self.app)
+        response = self.app.put('/api/v2/menu', data=json.dumps(
+                           {'food_id': 1, 'img1': 'tanner.jpg',
+                            'img2': 'tanne.jpg', 'img3': 'tann.jpg',
+                            'name': 'coveralls', 'price': 1000,
+                            'status': 'Unavailable', 'tags': 'meal'}),
+                            content_type='application/json', headers={'Authorization':
+                             'Bearer {}'.format(token)})
+        self.assertEqual({'msg': 'Food updated successfully.'},
+                         response.json)
         self.assertEqual(200, response.status_code)
 
     def test_make_admin(self):
@@ -108,14 +125,11 @@ class TestApi(unittest.TestCase):
 
     def test_make_order(self):
         token = get_token(self.app)
-        self.app.post('/api/v2/menu', data=json.dumps(
-            {'name': 'meat', 'price': '1000', 'status': 'Available',
-             'tags': 'meal'}), content_type='application/json',
-             headers={'Authorization': 'Bearer {}'.format(token)})
+
         response = self.app.post('/api/v2/users/orders', data=json.dumps(
-            {'name': 'meat', 'quantity': 2, 'comment': 'hurry'}),
+            {'name': 'coveralls', 'quantity': 2, 'comment': 'hurry'}),
              content_type='application/json', headers={'Authorization':
-                                 'Bearer {}'.format(token)})
+             'Bearer {}'.format(token)})
         self.assertEqual({'msg': 'Your order was placed successfully.'},
                          response.json)
         self.assertEqual(201, response.status_code)
@@ -133,6 +147,20 @@ class TestApi(unittest.TestCase):
     def test_get_user_orders(self):
         token = get_token(self.app)
         response = self.app.get('/api/v2/users/orders', headers={'Authorization':
+                                'Bearer {}'.format(token)})
+        self.assertEqual([], response.json)
+        self.assertEqual(200, response.status_code)
+
+    def test_get_pending_orders(self):
+        token = get_token(self.app)
+        response = self.app.get('/api/v2/orders/pending', headers={'Authorization':
+                                'Bearer {}'.format(token)})
+        self.assertEqual([], response.json)
+        self.assertEqual(200, response.status_code)
+
+    def test_get_archived_orders(self):
+        token = get_token(self.app)
+        response = self.app.get('/api/v2/orders/archive', headers={'Authorization':
                                 'Bearer {}'.format(token)})
         self.assertEqual([], response.json)
         self.assertEqual(200, response.status_code)
