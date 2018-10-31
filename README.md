@@ -1,14 +1,38 @@
 # Fast-Food-Fast
 
+Fast-Food-Fast is a food delivery app where customers can order food at their convinience.<br/>
+
+# USERS CAN:
+>Create an account and login
+>View the menu of all food options
+>Order for food
+>See their pending orders
+>See their order history
+>Logout
+
+# ADMIN USERS CAN:
+>See a list of new orders
+>Accept or decline orders
+>See a list of all pending orders
+>See all completed and declined orders
+>Delete a completed or declined order
+>Add food options to the menu
+>Update a food option on the menu
+>Remove a food option on the menu
+>Promote normal users to admins
+>Switch to a normal user dashboard
+
+[![Website perso.crans.org](https://img.shields.io/website-up-down-green-red/http/perso.crans.org.svg)](http://perso.crans.org/)<br>
+Here is a link to a fully functional app:<br/>
+## https://lule-foods.herokuapp.com/
+
+# Fast-Food-Fast API
+
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 [![Build Status](https://travis-ci.com/Luleherll/Fast-Food-Fast.svg?branch=develop)](https://travis-ci.com/Luleherll/Fast-Food-Fast)
 [![Maintainability](https://api.codeclimate.com/v1/badges/0a46deab9bc7008a20f7/maintainability)](https://codeclimate.com/github/Luleherll/Fast-Food-Fast/maintainability)
 [![Coverage Status](https://coveralls.io/repos/github/Luleherll/Fast-Food-Fast/badge.svg?branch=develop)](https://coveralls.io/github/Luleherll/Fast-Food-Fast?branch=develop)
 
-Fast-Food-Fast is a food delivery app.<br/>
-
-This API enables the users to signup and login, order for food, see their pending orders and order history:<br/>
-[![Website perso.crans.org](https://img.shields.io/website-up-down-green-red/http/perso.crans.org.svg)](http://perso.crans.org/)<br>
 Here is the link for the API hosted on Heroku with Swagger API documentation to demo the API:<br/>
 # https://lule-persistent.herokuapp.com/
 
@@ -24,17 +48,7 @@ Here is the link for the API hosted on Heroku with Swagger API documentation to 
  GET | `/api/v2/users/history` | For getting user order history
  GET | `/api/v2/orders` | For retrieving all orders in the orders list
  GET | `/api/v2/menu` | For getting the menu
+ DELETE | `/api/v2/menu` | Removing food option from the menu
  GET | `/api/v2/orders/<int:order_id>` | For retrieving one order
  PUT | `/api/v2/orders/<int:order_id>` | For updating the status of one order
  PUT | `/api/v2/menu/<string:name>` | For updating specific food option on the menu
-
-Fast-Food-Fast App is a food delivery app.
-
-The UI template has been made with:
->HTML<br/>
->CSS<br/>
->JAVASCRIPT<br/>
-
-The link to the app demo is here:<br />
-# https://Luleherll.github.io
-
