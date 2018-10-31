@@ -3,24 +3,24 @@
 Fast-Food-Fast is a food delivery app where customers can order food at their convinience.<br/>
 
 # USERS CAN:
->Create an account and login
->View the menu of all food options
->Order for food
->See their pending orders
->See their order history
->Logout
+>Create an account and login<br/>
+>View the menu of all food options<br/>
+>Order for food<br/>
+>See their pending orders<br/>
+>See their order history<br/>
+>Logout<br/>
 
 # ADMIN USERS CAN:
->See a list of new orders
->Accept or decline orders
->See a list of all pending orders
->See all completed and declined orders
->Delete a completed or declined order
->Add food options to the menu
->Update a food option on the menu
->Remove a food option on the menu
->Promote normal users to admins
->Switch to a normal user dashboard
+>See a list of new orders<br/>
+>Accept or decline orders<br/>
+>See a list of all pending orders<br/>
+>See all completed and declined orders<br/>
+>Delete a completed or declined order<br/>
+>Add food options to the menu<br/>
+>Update a food option on the menu<br/>
+>Remove a food option on the menu<br/>
+>Promote normal users to admins<br/>
+>Switch to a normal user dashboard<br/>
 
 [![Website perso.crans.org](https://img.shields.io/website-up-down-green-red/http/perso.crans.org.svg)](http://perso.crans.org/)<br>
 Here is a link to a fully functional app:<br/>
