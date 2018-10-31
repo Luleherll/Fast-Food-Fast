@@ -5,12 +5,16 @@ from flask import request, redirect
 from flask_jwt_extended import (JWTManager, create_access_token,
                                 get_jwt_identity, jwt_required)
 from flasgger import Swagger, swag_from
+from flask_cors import CORS
+import datetime
 
 
 app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = 'ucanguessit'
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(days=2)
 jwt = JWTManager(app)
 Swagger(app)
+CORS(app)
 error = 'You must provide all required fields.'
 
 
@@ -100,13 +104,15 @@ def place_order():
         quantity = request.get_json()['quantity']
         comment = request.get_json()['comment']
         order = {'name': name, 'quantity': quantity, 'comment': comment}
+        clean = Check().is_clean(order)
+        if type(clean) == tuple:
+            return clean
+        else:
+            response = Orders().make_order(user_id, order)
+            return response
 
-        response = Orders().make_order(user_id, order)
-        return response
     except KeyError:
         return jsonify(error=error), 400
-    except ValueError:
-        return jsonify(error='Please provide valid data types.'), 400
 
 
 @app.route('/api/v2/users/orders', methods=['GET'])
@@ -148,6 +154,15 @@ def update_order(orderId):
     status = request.get_json()['status']
     response = Orders().update_order(user_id, orderId, status)
     return response
+  
+  
+@app.route('/api/v2/orders/<int:orderId>', methods=['DELETE'])
+@jwt_required
+def delete_order(orderId):
+    user_id = get_jwt_identity()
+    "This route deletes a particular order."
+    response = Orders().delete_order(user_id, orderId)
+    return response
 
 
 @app.route('/api/v2/orders/', methods=['GET'])
@@ -156,7 +171,24 @@ def update_order(orderId):
 def get_orders():
     "This route returns all orders."
     user_id = get_jwt_identity()
-    response = Orders().get_orders(user_id)
+    response = Orders().get_new_orders(user_id)
+    return response
+
+@app.route('/api/v2/orders/pending', methods=['GET'])
+@jwt_required
+def pending_orders():
+    "This route returns all orders."
+    user_id = get_jwt_identity()
+    response = Orders().get_pending_orders(user_id)
+    return response
+
+
+@app.route('/api/v2/orders/archive', methods=['GET'])
+@jwt_required
+def archive():
+    "This route returns all orders."
+    user_id = get_jwt_identity()
+    response = Orders().complete_and_decline(user_id)
     return response
 
 
@@ -174,12 +206,56 @@ def menu():
 @swag_from('docs/add_food.yml')
 def add_menu():
     user_id = get_jwt_identity()
+    try:
+        img1 = request.get_json()['img1']
+        img2 = request.get_json()['img2']
+        img3 = request.get_json()['img3']
+        name = request.get_json()['name']
+        price = request.get_json()['price']
+        status = request.get_json()['status']
+        tags = request.get_json()['tags']
+        food = {'name': name, 'price': price, 'status': status,
+                'tags': tags, 'img1': img1, 'img2': img2, 'img3': img3}
+        clean = Check().is_clean(food)
+        if type(clean) == tuple:
+            return clean
+        else:
+            response = Menu().add_food(user_id, food)
+            return response
+    except KeyError:
+        return jsonify(error=error), 400
 
-    name = request.get_json()['name']
-    price = request.get_json()['price']
-    status = request.get_json()['status']
-    tags = request.get_json()['tags']
-    food = {'name': name, 'price': price, 'status': status,
-            'tags': tags}
-    response = Menu().add_food(user_id, food)
-    return response
+
+@app.route('/api/v2/menu', methods=['PUT'])
+@jwt_required
+def update_food():
+    user_id = get_jwt_identity()
+    try:
+        img1 = request.get_json()['img1']
+        img2 = request.get_json()['img2']
+        img3 = request.get_json()['img3']
+        name = request.get_json()['name']
+        price = request.get_json()['price']
+        status = request.get_json()['status']
+        tags = request.get_json()['tags']
+        food = {'name': name, 'price': price, 'status': status,
+                'tags': tags, 'img1': img1, 'img2': img2, 'img3': img3}
+        clean = Check().is_clean(food)
+        if type(clean) == tuple:
+            return clean
+        else:
+            response = Menu().update_food(user_id, food)
+            return response
+    except KeyError:
+        return jsonify(error=error), 400
+
+@app.route('/api/v2/menu', methods=['DELETE'])
+@jwt_required
+def delete_food():
+    user_id = get_jwt_identity()
+    try:
+        name = request.get_json()['name']
+        response = Menu().delete_food(user_id, name)
+        return response
+    except KeyError:
+        return jsonify(error=error), 400

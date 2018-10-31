@@ -1,6 +1,7 @@
 from API.db import Database
 from API.validation import Check
 from flask import jsonify
+from datetime import datetime
 
 
 class Users:
@@ -55,8 +56,10 @@ class Users:
 
     def user_history(self, user_id):
         orders = self.db.run(("""SELECT * FROM orders WHERE
-                                user_id = %s and status = %s""",),
-                             (user_id, 'Completed'), 'SELECT')
+                                user_id = %s and status = 'Completed' UNION
+                                SELECT * FROM orders WHERE user_id = %s and
+                                status = 'Declined'""",),
+                             (user_id, user_id,), 'SELECT')
 
         return orders
 
@@ -69,7 +72,7 @@ class Users:
             if updated == 0:
                 return jsonify(msg='User not found.'), 404
             else:
-                return jsonify(msg='{} made administrator.'.format(username)), 205
+                return jsonify(msg='{} made administrator.'.format(username)), 200
         else:
             return jsonify(msg='Not Authorized'), 401
 
@@ -82,12 +85,15 @@ class Menu:
 
     def add_food(self, user_id, food):
         sql = ("""
-        INSERT INTO menu(name, price, status, tags)
-             VALUES(%s,%s,%s,%s) RETURNING food_id;
+        INSERT INTO menu(name, price, status, tags, img1, img2, img3)
+             VALUES(%s,%s,%s,%s,%s,%s,%s) RETURNING food_id;
         """,)
         if Check().is_admin(user_id) is True:
-            self.db.run(sql, (food['name'], food['price'],
-                        food['status'], food['tags']), 'INSERT')
+            info = self.db.run(sql, (food['name'], food['price'],
+                               food['status'], food['tags'], food['img1'],
+                               food['img2'], food['img3']), 'INSERT')
+            if info is not None:
+                return jsonify(msg='Food already exists.Try updating.'), 406
             return jsonify(msg='Food option added successfully.'), 201
         else:
             return jsonify(msg='Not Authorized'), 401
@@ -101,25 +107,27 @@ class Menu:
                                 name = %s""",), (name,), 'SELECT')
         return jsonify(food), 200
 
-    def update_food(self, user_id, name, key, value):
+    def update_food(self, user_id, update):
         res = jsonify(msg='Not Authorized'), 401
         if Check().is_admin(user_id) is True:
-            updated = self.db.run(("""UPDATE menu SET {} = %s
-                                WHERE name = %s""".format(key),),
-                                  (value, name,), 'UPDATE')
+            updated = self.db.run(("""UPDATE menu SET price = %s, status = %s,
+                                    tags = %s, img1 = %s, img2 = %s, img3 = %s WHERE name = %s""",),
+                                  (update['price'], update['status'],
+                                  update['tags'], update['img1'],
+                               update['img2'], update['img3'], update['name']), 'UPDATE')
+            print(updated)
             if updated != 0:
-                res = jsonify(updated), 205
+                return jsonify(msg='Food updated successfully.'), 200
             else:
-                res = jsonify(msg='Not updated. crosscheck the given values.'),
-                404
+                return jsonify(msg='Not updated. crosscheck the given values.'), 404
         else:
             return res
 
-    def delete_food(self, user_id, food_id):
+    def delete_food(self, user_id, name):
         if Check().is_admin(user_id) is True:
             self.db.run(("""DELETE FROM menu WHERE
-                        food_id = %s""",), (food_id,))
-            return jsonify(msg='Food successfully deleted.'), 100
+                        name = %s""",), (name,))
+            return jsonify(msg='Food successfully deleted.'), 200
         else:
             return jsonify(msg='Not Authorized'), 401
 
@@ -143,13 +151,17 @@ class Orders:
         else:
             sql = ("""
              INSERT INTO orders(user_id, food_id, name, quantity, comment,
-             location, amount, status)
-             VALUES(%s,%s,%s,%s,%s,%s,%s,%s) RETURNING order_id;
+             location, amount, status, created_at, img1)
+             VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) RETURNING order_id;
             """,)
-            self.db.run(sql, (user['user_id'], food['food_id'], order['name'],
+            info = self.db.run(sql, (user['user_id'], food['food_id'], order['name'],
                               order['quantity'], order['comment'],
                               user['location'], order['quantity']*food['price'],
-                              'Queued'), 'INSERT')
+                              'Queued', datetime.now().strftime("%A, %d. %B %Y %I:%M%p"),
+                               food['img1']), 'INSERT')
+            if info is not None:
+                return jsonify(msg=str(info)), 201
+        
         return jsonify(msg='Your order was placed successfully.'), 201
 
     def get_order(self, user_id, order_id):
@@ -166,11 +178,12 @@ class Orders:
 
     def update_order(self, user_id, order_id, status):
         if Check().is_admin(user_id) is True:
-            updated = self.db.run(("""UPDATE orders SET status = %s
+            updated = self.db.run(("""UPDATE orders SET status = %s, ended_at = %s
                                 WHERE order_id = %s""",),
-                                  (status, order_id,), 'UPDATE')
+                                  (status, datetime.now().strftime("%A, %d. %B %Y %I:%M%p"),
+                                   order_id,), 'UPDATE')
             if updated != 0:
-                return jsonify(msg='Successfully updated.'), 205
+                return jsonify(msg='Successfully updated.'), 200
             else:
                 return jsonify(msg='Order not found.'), 404
         else:
@@ -182,17 +195,38 @@ class Orders:
             info = self.db.run(("""DELETE FROM orders WHERE
                         order_id = %s""",), (order_id,))
             if info is not None:
-                res = jsonify(msg='Order successfully deleted.'), 100
+                res = jsonify(msg='Order successfully deleted.'), 200
             else:
                 res = jsonify(msg='Not deleted. does it exist ?'), 404
         else:
             return res
 
-    def get_orders(self, user_id):
+    def get_new_orders(self, user_id):
         if Check().is_admin(user_id) is True:
-            orders = self.db.run(("""SELECT * FROM orders""",),
+            orders = self.db.run(("""SELECT * FROM orders WHERE
+                                  status = 'Queued'""",),
+                                 command='SELECT')
+            print(orders)
+            return jsonify(orders), 200
+        else:
+            return jsonify(msg='Not Authorized'), 401
+
+    def get_pending_orders(self, user_id):
+        if Check().is_admin(user_id) is True:
+            orders = self.db.run(("""SELECT * FROM orders WHERE status =
+                                     'Pending'""",),
                                  command='SELECT')
 
+            return jsonify(orders), 200
+        else:
+            return jsonify(msg='Not Authorized'), 401
+
+    def complete_and_decline(self, user_id):
+        if Check().is_admin(user_id) is True:
+            orders = self.db.run(("""SELECT * FROM orders WHERE status = 'Completed'
+                               UNION all SELECT * FROM orders WHERE status = 'Declined'""",),
+                                 command='SELECT')
+            print(orders)
             return jsonify(orders), 200
         else:
             return jsonify(msg='Not Authorized'), 401

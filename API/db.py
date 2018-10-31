@@ -3,7 +3,7 @@ from psycopg2.extras import RealDictCursor
 
 
 class Database:
-
+    
     def __init__(self, app):
         if app.config['TESTING'] is True:
             conn = pg.connect(dbname='fasttests', user='postgres',
@@ -11,8 +11,8 @@ class Database:
         else:
             conn = pg.connect("dbname='dd9mb4gqm802l1' user='envcqlrpkysjxa'\
                                host='ec2-23-21-147-71.compute-1.amazonaws.com'\
-                               port='5432'\
-                                password='428e7756143a868108cd0392055a879b31faae3e92ca3969ea26f14b9709b566'"
+                                port='5432'\
+                            password='428e7756143a868108cd0392055a879b31faae3e92ca3969ea26f14b9709b566'"
                               )
         self.conn = conn
         self.conn.autocommit = True
@@ -71,6 +71,9 @@ class Database:
                 location VARCHAR(255) NOT NULL,
                 amount INTEGER NOT NULL,
                 status VARCHAR(255) NOT NULL,
+                created_at VARCHAR,
+                ended_at VARCHAR,
+                img1 VARCHAR,
                 FOREIGN KEY (food_id) REFERENCES menu (food_id)
                     ON UPDATE CASCADE ON DELETE CASCADE,
                 FOREIGN KEY (user_id) REFERENCES users (user_id)
@@ -82,6 +85,19 @@ class Database:
                           role)
              VALUES('tanner','pass','0777','tom@dev.com','Bukoto','Andela',
                    'Admin') RETURNING user_id;
+           """,
+           """
+               INSERT INTO menu(food_id, img1, img2, img3, name, price,
+                                status,
+                          tags)
+             VALUES('1', 'tanner.jpg','tanne.jpg','tann.jpg','coveralls','1000','Available',
+                   'meal') RETURNING food_id;
+           """,
+           """
+               INSERT INTO orders(order_id, user_id, food_id, name, quantity, comment,
+                                location, amount, status, created_at, img1)
+             VALUES('1','1','coveralls','1','hurry','Bukoto','1000','Queued',
+                   '10/11/18','tanner.jpg');
            """
         )
         return self.run(sql_main)
