@@ -1,5 +1,8 @@
 # Fast-Food-Fast
 
+[![forthebadge](https://forthebadge.com/images/badges/uses-html.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/uses-css.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/uses-js.svg)](https://forthebadge.com)
 Fast-Food-Fast is a food delivery app where customers can order food at their convinience.<br/>
 
 # USERS CAN:
