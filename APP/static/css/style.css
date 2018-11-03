@@ -1,5 +1,5 @@
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 768px) {
 
     .modal-content {
     margin: 80% auto;
@@ -82,7 +82,7 @@
   }
   
 
-@media only screen and (min-width: 401px) and (max-width: 960px) {
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
     
     .modal-content {
     margin: 60% auto;
@@ -159,7 +159,7 @@
 #foodComment{width: 80%;display: block;}
   }
   
-@media only screen and (min-width: 961px) {
+@media only screen and (min-width: 1025px) {
    
 .modal-content { 
     margin: 15% auto;
