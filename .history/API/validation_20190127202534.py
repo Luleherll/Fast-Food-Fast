@@ -31,7 +31,7 @@ class Check:
             pass
 
     def is_admin(self, user_id):
-        print(user_id)
+        print()
         response = self.db.run(("""SELECT role FROM Users WHERE
                                 user_id = %s""",),
                                (user_id,), 'SELECT')

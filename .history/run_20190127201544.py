@@ -5,5 +5,5 @@ from API.validation import Check
 
 if __name__ == '__main__':
     d = Database(app)
-    d.create_tables()
+    d.create_tables
     app.run(debug=True)

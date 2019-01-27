@@ -66,8 +66,8 @@ def login():
         else:
             user_id = Users().login(name, password)
             access_token = create_access_token(identity=user_id['user_id'])
-            userStatus = Check().is_admin(user_id['user_id'])
-            return jsonify({'token': access_token, 'Admin': userStatus}), 200
+            userStatus = Check().is_admin(user_id)
+            return jsonify({token: access_token, status: userStatus}), 200
     except TypeError:
         return jsonify(error='Not Registered.'), 401
     except KeyError:
