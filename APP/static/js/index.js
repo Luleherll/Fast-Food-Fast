@@ -40,7 +40,7 @@ document.getElementById("login").addEventListener("click", function() {
     mode: 'cors',
 	headers: new Headers({
 		'Content-Type': 'application/json',
-		'Authorization': 'Bearer '+j
+		'Authorization': 'Bearer '+j.user
 	})
 	
    }).then(function(response) {return response.json();}).then(function(res) {
