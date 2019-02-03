@@ -34,7 +34,7 @@ document.getElementById("login").addEventListener("click", function() {
 		alert.style.display='block';
 	}else{
 		
-		sessionStorage.setItem('token', j);
+		sessionStorage.setItem('token', j.user);
 		fetch('https://lule-persistent.herokuapp.com/api/v2/orders/', {
     method: 'get',
     mode: 'cors',
